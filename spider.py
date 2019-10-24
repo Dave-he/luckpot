@@ -5,7 +5,7 @@ import time
 from selenium import webdriver
 from lxml import etree
 
-ENDNUM = '19069'
+ENDNUM = '19121'
 STARTNUM = '03001'
 
 class Balls(object):
@@ -21,7 +21,7 @@ class Balls(object):
 
     def run_spider(self):
         self.web.get(self.start_url)
-        self.web.find_element_by_id('link99')
+        self.web.find_element_by_id('link187')
         start = self.web.find_element_by_id('start')
         end = self.web.find_element_by_id('end')
         start.clear()
@@ -71,7 +71,7 @@ class Balls(object):
     def write_to_csv(self, pathfile, data):
         if not os.path.exists(pathfile):
             with open(pathfile, 'w') as f:
-                pass
+                csv.writer(f, dialect='excel').writerow(['Date Time','red1','red2','red3','red4','red5','red6','blue'])
         f = open(pathfile, 'a', newline='')
         wr = csv.writer(f, dialect='excel')
         wr.writerow(data)

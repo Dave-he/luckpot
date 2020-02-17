@@ -5,8 +5,8 @@ import time
 from selenium import webdriver
 from lxml import etree
 
-ENDNUM = '19121'
-STARTNUM = '03001'
+ENDNUM = '20009'
+STARTNUM = '19122'
 
 class Balls(object):
     numlis = []

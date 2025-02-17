@@ -1,4 +1,3 @@
-import requests
 import os
 import csv
 import time
@@ -12,32 +11,40 @@ class Balls(object):
     numlis = []
 
     def __init__(self):
-        self.start_url = 'http://datachart.500.com/ssq/history/history.shtml'
-        option = webdriver.ChromeOptions()
-        # option.binary_location=r'chromedriver.exe'
-        option.add_argument('--headless')
-        option.add_argument('--no-sandbox')
-        self.web = webdriver.Chrome(chrome_options=option)
+        self.start_url = 'https://datachart.500.com/dlt/history/newinc/history.php?limit=100&sort=0'
+      
+        # 创建 ChromeOptions 对象
+        options = webdriver.ChromeOptions()
+        options.add_argument('--ignore-certificate-errors')  # 忽略证书错误
+        options.add_argument('--disable-extensions')  # 禁用扩展
+        options.add_argument('--headless')  # 无头模式示例
+        options.add_argument('--disable-gpu')  # 禁用 GPU 加速
+        options.add_argument('--no-sandbox')  # 禁用沙盒
+    
+        # 初始化 WebDriver
+        self.web = webdriver.Chrome(options=options)
+        
 
     def run_spider(self):
         self.web.get(self.start_url)
-        self.web.find_element_by_id('link187')
-        start = self.web.find_element_by_id('start')
-        end = self.web.find_element_by_id('end')
-        start.clear()
-        end.clear()  # 先清除
-        time.sleep(1.5)
-        start.send_keys('00001')
-        end.send_keys(ENDNUM)
-        sub = self.web.find_element_by_xpath(
-            '//*[@id="container"]/div/table/tbody/tr[1]/td/div/div[1]/div/table/tbody/tr/td[2]/img')
-        time.sleep(0.8)
-        sub.click()
+        # # self.web.find_element('link187')
+        # start = self.web.find_element('start')
+        # end = self.web.find_element('end')
+        # start.clear()
+        # end.clear()  # 先清除
+        # time.sleep(1.5)
+        # start.send_keys('00001')
+        # end.send_keys(ENDNUM)
+        # sub = self.web.find_element(by='xpath', value=
+        #     '//*[@id="container"]/div/table/tbody/tr[1]/td/div/div[1]/div/table/tbody/tr/td[2]/img')
+        # time.sleep(0.8)
+        # sub.click()
         # print(self.web.page_source)
         return self.web.page_source
 
     def get_spider_source(self):
         sourse = self.run_spider()
+        print(sourse)
         html = etree.HTML(sourse)
         i = 0
         result = '0'

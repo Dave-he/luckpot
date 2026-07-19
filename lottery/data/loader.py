@@ -51,7 +51,9 @@ class DataLoader:
                         if val:
                             blues.append(int(val))
 
-                    if reds and blues and len(reds) == self.red_count and len(blues) == self.blue_count:
+                    reds_ok = len(reds) == self.red_count
+                    blues_ok = self.blue_count == 0 or len(blues) == self.blue_count
+                    if reds and reds_ok and blues_ok:
                         results.append({
                             "issue": issue,
                             "date": date,

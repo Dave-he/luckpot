@@ -3,30 +3,57 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
-SSQ_DATA_DIR = os.path.join(DATA_DIR, "ssq")
-DLT_DATA_DIR = os.path.join(DATA_DIR, "dlt")
-
-for d in [DATA_DIR, SSQ_DATA_DIR, DLT_DATA_DIR]:
+for d in [DATA_DIR]:
     os.makedirs(d, exist_ok=True)
 
-SSQ_CONFIG = {
-    "name": "双色球",
-    "short_name": "ssq",
-    "red_count": 6,
-    "red_range": (1, 33),
-    "blue_count": 1,
-    "blue_range": (1, 16),
-    "data_file": os.path.join(SSQ_DATA_DIR, "history.csv"),
-}
 
-DLT_CONFIG = {
-    "name": "大乐透",
-    "short_name": "dlt",
-    "red_count": 5,
-    "red_range": (1, 35),
-    "blue_count": 2,
-    "blue_range": (1, 12),
-    "data_file": os.path.join(DLT_DATA_DIR, "history.csv"),
+def _config(name, short_name, red_count, red_range, blue_count, blue_range,
+            provider, provider_code, schedule=""):
+    data_dir = os.path.join(DATA_DIR, short_name)
+    os.makedirs(data_dir, exist_ok=True)
+    return {
+        "name": name,
+        "short_name": short_name,
+        "red_count": red_count,
+        "red_range": red_range,
+        "blue_count": blue_count,
+        "blue_range": blue_range,
+        "data_file": os.path.join(data_dir, "history.csv"),
+        "provider": provider,
+        "provider_code": provider_code,
+        "schedule": schedule,
+    }
+
+
+SSQ_CONFIG = _config("双色球", "ssq", 6, (1, 33), 1, (1, 16),
+                     "cwl", "ssq", "每周二、四、日")
+
+DLT_CONFIG = _config("大乐透", "dlt", 5, (1, 35), 2, (1, 12),
+                     "sporttery", "85", "每周一、三、六")
+
+FC3D_CONFIG = _config("福彩3D", "fc3d", 3, (0, 9), 0, (0, 0),
+                      "cwl", "3d", "每日开奖")
+
+QLC_CONFIG = _config("七乐彩", "qlc", 7, (1, 30), 1, (1, 30),
+                     "cwl", "qlc", "每周一、三、五")
+
+QXC_CONFIG = _config("七星彩", "qxc", 7, (0, 9), 0, (0, 0),
+                     "sporttery", "04", "每周二、五、日")
+
+PLS_CONFIG = _config("排列3", "pls", 3, (0, 9), 0, (0, 0),
+                     "sporttery", "35", "每日开奖")
+
+PLW_CONFIG = _config("排列5", "plw", 5, (0, 9), 0, (0, 0),
+                     "sporttery", "350133", "每日开奖")
+
+LOTTERY_CONFIGS = {
+    "ssq": SSQ_CONFIG,
+    "dlt": DLT_CONFIG,
+    "fc3d": FC3D_CONFIG,
+    "qlc": QLC_CONFIG,
+    "qxc": QXC_CONFIG,
+    "pls": PLS_CONFIG,
+    "plw": PLW_CONFIG,
 }
 
 HEADERS = {

@@ -146,6 +146,23 @@ def check_lottery(pred_entry, history_hits):
                 if r:
                     results.append(r)
 
+    # 权重融合预测 (如果存在 weighted_predictions.json)
+    weighted_path = os.path.join("data", "weighted_predictions.json")
+    if os.path.exists(weighted_path):
+        try:
+            with open(weighted_path, "r", encoding="utf-8") as f:
+                weighted_preds = json.load(f)
+            for wp in weighted_preds:
+                if wp.get("lottery") == lottery_key and wp.get("latest_issue") == last_pred_issue:
+                    pred = wp.get("weighted_prediction", {})
+                    if "reds" in pred:
+                        r = check_one("weighted_ensemble", pred["reds"], pred.get("blues", []))
+                        if r:
+                            results.append(r)
+                    break
+        except Exception:
+            pass
+
     return {
         "lottery": lottery_key,
         "name": name,

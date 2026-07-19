@@ -23,7 +23,7 @@ concurrency:
 jobs:
   daily-update-and-predict:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     permissions:
       contents: write
 
@@ -65,29 +65,48 @@ jobs:
           echo "=== 步骤3: 检查上次预测是否命中 (在新预测生成前) ==="
           python3 scripts/check_hits.py || true
 
+      - name: 更新动态算法权重
+        run: |
+          echo "=== 步骤4: 基于历史回测更新算法权重 ==="
+          python3 scripts/update_weights.py --backtest 15 || true
+
       - name: 生成新预测
         run: |
-          echo "=== 步骤4: 生成下一期预测 ==="
+          echo "=== 步骤5: 生成下一期预测 ==="
           python3 scripts/predict.py
+
+      - name: 权重融合预测
+        run: |
+          echo "=== 步骤6: 用动态权重融合各算法预测 ==="
+          python3 scripts/weighted_predict.py || true
+
+      - name: 历史回测验证 (每周一/四运行, 或手动触发)
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && (date -u +%w) == "1" || (date -u +%w) == "4")
+        run: |
+          echo "=== 步骤6.5: 历史回测验证 ==="
+          python3 scripts/backtest.py --n 30 || true
 
       - name: 生成 README
         run: |
-          echo "=== 步骤5: 生成 README ==="
+          echo "=== 步骤7: 生成 README ==="
           python3 scripts/generate_readme.py
 
       - name: 提交并推送
         run: |
-          echo "=== 步骤6: 提交并推送 ==="
+          echo "=== 步骤8: 提交并推送 ==="
           git add -A
           if git diff --staged --quiet; then
             echo "无变更，跳过提交"
           else
-            git commit -m "chore: 每日数据更新与预测 $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+            git commit -m "chore: 每日数据更新+预测+权重更新 $(date -u '+%Y-%m-%d %H:%M:%S UTC')
 
             - 更新历史数据 CSV
             - 重新训练 XGBoost + MLP 模型
-            - 生成下一期预测结果
+            - 检查上次预测命中情况 (永久记录)
+            - 更新动态算法权重 (EMA平滑)
+            - 生成下一期预测+权重融合预测
             - 更新 README"
+            git pull --rebase origin ${{ github.ref_name }} || true
             git push
             echo "✓ 已推送到 GitHub"
           fi
@@ -98,20 +117,26 @@ jobs:
           echo "=== 工作流执行总结 ==="
           echo "时间: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           echo ""
-          echo "预测结果文件:"
-          if [ -f data/predictions.json ]; then
-            echo "  ✓ data/predictions.json"
-          else
-            echo "  ✗ data/predictions.json 缺失"
+          echo "权重文件:"
+          if [ -f data/algorithm_weights.json ]; then
+            echo "  ✓ data/algorithm_weights.json"
+            python3 -c "
+import json
+with open('data/algorithm_weights.json') as f:
+    d = json.load(f)
+for k, v in d.get('lotteries', {}).items():
+    w = v.get('weights', {})
+    top = max(w.items(), key=lambda x: x[1]) if w else ('-', 0)
+    print(f'  {v.get(\"name\",k)}: Top={top[0]}({top[1]:.3f})')
+" 2>/dev/null || true
           fi
           echo ""
-          echo "训练报告:"
-          if [ -f data/training_report.json ]; then
-            echo "  ✓ data/training_report.json"
-            cat data/training_report.json | python3 -c "import sys,json; data=json.load(sys.stdin); [print(f\"  {r.get('name',r.get('lottery'))}: xgb={r.get('models',{}).get('xgboost',{}).get('success',False)} mlp={r.get('models',{}).get('mlp',{}).get('success',False)}\") for r in data]" 2>/dev/null || true
+          echo "权重融合预测:"
+          if [ -f data/weighted_predictions.json ]; then
+            echo "  ✓ data/weighted_predictions.json"
           fi
           echo ""
-          echo "数据更新报告:"
-          if [ -f data/update_report.json ]; then
-            echo "  ✓ data/update_report.json"
+          echo "命中记录:"
+          if [ -f data/prediction_hits.json ]; then
+            echo "  ✓ data/prediction_hits.json ($(python3 -c 'import json;print(len(json.load(open("data/prediction_hits.json"))))' 2>/dev/null || echo 0) 条)"
           fi

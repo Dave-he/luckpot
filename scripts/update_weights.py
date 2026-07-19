@@ -120,8 +120,8 @@ def backtest_lottery(lottery_key, config, n_backtests=20):
         except Exception as e:
             pass
 
-        # 2. MLP (回测时跳过 - 太慢，只在前5个回测点用)
-        if idx - backtest_points[0] < 3:
+        # 2. MLP (回测时只在前2个回测点用, 太慢)
+        if idx - backtest_points[0] < 2:
             try:
                 mlp_pred = MLPredictor(config)
                 train_result = mlp_pred.train(train_data)

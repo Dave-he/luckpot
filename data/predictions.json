@@ -1,1 +1,897 @@
-[{"lottery": "ssq", "name": "双色球", "schedule": "每周二、四、日", "provider": "cwl", "predict_time": "2026-07-19 11:01:41", "latest_issue": "2026081", "latest_reds": [6, 10, 12, 15, 24, 27], "latest_blues": [12], "history_count": 4558, "predictions": {"xgboost": {"reds": [5, 9, 14, 18, 25, 29], "blues": [9], "info": {"raw_red_preds": [4.95, 9.03, 14.03, 17.98, 24.8, 28.7], "raw_blue_preds": [9.39]}}, "mlp": {"reds": [2, 5, 25, 26, 31, 33], "blues": [16], "info": {"red_top_probs": [[26, 0.0463], [31, 0.0438], [25, 0.0431], [33, 0.0429], [5, 0.0403], [2, 0.0373]], "blue_top_probs": [[16, 0.0996]]}}, "traditional": {"热号推荐": {"reds": [1, 4, 8, 24, 29, 30], "blues": [1]}, "冷号回补": {"reds": [2, 9, 13, 23, 31, 33], "blues": [14]}, "综合推荐": {"reds": [1, 3, 24, 29, 30, 33], "blues": [2]}, "随机机选": {"reds": [8, 12, 17, 18, 20, 33], "blues": [5]}}}}, {"lottery": "dlt", "name": "大乐透", "schedule": "每周一、三、六", "provider": "sporttery", "predict_time": "2026-07-19 11:01:41", "latest_issue": "26080", "latest_reds": [5, 10, 15, 21, 23], "latest_blues": [7, 8], "history_count": 2898, "predictions": {"xgboost": {"reds": [5, 10, 19, 24, 31], "blues": [4, 8], "info": {"raw_red_preds": [4.59, 10.39, 18.94, 23.64, 30.61], "raw_blue_preds": [4.07, 8.49]}}, "mlp": {"reds": [1, 2, 4, 29, 32], "blues": [2, 9], "info": {"red_top_probs": [[1, 0.0631], [4, 0.0518], [2, 0.0473], [29, 0.0459], [32, 0.0433]], "blue_top_probs": [[9, 0.1082], [2, 0.1076]]}}, "traditional": {"热号推荐": {"reds": [6, 13, 20, 21, 26], "blues": [2, 11]}, "冷号回补": {"reds": [7, 9, 17, 31, 34], "blues": [3, 9]}, "综合推荐": {"reds": [9, 12, 13, 20, 26], "blues": [2, 11]}, "随机机选": {"reds": [5, 9, 15, 19, 30], "blues": [4, 6]}}}}, {"lottery": "fc3d", "name": "福彩3D", "schedule": "每日开奖", "provider": "cwl", "predict_time": "2026-07-19 11:01:41", "latest_issue": "2026189", "latest_reds": [5, 5, 8], "latest_blues": [], "history_count": 4694, "predictions": {"xgboost": {"reds": [2, 4, 7], "blues": [], "info": {"raw_red_preds": [1.75, 4.06, 7.26], "raw_blue_preds": []}}, "mlp": {"reds": [1, 4, 9], "blues": [], "info": {"red_top_probs": [[1, 0.153], [4, 0.1292], [8, 0.1171]]}}, "traditional": {"热号推荐": {"reds": [2, 3, 9], "blues": []}, "冷号回补": {"reds": [1, 4, 7], "blues": []}, "综合推荐": {"reds": [1, 2, 9], "blues": []}, "随机机选": {"reds": [3, 5, 7], "blues": []}}}}, {"lottery": "qlc", "name": "七乐彩", "schedule": "每周一、三、五", "provider": "cwl", "predict_time": "2026-07-19 11:01:41", "latest_issue": "2026081", "latest_reds": [1, 6, 8, 12, 18, 21, 24], "latest_blues": [23], "history_count": 2040, "predictions": {"xgboost": {"reds": [4, 8, 13, 15, 20, 23, 27], "blues": [18], "info": {"raw_red_preds": [3.51, 8.03, 12.77, 15.28, 19.94, 22.97, 27.2], "raw_blue_preds": [18.41]}}, "mlp": {"reds": [2, 6, 8, 18, 26, 27, 29], "blues": [26], "info": {"red_top_probs": [[2, 0.0522], [29, 0.0488], [8, 0.0471], [6, 0.0463], [18, 0.0447], [27, 0.0392], [26, 0.0385]], "blue_top_probs": [[26, 0.06]]}}, "traditional": {"热号推荐": {"reds": [7, 10, 12, 14, 25, 27, 30], "blues": [16]}, "冷号回补": {"reds": [4, 9, 11, 15, 16, 22, 29], "blues": [15]}, "综合推荐": {"reds": [10, 14, 15, 17, 25, 27, 30], "blues": [27]}, "随机机选": {"reds": [3, 6, 11, 16, 17, 22, 23], "blues": [23]}}}}, {"lottery": "qxc", "name": "七星彩", "schedule": "每周二、五、日", "provider": "sporttery", "predict_time": "2026-07-19 11:01:41", "latest_issue": "26081", "latest_reds": [2, 3, 3, 4, 5, 5, 8], "latest_blues": [], "history_count": 3365, "predictions": {"xgboost": {"reds": [1, 2, 3, 5, 6, 7, 9], "blues": [], "info": {"raw_red_preds": [0.52, 2.37, 3.48, 5.17, 6.17, 6.98, 8.79], "raw_blue_preds": []}}, "mlp": {"reds": [0, 1, 4, 3, 6, 8, 9], "blues": [], "info": {"red_top_probs": [[8, 0.1346], [1, 0.1109], [3, 0.1104], [0, 0.1091], [4, 0.1059], [6, 0.093], [9, 0.0919]]}}, "traditional": {"热号推荐": {"reds": [0, 2, 3, 4, 5, 6, 7], "blues": []}, "冷号回补": {"reds": [0, 1, 2, 3, 6, 7, 9], "blues": []}, "综合推荐": {"reds": [0, 1, 3, 4, 5, 6, 7], "blues": []}, "随机机选": {"reds": [0, 1, 2, 3, 4, 5, 6], "blues": []}}}}, {"lottery": "pls", "name": "排列3", "schedule": "每日开奖", "provider": "sporttery", "predict_time": "2026-07-19 11:01:41", "latest_issue": "26189", "latest_reds": [0, 5, 9], "latest_blues": [], "history_count": 7664, "predictions": {"xgboost": {"reds": [3, 4, 7], "blues": [], "info": {"raw_red_preds": [2.6, 4.42, 6.99], "raw_blue_preds": []}}, "mlp": {"reds": [1, 6, 8], "blues": [], "info": {"red_top_probs": [[1, 0.1149], [8, 0.1123], [3, 0.1103]]}}, "traditional": {"热号推荐": {"reds": [1, 2, 5], "blues": []}, "冷号回补": {"reds": [1, 2, 3], "blues": []}, "综合推荐": {"reds": [1, 2, 5], "blues": []}, "随机机选": {"reds": [2, 4, 7], "blues": []}}}}, {"lottery": "plw", "name": "排列5", "schedule": "每日开奖", "provider": "sporttery", "predict_time": "2026-07-19 11:01:41", "latest_issue": "26189", "latest_reds": [0, 5, 5, 6, 9], "latest_blues": [], "history_count": 7664, "predictions": {"xgboost": {"reds": [1, 3, 4, 6, 8], "blues": [], "info": {"raw_red_preds": [1.33, 2.83, 4.47, 5.93, 7.75], "raw_blue_preds": []}}, "mlp": {"reds": [0, 1, 5, 7, 8], "blues": [], "info": {"red_top_probs": [[7, 0.1154], [5, 0.1141], [1, 0.1138], [3, 0.1095], [8, 0.1078]]}}, "traditional": {"热号推荐": {"reds": [1, 2, 4, 5, 7], "blues": []}, "冷号回补": {"reds": [1, 2, 3, 4, 8], "blues": []}, "综合推荐": {"reds": [1, 2, 3, 4, 7], "blues": []}, "随机机选": {"reds": [0, 1, 2, 3, 5], "blues": []}}}}]
+[
+  {
+    "lottery": "ssq",
+    "name": "双色球",
+    "schedule": "每周二、四、日",
+    "provider": "cwl",
+    "predict_time": "2026-07-19 12:34:12",
+    "latest_issue": "2026081",
+    "latest_reds": [
+      6,
+      10,
+      12,
+      15,
+      24,
+      27
+    ],
+    "latest_blues": [
+      12
+    ],
+    "history_count": 4558,
+    "predictions": {
+      "xgboost": {
+        "reds": [
+          5,
+          9,
+          14,
+          18,
+          25,
+          29
+        ],
+        "blues": [
+          9
+        ],
+        "info": {
+          "raw_red_preds": [
+            4.95,
+            9.03,
+            14.03,
+            17.98,
+            24.8,
+            28.7
+          ],
+          "raw_blue_preds": [
+            9.39
+          ]
+        }
+      },
+      "mlp": {
+        "reds": [
+          2,
+          5,
+          25,
+          26,
+          31,
+          33
+        ],
+        "blues": [
+          16
+        ],
+        "info": {
+          "red_top_probs": [
+            [
+              26,
+              0.0463
+            ],
+            [
+              31,
+              0.0438
+            ],
+            [
+              25,
+              0.0431
+            ],
+            [
+              33,
+              0.0429
+            ],
+            [
+              5,
+              0.0403
+            ],
+            [
+              2,
+              0.0373
+            ]
+          ],
+          "blue_top_probs": [
+            [
+              16,
+              0.0996
+            ]
+          ]
+        }
+      },
+      "traditional": {
+        "热号推荐": {
+          "reds": [
+            1,
+            4,
+            8,
+            24,
+            29,
+            30
+          ],
+          "blues": [
+            1
+          ]
+        },
+        "冷号回补": {
+          "reds": [
+            2,
+            9,
+            13,
+            23,
+            31,
+            33
+          ],
+          "blues": [
+            14
+          ]
+        },
+        "综合推荐": {
+          "reds": [
+            1,
+            3,
+            24,
+            29,
+            30,
+            33
+          ],
+          "blues": [
+            2
+          ]
+        },
+        "随机机选": {
+          "reds": [
+            11,
+            13,
+            19,
+            22,
+            23,
+            26
+          ],
+          "blues": [
+            8
+          ]
+        }
+      }
+    }
+  },
+  {
+    "lottery": "dlt",
+    "name": "大乐透",
+    "schedule": "每周一、三、六",
+    "provider": "sporttery",
+    "predict_time": "2026-07-19 12:34:13",
+    "latest_issue": "26080",
+    "latest_reds": [
+      5,
+      10,
+      15,
+      21,
+      23
+    ],
+    "latest_blues": [
+      7,
+      8
+    ],
+    "history_count": 2898,
+    "predictions": {
+      "xgboost": {
+        "reds": [
+          5,
+          10,
+          19,
+          24,
+          31
+        ],
+        "blues": [
+          4,
+          8
+        ],
+        "info": {
+          "raw_red_preds": [
+            4.59,
+            10.39,
+            18.94,
+            23.64,
+            30.61
+          ],
+          "raw_blue_preds": [
+            4.07,
+            8.49
+          ]
+        }
+      },
+      "mlp": {
+        "reds": [
+          1,
+          2,
+          4,
+          29,
+          32
+        ],
+        "blues": [
+          2,
+          9
+        ],
+        "info": {
+          "red_top_probs": [
+            [
+              1,
+              0.0631
+            ],
+            [
+              4,
+              0.0518
+            ],
+            [
+              2,
+              0.0473
+            ],
+            [
+              29,
+              0.0459
+            ],
+            [
+              32,
+              0.0433
+            ]
+          ],
+          "blue_top_probs": [
+            [
+              9,
+              0.1082
+            ],
+            [
+              2,
+              0.1076
+            ]
+          ]
+        }
+      },
+      "traditional": {
+        "热号推荐": {
+          "reds": [
+            6,
+            13,
+            20,
+            21,
+            26
+          ],
+          "blues": [
+            2,
+            11
+          ]
+        },
+        "冷号回补": {
+          "reds": [
+            7,
+            9,
+            17,
+            31,
+            34
+          ],
+          "blues": [
+            3,
+            9
+          ]
+        },
+        "综合推荐": {
+          "reds": [
+            9,
+            12,
+            13,
+            20,
+            26
+          ],
+          "blues": [
+            2,
+            11
+          ]
+        },
+        "随机机选": {
+          "reds": [
+            1,
+            4,
+            8,
+            24,
+            30
+          ],
+          "blues": [
+            1,
+            4
+          ]
+        }
+      }
+    }
+  },
+  {
+    "lottery": "fc3d",
+    "name": "福彩3D",
+    "schedule": "每日开奖",
+    "provider": "cwl",
+    "predict_time": "2026-07-19 12:34:13",
+    "latest_issue": "2026189",
+    "latest_reds": [
+      5,
+      5,
+      8
+    ],
+    "latest_blues": [],
+    "history_count": 4694,
+    "predictions": {
+      "xgboost": {
+        "reds": [
+          2,
+          4,
+          7
+        ],
+        "blues": [],
+        "info": {
+          "raw_red_preds": [
+            1.75,
+            4.06,
+            7.26
+          ],
+          "raw_blue_preds": []
+        }
+      },
+      "mlp": {
+        "reds": [
+          1,
+          4,
+          9
+        ],
+        "blues": [],
+        "info": {
+          "red_top_probs": [
+            [
+              1,
+              0.153
+            ],
+            [
+              4,
+              0.1292
+            ],
+            [
+              8,
+              0.1171
+            ]
+          ]
+        }
+      },
+      "traditional": {
+        "热号推荐": {
+          "reds": [
+            2,
+            3,
+            9
+          ],
+          "blues": []
+        },
+        "冷号回补": {
+          "reds": [
+            1,
+            4,
+            7
+          ],
+          "blues": []
+        },
+        "综合推荐": {
+          "reds": [
+            1,
+            2,
+            9
+          ],
+          "blues": []
+        },
+        "随机机选": {
+          "reds": [
+            1,
+            3,
+            5
+          ],
+          "blues": []
+        }
+      }
+    }
+  },
+  {
+    "lottery": "qlc",
+    "name": "七乐彩",
+    "schedule": "每周一、三、五",
+    "provider": "cwl",
+    "predict_time": "2026-07-19 12:34:13",
+    "latest_issue": "2026081",
+    "latest_reds": [
+      1,
+      6,
+      8,
+      12,
+      18,
+      21,
+      24
+    ],
+    "latest_blues": [
+      23
+    ],
+    "history_count": 2040,
+    "predictions": {
+      "xgboost": {
+        "reds": [
+          4,
+          8,
+          13,
+          15,
+          20,
+          23,
+          27
+        ],
+        "blues": [
+          18
+        ],
+        "info": {
+          "raw_red_preds": [
+            3.51,
+            8.03,
+            12.77,
+            15.28,
+            19.94,
+            22.97,
+            27.2
+          ],
+          "raw_blue_preds": [
+            18.41
+          ]
+        }
+      },
+      "mlp": {
+        "reds": [
+          2,
+          6,
+          8,
+          18,
+          26,
+          27,
+          29
+        ],
+        "blues": [
+          26
+        ],
+        "info": {
+          "red_top_probs": [
+            [
+              2,
+              0.0522
+            ],
+            [
+              29,
+              0.0488
+            ],
+            [
+              8,
+              0.0471
+            ],
+            [
+              6,
+              0.0463
+            ],
+            [
+              18,
+              0.0447
+            ],
+            [
+              27,
+              0.0392
+            ],
+            [
+              26,
+              0.0385
+            ]
+          ],
+          "blue_top_probs": [
+            [
+              26,
+              0.06
+            ]
+          ]
+        }
+      },
+      "traditional": {
+        "热号推荐": {
+          "reds": [
+            7,
+            10,
+            12,
+            14,
+            25,
+            27,
+            30
+          ],
+          "blues": [
+            16
+          ]
+        },
+        "冷号回补": {
+          "reds": [
+            4,
+            9,
+            11,
+            15,
+            16,
+            22,
+            29
+          ],
+          "blues": [
+            15
+          ]
+        },
+        "综合推荐": {
+          "reds": [
+            10,
+            14,
+            15,
+            17,
+            25,
+            27,
+            30
+          ],
+          "blues": [
+            27
+          ]
+        },
+        "随机机选": {
+          "reds": [
+            1,
+            2,
+            6,
+            10,
+            11,
+            23,
+            24
+          ],
+          "blues": [
+            7
+          ]
+        }
+      }
+    }
+  },
+  {
+    "lottery": "qxc",
+    "name": "七星彩",
+    "schedule": "每周二、五、日",
+    "provider": "sporttery",
+    "predict_time": "2026-07-19 12:34:13",
+    "latest_issue": "26081",
+    "latest_reds": [
+      2,
+      3,
+      3,
+      4,
+      5,
+      5,
+      8
+    ],
+    "latest_blues": [],
+    "history_count": 3365,
+    "predictions": {
+      "xgboost": {
+        "reds": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          9
+        ],
+        "blues": [],
+        "info": {
+          "raw_red_preds": [
+            0.52,
+            2.37,
+            3.48,
+            5.17,
+            6.17,
+            6.98,
+            8.79
+          ],
+          "raw_blue_preds": []
+        }
+      },
+      "mlp": {
+        "reds": [
+          0,
+          1,
+          4,
+          3,
+          6,
+          8,
+          9
+        ],
+        "blues": [],
+        "info": {
+          "red_top_probs": [
+            [
+              8,
+              0.1346
+            ],
+            [
+              1,
+              0.1109
+            ],
+            [
+              3,
+              0.1104
+            ],
+            [
+              0,
+              0.1091
+            ],
+            [
+              4,
+              0.1059
+            ],
+            [
+              6,
+              0.093
+            ],
+            [
+              9,
+              0.0919
+            ]
+          ]
+        }
+      },
+      "traditional": {
+        "热号推荐": {
+          "reds": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "blues": []
+        },
+        "冷号回补": {
+          "reds": [
+            0,
+            1,
+            2,
+            3,
+            6,
+            7,
+            9
+          ],
+          "blues": []
+        },
+        "综合推荐": {
+          "reds": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "blues": []
+        },
+        "随机机选": {
+          "reds": [
+            0,
+            1,
+            3,
+            4,
+            6,
+            7,
+            8
+          ],
+          "blues": []
+        }
+      }
+    }
+  },
+  {
+    "lottery": "pls",
+    "name": "排列3",
+    "schedule": "每日开奖",
+    "provider": "sporttery",
+    "predict_time": "2026-07-19 12:34:13",
+    "latest_issue": "26189",
+    "latest_reds": [
+      0,
+      5,
+      9
+    ],
+    "latest_blues": [],
+    "history_count": 7664,
+    "predictions": {
+      "xgboost": {
+        "reds": [
+          3,
+          4,
+          7
+        ],
+        "blues": [],
+        "info": {
+          "raw_red_preds": [
+            2.6,
+            4.42,
+            6.99
+          ],
+          "raw_blue_preds": []
+        }
+      },
+      "mlp": {
+        "reds": [
+          1,
+          6,
+          8
+        ],
+        "blues": [],
+        "info": {
+          "red_top_probs": [
+            [
+              1,
+              0.1149
+            ],
+            [
+              8,
+              0.1123
+            ],
+            [
+              3,
+              0.1103
+            ]
+          ]
+        }
+      },
+      "traditional": {
+        "热号推荐": {
+          "reds": [
+            1,
+            2,
+            5
+          ],
+          "blues": []
+        },
+        "冷号回补": {
+          "reds": [
+            1,
+            2,
+            3
+          ],
+          "blues": []
+        },
+        "综合推荐": {
+          "reds": [
+            1,
+            2,
+            5
+          ],
+          "blues": []
+        },
+        "随机机选": {
+          "reds": [
+            3,
+            8,
+            9
+          ],
+          "blues": []
+        }
+      }
+    }
+  },
+  {
+    "lottery": "plw",
+    "name": "排列5",
+    "schedule": "每日开奖",
+    "provider": "sporttery",
+    "predict_time": "2026-07-19 12:34:13",
+    "latest_issue": "26189",
+    "latest_reds": [
+      0,
+      5,
+      5,
+      6,
+      9
+    ],
+    "latest_blues": [],
+    "history_count": 7664,
+    "predictions": {
+      "xgboost": {
+        "reds": [
+          1,
+          3,
+          4,
+          6,
+          8
+        ],
+        "blues": [],
+        "info": {
+          "raw_red_preds": [
+            1.33,
+            2.83,
+            4.47,
+            5.93,
+            7.75
+          ],
+          "raw_blue_preds": []
+        }
+      },
+      "mlp": {
+        "reds": [
+          0,
+          1,
+          5,
+          7,
+          8
+        ],
+        "blues": [],
+        "info": {
+          "red_top_probs": [
+            [
+              7,
+              0.1154
+            ],
+            [
+              5,
+              0.1141
+            ],
+            [
+              1,
+              0.1138
+            ],
+            [
+              3,
+              0.1095
+            ],
+            [
+              8,
+              0.1078
+            ]
+          ]
+        }
+      },
+      "traditional": {
+        "热号推荐": {
+          "reds": [
+            1,
+            2,
+            4,
+            5,
+            7
+          ],
+          "blues": []
+        },
+        "冷号回补": {
+          "reds": [
+            1,
+            2,
+            3,
+            4,
+            8
+          ],
+          "blues": []
+        },
+        "综合推荐": {
+          "reds": [
+            1,
+            2,
+            3,
+            4,
+            7
+          ],
+          "blues": []
+        },
+        "随机机选": {
+          "reds": [
+            3,
+            4,
+            5,
+            7,
+            8
+          ],
+          "blues": []
+        }
+      }
+    }
+  }
+]

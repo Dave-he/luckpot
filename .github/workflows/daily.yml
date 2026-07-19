@@ -80,11 +80,10 @@ jobs:
           echo "=== 步骤6: 用动态权重融合各算法预测 ==="
           python3 scripts/weighted_predict.py || true
 
-      - name: 历史回测验证 (每周一/四运行, 或手动触发)
-        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && (date -u +%w) == "1" || (date -u +%w) == "4")
+      - name: 历史回测验证
         run: |
           echo "=== 步骤6.5: 历史回测验证 ==="
-          python3 scripts/backtest.py --n 30 || true
+          python3 scripts/backtest.py --n 20 || true
 
       - name: 生成 README
         run: |

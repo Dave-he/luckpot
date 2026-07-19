@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
-预测脚本 - 使用训练好的模型预测下一期号码，输出JSON
+预测脚本 - 使用训练好的所有模型预测下一期号码，输出JSON
+- XGBoost, MLP, Random Forest, Markov, Naive Bayes, Monte Carlo, K-Means, LSTM
+- 传统策略 (热号/冷号/综合/转移概率/随机)
+
 用法: python3 scripts/predict.py
 输出: data/predictions.json
 """
@@ -13,12 +16,35 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lottery.config import LOTTERY_CONFIGS
 from lottery.data import DataLoader
-from lottery.models import XGBoostPredictor, MLPredictor
+from lottery.models import (
+    XGBoostPredictor, MLPredictor,
+    RandomForestPredictor, MarkovPredictor,
+    NaiveBayesPredictor, MonteCarloPredictor,
+    KMeansPredictor, LSTMPredictor,
+)
 from lottery.models.predictor import LotteryPredictor
 
 
 def get_model_dir(config, model_type):
     return os.path.join(os.path.dirname(config["data_file"]), "models", model_type)
+
+
+def predict_with_model(model_name, predictor_cls, config, history):
+    """用单个模型预测 (加载已训练模型)"""
+    try:
+        predictor = predictor_cls(config)
+        model_dir = get_model_dir(config, model_name)
+        if predictor.load(model_dir):
+            reds, blues, info = predictor.predict(history)
+            return {
+                "reds": reds,
+                "blues": blues,
+                "info": info,
+            }
+        else:
+            return {"error": f"模型未训练: {model_name}"}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 def predict_lottery(lottery_key: str, config: dict) -> dict:
@@ -46,58 +72,22 @@ def predict_lottery(lottery_key: str, config: dict) -> dict:
 
     predictions = {}
 
-    # 1. XGBoost预测
-    try:
-        xgb_pred = XGBoostPredictor(config)
-        model_dir = get_model_dir(config, "xgboost")
-        if xgb_pred.load(model_dir):
-            reds, blues, info = xgb_pred.predict(history)
-            predictions["xgboost"] = {
-                "reds": reds,
-                "blues": blues,
-                "info": info,
-            }
-        else:
-            # 模型不存在则现场训练
-            print(f"  [{name}] XGBoost模型不存在，现场训练...")
-            train_result = xgb_pred.train(history)
-            if train_result.get("success"):
-                xgb_pred.save(model_dir)
-                reds, blues, info = xgb_pred.predict(history)
-                predictions["xgboost"] = {
-                    "reds": reds,
-                    "blues": blues,
-                    "metrics": train_result["metrics"],
-                }
-    except Exception as e:
-        predictions["xgboost"] = {"error": str(e)}
+    # 所有机器学习/统计模型
+    ml_models = [
+        ("xgboost", XGBoostPredictor),
+        ("mlp", MLPredictor),
+        ("random_forest", RandomForestPredictor),
+        ("markov", MarkovPredictor),
+        ("naive_bayes", NaiveBayesPredictor),
+        ("monte_carlo", MonteCarloPredictor),
+        ("kmeans", KMeansPredictor),
+        ("lstm", LSTMPredictor),
+    ]
 
-    # 2. MLP预测
-    try:
-        mlp_pred = MLPredictor(config)
-        model_dir = get_model_dir(config, "mlp")
-        if mlp_pred.load(model_dir):
-            reds, blues, info = mlp_pred.predict(history)
-            predictions["mlp"] = {
-                "reds": reds,
-                "blues": blues,
-                "info": info,
-            }
-        else:
-            print(f"  [{name}] MLP模型不存在，现场训练...")
-            train_result = mlp_pred.train(history)
-            if train_result.get("success"):
-                mlp_pred.save(model_dir)
-                reds, blues, info = mlp_pred.predict(history)
-                predictions["mlp"] = {
-                    "reds": reds,
-                    "blues": blues,
-                    "metrics": train_result["metrics"],
-                }
-    except Exception as e:
-        predictions["mlp"] = {"error": str(e)}
+    for model_name, cls in ml_models:
+        predictions[model_name] = predict_with_model(model_name, cls, config, history)
 
-    # 3. 传统策略预测 (热号/冷号/综合/转移概率)
+    # 传统策略预测
     try:
         traditional = LotteryPredictor(config)
         trad_results = traditional.predict_multi_strategy(history)
@@ -120,7 +110,6 @@ def main():
         print(f"\n预测 {config['name']} ({key}) ...")
         pred = predict_lottery(key, config)
 
-        # 打印预测结果
         if "latest_issue" in pred:
             print(f"  最新期: {pred['latest_issue']} 红球={pred['latest_reds']} 蓝球={pred['latest_blues']}")
 

@@ -25,7 +25,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lottery.config import LOTTERY_CONFIGS
 from lottery.data import DataLoader
-from lottery.models import XGBoostPredictor, MLPredictor
+from lottery.models import (
+    XGBoostPredictor, MLPredictor,
+    RandomForestPredictor, MarkovPredictor,
+    NaiveBayesPredictor, MonteCarloPredictor,
+    KMeansPredictor, LSTMPredictor,
+)
 from lottery.models.predictor import LotteryPredictor
 
 WEIGHTS_FILE = os.path.join("data", "algorithm_weights.json")
@@ -51,11 +56,12 @@ def count_hits(predicted, actual, is_repeatable=False):
     return len(set(predicted) & set(actual))
 
 
-def backtest_lottery(lottery_key, config, n_backtests=20):
+def backtest_lottery(lottery_key, config, n_backtests=20, use_slow=True):
     """对单个彩种进行回测
 
     策略: 取最近 n_backtests 期作为验证集，
     每次用之前所有历史数据训练模型并预测，对比实际开奖
+    use_slow: 是否使用慢速模型 (MLP, LSTM)
     """
     name = config["name"]
     loader = DataLoader(config)
@@ -87,10 +93,14 @@ def backtest_lottery(lottery_key, config, n_backtests=20):
 
     print(f"  [{name}] 回测 {n_bt} 期 (从第 {backtest_points[0]} 到 {backtest_points[-1]})...")
 
-    # 为了加速: XGBoost和MLP训练较慢，回测时减少训练频率
-    # 每5期重新训练一次模型
+    # 为了加速: 复杂模型训练较慢，回测时减少训练频率
     xgb_pred = None
     mlp_pred = None
+    rf_pred = None
+    nb_pred = None
+    mc_pred = None
+    km_pred = None
+    lstm_pred = None
     last_train_idx = -100
 
     for idx in backtest_points:
@@ -121,7 +131,7 @@ def backtest_lottery(lottery_key, config, n_backtests=20):
             pass
 
         # 2. MLP (回测时只在前2个回测点用, 太慢)
-        if idx - backtest_points[0] < 2:
+        if use_slow and idx - backtest_points[0] < 2:
             try:
                 mlp_pred = MLPredictor(config)
                 train_result = mlp_pred.train(train_data)
@@ -135,7 +145,101 @@ def backtest_lottery(lottery_key, config, n_backtests=20):
             except Exception as e:
                 pass
 
-        # 3. 传统策略 (快)
+        # 3. Random Forest (sklearn 快)
+        try:
+            if should_retrain or rf_pred is None:
+                rf_pred = RandomForestPredictor(config)
+                train_result = rf_pred.train(train_data)
+                if not train_result.get("success"):
+                    rf_pred = None
+            if rf_pred is not None and rf_pred.is_trained:
+                reds, blues, _ = rf_pred.predict(train_data)
+                if reds:
+                    rh = count_hits(reds, actual_reds, is_repeatable)
+                    bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
+                    _update_stats(algo_stats["random_forest"], rh, len(actual_reds),
+                                  bh, len(actual_blues))
+        except Exception as e:
+            pass
+
+        # 4. Markov (快)
+        try:
+            mk_pred = MarkovPredictor(config)
+            mk_pred.train(train_data)
+            reds, blues, _ = mk_pred.predict(train_data)
+            if reds:
+                rh = count_hits(reds, actual_reds, is_repeatable)
+                bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
+                _update_stats(algo_stats["markov"], rh, len(actual_reds),
+                              bh, len(actual_blues))
+        except Exception as e:
+            pass
+
+        # 5. Naive Bayes (快)
+        try:
+            if should_retrain or nb_pred is None:
+                nb_pred = NaiveBayesPredictor(config)
+                train_result = nb_pred.train(train_data)
+                if not train_result.get("success"):
+                    nb_pred = None
+            if nb_pred is not None and nb_pred.is_trained:
+                reds, blues, _ = nb_pred.predict(train_data)
+                if reds:
+                    rh = count_hits(reds, actual_reds, is_repeatable)
+                    bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
+                    _update_stats(algo_stats["naive_bayes"], rh, len(actual_reds),
+                                  bh, len(actual_blues))
+        except Exception as e:
+            pass
+
+        # 6. Monte Carlo (极快)
+        try:
+            mc_pred = MonteCarloPredictor(config)
+            mc_pred.train(train_data)
+            reds, blues, _ = mc_pred.predict(train_data)
+            if reds:
+                rh = count_hits(reds, actual_reds, is_repeatable)
+                bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
+                _update_stats(algo_stats["monte_carlo"], rh, len(actual_reds),
+                              bh, len(actual_blues))
+        except Exception as e:
+            pass
+
+        # 7. K-Means (快)
+        try:
+            if should_retrain or km_pred is None:
+                km_pred = KMeansPredictor(config)
+                train_result = km_pred.train(train_data)
+                if not train_result.get("success"):
+                    km_pred = None
+            if km_pred is not None and km_pred.is_trained:
+                reds, blues, _ = km_pred.predict(train_data)
+                if reds:
+                    rh = count_hits(reds, actual_reds, is_repeatable)
+                    bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
+                    _update_stats(algo_stats["kmeans"], rh, len(actual_reds),
+                                  bh, len(actual_blues))
+        except Exception as e:
+            pass
+
+        # 8. LSTM (只在前2个回测点用, 太慢)
+        if use_slow and idx - backtest_points[0] < 2:
+            try:
+                lstm_pred = LSTMPredictor(config)
+                lstm_pred.epochs = 15
+                lstm_data = train_data[-300:] if len(train_data) > 300 else train_data
+                train_result = lstm_pred.train(lstm_data)
+                if train_result.get("success"):
+                    reds, blues, _ = lstm_pred.predict(lstm_data)
+                    if reds:
+                        rh = count_hits(reds, actual_reds, is_repeatable)
+                        bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
+                        _update_stats(algo_stats["lstm"], rh, len(actual_reds),
+                                      bh, len(actual_blues))
+            except Exception as e:
+                pass
+
+        # 9. 传统策略 (快)
         try:
             trad = LotteryPredictor(config)
             strategies = trad.predict_multi_strategy(train_data)
@@ -251,22 +355,27 @@ def main():
                         help="回测期数 (默认20)")
     parser.add_argument("--no-merge", action="store_true",
                         help="不与历史权重合并")
+    parser.add_argument("--skip-slow", action="store_true",
+                        help="跳过慢速模型 (MLP/LSTM) 加速回测")
     args = parser.parse_args()
 
     print(f"动态权重更新 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"回测期数: {args.backtest}")
+    print(f"慢速模型 (MLP/LSTM): {'禁用' if args.skip_slow else '启用'}")
 
-    # 加载历史权重
-    history_weights = load_json(WEIGHTS_FILE, default={})
-    if not isinstance(history_weights, dict):
-        history_weights = {}
+    # 加载历史权重 (从 "lotteries" 字段解包)
+    raw_weights = load_json(WEIGHTS_FILE, default={})
+    if not isinstance(raw_weights, dict):
+        raw_weights = {}
+    history_weights = raw_weights.get("lotteries", raw_weights) if raw_weights else {}
 
     # 计算每个彩种的新权重
     new_weights = {}
     for key, config in LOTTERY_CONFIGS.items():
         print(f"\n处理 {config['name']} ({key}) ...")
         t0 = time.time()
-        result = backtest_lottery(key, config, n_backtests=args.backtest)
+        result = backtest_lottery(key, config, n_backtests=args.backtest,
+                                   use_slow=not args.skip_slow)
         if result is None:
             print(f"  数据不足，跳过")
             continue

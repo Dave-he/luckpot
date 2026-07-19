@@ -21,7 +21,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lottery.config import LOTTERY_CONFIGS
 from lottery.data import DataLoader
-from lottery.models import XGBoostPredictor, MLPredictor
+from lottery.models import (
+    XGBoostPredictor, MLPredictor,
+    RandomForestPredictor, MarkovPredictor,
+    NaiveBayesPredictor, MonteCarloPredictor,
+    KMeansPredictor, LSTMPredictor,
+)
 from lottery.models.predictor import LotteryPredictor
 
 WEIGHTS_FILE = os.path.join("data", "algorithm_weights.json")
@@ -40,7 +45,9 @@ def save_json(path, data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def get_algo_red_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None, trad_pred=None):
+def get_algo_red_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None, trad_pred=None,
+                        rf_pred=None, mk_pred=None, nb_pred=None, mc_pred=None, km_pred=None,
+                        lstm_pred=None):
     """获取某算法对每个红球号码的偏好分数 (归一化到0-1)"""
     red_min, red_max = config["red_range"]
     red_count = config["red_count"]
@@ -49,22 +56,66 @@ def get_algo_red_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None
     try:
         if algo_name == "xgboost" and xgb_pred is not None and xgb_pred.is_trained:
             reds, blues, info = xgb_pred.predict(history)
-            # 用原始预测值的接近程度打分
             raw_preds = info.get("raw_red_preds", [])
             for i, pred in enumerate(raw_preds):
                 if i < red_count:
-                    # 对预测值附近的号码给高分
                     center = int(round(pred))
                     for n in range(red_min, red_max + 1):
                         dist = abs(n - center)
-                        # 高斯衰减
                         s = math.exp(-dist * dist / 2)
                         scores[n] = max(scores[n], s)
 
         elif algo_name == "mlp" and mlp_pred is not None and mlp_pred.is_trained:
             reds, blues, info = mlp_pred.predict(history)
             top_probs = info.get("red_top_probs", [])
-            # 用概率直接打分
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if red_min <= n <= red_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+
+        elif algo_name == "random_forest" and rf_pred is not None and rf_pred.is_trained:
+            reds, blues, info = rf_pred.predict(history)
+            top_probs = info.get("red_top_probs", [])
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if red_min <= n <= red_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+
+        elif algo_name == "markov" and mk_pred is not None and mk_pred.is_trained:
+            reds, blues, info = mk_pred.predict(history)
+            top_probs = info.get("red_top_probs", [])
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if red_min <= n <= red_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+
+        elif algo_name == "naive_bayes" and nb_pred is not None and nb_pred.is_trained:
+            reds, blues, info = nb_pred.predict(history)
+            top_probs = info.get("red_top_probs", [])
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if red_min <= n <= red_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+
+        elif algo_name == "monte_carlo" and mc_pred is not None and mc_pred.is_trained:
+            reds, blues, info = mc_pred.predict(history)
+            top_probs = info.get("red_top_probs", [])
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if red_min <= n <= red_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+
+        elif algo_name == "kmeans" and km_pred is not None and km_pred.is_trained:
+            reds, blues, info = km_pred.predict(history)
+            top_probs = info.get("red_top_probs", [])
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if red_min <= n <= red_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+
+        elif algo_name == "lstm" and lstm_pred is not None and lstm_pred.is_trained:
+            reds, blues, info = lstm_pred.predict(history)
+            top_probs = info.get("red_top_probs", [])
             max_p = max((p for _, p in top_probs), default=1)
             for n, p in top_probs:
                 if red_min <= n <= red_max:
@@ -85,7 +136,9 @@ def get_algo_red_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None
     return scores
 
 
-def get_algo_blue_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None, trad_pred=None):
+def get_algo_blue_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None, trad_pred=None,
+                         rf_pred=None, mk_pred=None, nb_pred=None, mc_pred=None, km_pred=None,
+                         lstm_pred=None):
     """获取某算法对每个蓝球号码的偏好分数"""
     blue_min, blue_max = config["blue_range"]
     blue_count = config["blue_count"]
@@ -94,8 +147,18 @@ def get_algo_blue_scores(algo_name, config, history, xgb_pred=None, mlp_pred=Non
 
     scores = {n: 0.0 for n in range(blue_min, blue_max + 1)}
 
+    # xgboost单独处理 (它返回raw_blue_preds而非blue_top_probs)
+    # 其他ML模型都用info["blue_top_probs"]提取分数
+    ml_models = {
+        "mlp": mlp_pred,
+        "random_forest": rf_pred, "markov": mk_pred,
+        "naive_bayes": nb_pred, "monte_carlo": mc_pred,
+        "kmeans": km_pred, "lstm": lstm_pred,
+    }
+
     try:
         if algo_name == "xgboost" and xgb_pred is not None and xgb_pred.is_trained:
+            # xgboost用 raw_blue_preds + 高斯衰减
             reds, blues, info = xgb_pred.predict(history)
             raw_preds = info.get("raw_blue_preds", [])
             for i, pred in enumerate(raw_preds):
@@ -105,15 +168,13 @@ def get_algo_blue_scores(algo_name, config, history, xgb_pred=None, mlp_pred=Non
                         dist = abs(n - center)
                         s = math.exp(-dist * dist / 2)
                         scores[n] = max(scores[n], s)
-
-        elif algo_name == "mlp" and mlp_pred is not None and mlp_pred.is_trained:
-            reds, blues, info = mlp_pred.predict(history)
+        elif algo_name in ml_models and ml_models[algo_name] is not None and ml_models[algo_name].is_trained:
+            reds, blues, info = ml_models[algo_name].predict(history)
             top_probs = info.get("blue_top_probs", [])
             max_p = max((p for _, p in top_probs), default=1)
             for n, p in top_probs:
                 if blue_min <= n <= blue_max:
                     scores[n] = p / max_p if max_p > 0 else 0
-
         elif algo_name.startswith("trad_"):
             if trad_pred is not None:
                 red_scores, blue_scores = trad_pred._score_numbers(history, "combined")
@@ -142,20 +203,34 @@ def weighted_predict_lottery(lottery_key, config, weights_data):
     is_repeatable = (red_max - red_min + 1) <= 10 and red_count >= 3
 
     # 加载训练好的模型 (没有就跳过)
-    xgb_pred = None
-    mlp_pred = None
-    try:
-        xgb_pred = XGBoostPredictor(config)
-        model_dir = os.path.join(os.path.dirname(config["data_file"]), "models", "xgboost")
-        xgb_pred.load(model_dir)
-    except Exception:
-        xgb_pred = None
-    try:
-        mlp_pred = MLPredictor(config)
-        model_dir = os.path.join(os.path.dirname(config["data_file"]), "models", "mlp")
-        mlp_pred.load(model_dir)
-    except Exception:
-        mlp_pred = None
+    loaded_models = {}
+    model_classes = [
+        ("xgboost", XGBoostPredictor),
+        ("mlp", MLPredictor),
+        ("random_forest", RandomForestPredictor),
+        ("markov", MarkovPredictor),
+        ("naive_bayes", NaiveBayesPredictor),
+        ("monte_carlo", MonteCarloPredictor),
+        ("kmeans", KMeansPredictor),
+        ("lstm", LSTMPredictor),
+    ]
+    for mname, cls in model_classes:
+        try:
+            pred = cls(config)
+            model_dir = os.path.join(os.path.dirname(config["data_file"]), "models", mname)
+            if pred.load(model_dir):
+                loaded_models[mname] = pred
+        except Exception:
+            pass
+
+    xgb_pred = loaded_models.get("xgboost")
+    mlp_pred = loaded_models.get("mlp")
+    rf_pred = loaded_models.get("random_forest")
+    mk_pred = loaded_models.get("markov")
+    nb_pred = loaded_models.get("naive_bayes")
+    mc_pred = loaded_models.get("monte_carlo")
+    km_pred = loaded_models.get("kmeans")
+    lstm_pred = loaded_models.get("lstm")
 
     trad_pred = LotteryPredictor(config)
 
@@ -164,11 +239,13 @@ def weighted_predict_lottery(lottery_key, config, weights_data):
     weights = lot_data.get("weights", {})
     if not weights:
         # 默认均等权重
-        algos = ["xgboost", "mlp", "trad_热号推荐", "trad_冷号回补",
-                 "trad_综合推荐", "trad_随机机选"]
+        algos = ["xgboost", "mlp", "random_forest", "markov", "naive_bayes",
+                 "monte_carlo", "kmeans", "lstm",
+                 "trad_热号推荐", "trad_冷号回补", "trad_综合推荐", "trad_随机机选"]
         weights = {a: 1.0 / len(algos) for a in algos}
 
     print(f"  [{name}] 权重: {weights}")
+    print(f"  已加载模型: {list(loaded_models.keys())}")
 
     # 收集每个算法的红球/蓝球分数
     algo_red_scores = {}
@@ -176,8 +253,12 @@ def weighted_predict_lottery(lottery_key, config, weights_data):
     active_algos = []
 
     for algo in weights.keys():
-        rs = get_algo_red_scores(algo, config, history, xgb_pred, mlp_pred, trad_pred)
-        bs = get_algo_blue_scores(algo, config, history, xgb_pred, mlp_pred, trad_pred)
+        rs = get_algo_red_scores(algo, config, history, xgb_pred, mlp_pred, trad_pred,
+                                 rf_pred=rf_pred, mk_pred=mk_pred, nb_pred=nb_pred,
+                                 mc_pred=mc_pred, km_pred=km_pred, lstm_pred=lstm_pred)
+        bs = get_algo_blue_scores(algo, config, history, xgb_pred, mlp_pred, trad_pred,
+                                  rf_pred=rf_pred, mk_pred=mk_pred, nb_pred=nb_pred,
+                                  mc_pred=mc_pred, km_pred=km_pred, lstm_pred=lstm_pred)
         if any(v > 0 for v in rs.values()):
             algo_red_scores[algo] = rs
             algo_blue_scores[algo] = bs

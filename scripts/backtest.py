@@ -7,6 +7,9 @@
 - 统计每个算法 (含 weighted_ensemble) 的命中率
 - 找出最佳算法和是否达到 50% 准确率
 
+支持算法: XGBoost, MLP, RandomForest, Markov, NaiveBayes,
+         MonteCarlo, KMeans, LSTM, 传统策略, weighted_ensemble
+
 用法: python3 scripts/backtest.py [--n N] [--lottery KEY]
 """
 import sys
@@ -22,7 +25,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lottery.config import LOTTERY_CONFIGS
 from lottery.data import DataLoader
-from lottery.models import XGBoostPredictor, MLPredictor
+from lottery.models import (
+    XGBoostPredictor, MLPredictor,
+    RandomForestPredictor, MarkovPredictor,
+    NaiveBayesPredictor, MonteCarloPredictor,
+    KMeansPredictor, LSTMPredictor,
+)
 from lottery.models.predictor import LotteryPredictor
 
 
@@ -32,72 +40,184 @@ def count_hits(predicted, actual, is_repeatable=False):
     return len(set(predicted) & set(actual))
 
 
-def weighted_vote_predict(config, history, xgb_pred, mlp_pred, trad_pred,
-                          weights, last_train_idx):
-    """权重融合预测 - 简化版用于回测"""
+def _model_red_scores(model, config, history):
+    """从模型预测结果提取红球分数 (归一化0-1)"""
+    red_min, red_max = config["red_range"]
+    scores = {n: 0.0 for n in range(red_min, red_max + 1)}
+    try:
+        reds, blues, info = model.predict(history)
+        # 优先使用 red_top_probs
+        top_probs = info.get("red_top_probs", []) if isinstance(info, dict) else []
+        if top_probs:
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if red_min <= n <= red_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+        else:
+            # 回退: 用预测的红球号码给满分
+            for n in reds:
+                if red_min <= n <= red_max:
+                    scores[n] = 1.0
+    except Exception:
+        pass
+    return scores
+
+
+def _model_blue_scores(model, config, history):
+    """从模型预测结果提取蓝球分数"""
+    blue_count = config["blue_count"]
+    if blue_count == 0:
+        return {}
+    blue_min, blue_max = config["blue_range"]
+    scores = {n: 0.0 for n in range(blue_min, blue_max + 1)}
+    try:
+        reds, blues, info = model.predict(history)
+        top_probs = info.get("blue_top_probs", []) if isinstance(info, dict) else []
+        if top_probs:
+            max_p = max((p for _, p in top_probs), default=1)
+            for n, p in top_probs:
+                if blue_min <= n <= blue_max:
+                    scores[n] = p / max_p if max_p > 0 else 0
+        else:
+            for n in blues:
+                if blue_min <= n <= blue_max:
+                    scores[n] = 1.0
+    except Exception:
+        pass
+    return scores
+
+
+def _xgb_red_scores(xgb_pred, config, history):
+    """XGBoost 专用: 用 raw_red_preds 高斯衰减"""
+    red_min, red_max = config["red_range"]
+    red_count = config["red_count"]
+    scores = {n: 0.0 for n in range(red_min, red_max + 1)}
+    try:
+        reds, blues, info = xgb_pred.predict(history)
+        raw_preds = info.get("raw_red_preds", [])
+        for i, pred in enumerate(raw_preds):
+            if i < red_count:
+                center = int(round(pred))
+                for n in range(red_min, red_max + 1):
+                    dist = abs(n - center)
+                    s = math.exp(-dist * dist / 2)
+                    scores[n] = max(scores[n], s)
+    except Exception:
+        pass
+    return scores
+
+
+def _xgb_blue_scores(xgb_pred, config, history):
+    """XGBoost 专用: 用 raw_blue_preds 高斯衰减"""
+    blue_count = config["blue_count"]
+    if blue_count == 0:
+        return {}
+    blue_min, blue_max = config["blue_range"]
+    scores = {n: 0.0 for n in range(blue_min, blue_max + 1)}
+    try:
+        reds, blues, info = xgb_pred.predict(history)
+        raw_preds = info.get("raw_blue_preds", [])
+        for i, pred in enumerate(raw_preds):
+            if i < blue_count:
+                center = int(round(pred))
+                for n in range(blue_min, blue_max + 1):
+                    dist = abs(n - center)
+                    s = math.exp(-dist * dist / 2)
+                    scores[n] = max(scores[n], s)
+    except Exception:
+        pass
+    return scores
+
+
+def _trad_scores(trad_pred, config, history):
+    """传统策略的分数"""
+    red_min, red_max = config["red_range"]
+    blue_count = config["blue_count"]
+    try:
+        red_scores, blue_scores = trad_pred._score_numbers(history, "combined")
+        if red_scores:
+            max_s = max(red_scores.values()) or 1
+            red_norm = {n: red_scores.get(n, 0) / max_s for n in range(red_min, red_max + 1)}
+        else:
+            red_norm = {}
+        blue_norm = {}
+        if blue_count > 0 and blue_scores:
+            blue_min, blue_max = config["blue_range"]
+            max_s = max(blue_scores.values()) or 1
+            blue_norm = {n: blue_scores.get(n, 0) / max_s for n in range(blue_min, blue_max + 1)}
+        return red_norm, blue_norm
+    except Exception:
+        return {}, {}
+
+
+def weighted_vote_predict(config, history, models, trad_pred, weights):
+    """权重融合预测 - 用所有算法投票
+
+    models: dict of {algo_name: model_instance_or_None}
+    weights: dict of {algo_name: weight}
+    """
     red_min, red_max = config["red_range"]
     red_count = config["red_count"]
     blue_count = config["blue_count"]
     is_repeatable = (red_max - red_min + 1) <= 10 and red_count >= 3
 
-    # 收集每个算法对每个号码的分数
     final_red = defaultdict(float)
     final_blue = defaultdict(float)
     active_algos = []
 
-    # XGBoost
-    if xgb_pred is not None and xgb_pred.is_trained:
-        try:
-            reds, blues, info = xgb_pred.predict(history)
-            raw_preds = info.get("raw_red_preds", [])
-            for i, pred in enumerate(raw_preds):
-                if i < red_count:
-                    center = int(round(pred))
-                    for n in range(red_min, red_max + 1):
-                        dist = abs(n - center)
-                        s = math.exp(-dist * dist / 2)
-                        final_red[n] += weights.get("xgboost", 0) * s
+    # XGBoost (特殊处理)
+    xgb = models.get("xgboost")
+    if xgb is not None and xgb.is_trained:
+        w = weights.get("xgboost", 0)
+        rs = _xgb_red_scores(xgb, config, history)
+        for n, s in rs.items():
+            final_red[n] += w * s
+        bs = _xgb_blue_scores(xgb, config, history)
+        for n, s in bs.items():
+            final_blue[n] += w * s
+        if any(v > 0 for v in rs.values()):
             active_algos.append("xgboost")
-        except Exception:
-            pass
 
-    # MLP
-    if mlp_pred is not None and mlp_pred.is_trained:
-        try:
-            reds, blues, info = mlp_pred.predict(history)
-            top_probs = info.get("red_top_probs", [])
-            max_p = max((p for _, p in top_probs), default=1)
-            for n, p in top_probs:
-                if red_min <= n <= red_max:
-                    final_red[n] += weights.get("mlp", 0) * (p / max_p if max_p > 0 else 0)
-            active_algos.append("mlp")
-        except Exception:
-            pass
+    # 其他 ML 模型
+    other_models = ["mlp", "random_forest", "markov", "naive_bayes",
+                    "monte_carlo", "kmeans", "lstm"]
+    for mname in other_models:
+        m = models.get(mname)
+        if m is not None and m.is_trained:
+            w = weights.get(mname, 0)
+            rs = _model_red_scores(m, config, history)
+            for n, s in rs.items():
+                final_red[n] += w * s
+            bs = _model_blue_scores(m, config, history)
+            for n, s in bs.items():
+                final_blue[n] += w * s
+            if any(v > 0 for v in rs.values()):
+                active_algos.append(mname)
 
-    # 传统策略 - 综合推荐
+    # 传统策略
     if trad_pred is not None:
-        try:
-            red_scores, blue_scores = trad_pred._score_numbers(history, "combined")
-            if red_scores:
-                max_s = max(red_scores.values()) or 1
-                for n, s in red_scores.items():
-                    final_red[n] += weights.get("trad_综合推荐", 0) * (s / max_s)
-            active_algos.append("trad_综合推荐")
-        except Exception:
-            pass
+        w = weights.get("trad_综合推荐", 0)
+        if w > 0:
+            red_norm, blue_norm = _trad_scores(trad_pred, config, history)
+            for n, s in red_norm.items():
+                final_red[n] += w * s
+            for n, s in blue_norm.items():
+                final_blue[n] += w * s
+            if red_norm:
+                active_algos.append("trad_综合推荐")
 
     if not active_algos:
         return [], []
 
-    # 归一化权重
     total_w = sum(weights.get(a, 0) for a in active_algos)
     if total_w == 0:
         return [], []
 
     # 选号
     if is_repeatable:
-        if xgb_pred is not None and xgb_pred.is_trained:
-            reds, _, _ = xgb_pred.predict(history)
+        # 可重复: 优先用 XGBoost 按位置预测
+        if xgb is not None and xgb.is_trained:
+            reds, _, _ = xgb.predict(history)
             if len(reds) == red_count:
                 return reds, []
         sorted_reds = sorted(final_red.items(), key=lambda x: -x[1])
@@ -107,16 +227,18 @@ def weighted_vote_predict(config, history, xgb_pred, mlp_pred, trad_pred,
         reds = sorted([n for n, _ in sorted_reds[:red_count]])
 
     blues = []
-    if blue_count > 0:
-        blue_min, blue_max = config["blue_range"]
+    if blue_count > 0 and final_blue:
         sorted_blues = sorted(final_blue.items(), key=lambda x: -x[1])
         blues = sorted([n for n, _ in sorted_blues[:blue_count]])
 
     return reds, blues
 
 
-def backtest_lottery(lottery_key, config, n_backtests, use_mlp=False):
-    """回测单个彩种"""
+def backtest_lottery(lottery_key, config, n_backtests, use_slow=True):
+    """回测单个彩种
+
+    use_slow: 是否使用慢速模型 (MLP, LSTM)
+    """
     name = config["name"]
     loader = DataLoader(config)
     history = loader.load_history()
@@ -140,14 +262,19 @@ def backtest_lottery(lottery_key, config, n_backtests, use_mlp=False):
         "count": 0,
     })
 
-    print(f"\n  [{name}] 回测 {n_bt} 期...")
+    print(f"\n  [{name}] 回测 {n_bt} 期 (is_repeatable={is_repeatable})...")
 
-    xgb_pred = None
-    mlp_pred = None
+    # 持久化模型 (每5期重训一次)
+    cached_models = {}  # {algo_name: model}
     last_train_idx = -100
-    # 训练时计算的权重 (回测期间用同一个)
+
+    # 默认权重 (均等)
     backtest_weights = {
-        "xgboost": 0.25, "mlp": 0.25, "trad_综合推荐": 0.5
+        "xgboost": 0.15, "mlp": 0.10,
+        "random_forest": 0.15, "markov": 0.10,
+        "naive_bayes": 0.10, "monte_carlo": 0.10,
+        "kmeans": 0.10, "lstm": 0.10,
+        "trad_综合推荐": 0.10,
     }
 
     for i, idx in enumerate(backtest_points):
@@ -156,56 +283,99 @@ def backtest_lottery(lottery_key, config, n_backtests, use_mlp=False):
         actual_reds = actual["reds"]
         actual_blues = actual["blues"]
 
-        # 每5期重新训练一次
         should_retrain = (idx - last_train_idx) >= 5
 
+        # --- 训练各模型 ---
+        # 快速模型 (每5期重训)
         if should_retrain:
+            # XGBoost
             try:
-                xgb_pred = XGBoostPredictor(config)
-                r = xgb_pred.train(train_data)
-                if not r.get("success"):
-                    xgb_pred = None
+                m = XGBoostPredictor(config)
+                r = m.train(train_data)
+                cached_models["xgboost"] = m if r.get("success") else None
             except Exception:
-                xgb_pred = None
+                cached_models["xgboost"] = None
+
+            # Random Forest
+            try:
+                m = RandomForestPredictor(config)
+                r = m.train(train_data)
+                cached_models["random_forest"] = m if r.get("success") else None
+            except Exception:
+                cached_models["random_forest"] = None
+
+            # Naive Bayes
+            try:
+                m = NaiveBayesPredictor(config)
+                r = m.train(train_data)
+                cached_models["naive_bayes"] = m if r.get("success") else None
+            except Exception:
+                cached_models["naive_bayes"] = None
+
+            # KMeans
+            try:
+                m = KMeansPredictor(config)
+                r = m.train(train_data)
+                cached_models["kmeans"] = m if r.get("success") else None
+            except Exception:
+                cached_models["kmeans"] = None
+
             last_train_idx = idx
 
-        # MLP只在前3个回测点用 (太慢)
-        if use_mlp and i < 3:
+        # Markov & Monte Carlo (每期都重训, 极快)
+        try:
+            m = MarkovPredictor(config)
+            m.train(train_data)
+            cached_models["markov"] = m
+        except Exception:
+            cached_models["markov"] = None
+
+        try:
+            m = MonteCarloPredictor(config)
+            m.train(train_data)
+            cached_models["monte_carlo"] = m
+        except Exception:
+            cached_models["monte_carlo"] = None
+
+        # MLP & LSTM (慢, 仅前3期用)
+        if use_slow and i < 3:
             try:
-                mlp_pred = MLPredictor(config)
-                r = mlp_pred.train(train_data)
-                if not r.get("success"):
-                    mlp_pred = None
+                m = MLPredictor(config)
+                r = m.train(train_data)
+                cached_models["mlp"] = m if r.get("success") else None
             except Exception:
-                mlp_pred = None
+                cached_models["mlp"] = None
+
+            try:
+                m = LSTMPredictor(config)
+                m.epochs = 15
+                lstm_data = train_data[-300:] if len(train_data) > 300 else train_data
+                r = m.train(lstm_data)
+                cached_models["lstm"] = m if r.get("success") else None
+            except Exception:
+                cached_models["lstm"] = None
         elif i >= 3:
-            mlp_pred = None
+            cached_models["mlp"] = None
+            cached_models["lstm"] = None
 
         trad_pred = LotteryPredictor(config)
 
-        # 1. XGBoost
-        if xgb_pred is not None and xgb_pred.is_trained:
+        # --- 评估每个算法 ---
+        for algo_name in ["xgboost", "mlp", "random_forest", "markov",
+                          "naive_bayes", "monte_carlo", "kmeans", "lstm"]:
+            m = cached_models.get(algo_name)
+            if m is None or not m.is_trained:
+                continue
             try:
-                reds, blues, _ = xgb_pred.predict(train_data)
+                reds, blues, _ = m.predict(train_data)
                 if reds:
                     rh = count_hits(reds, actual_reds, is_repeatable)
                     bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
-                    _update(algo_stats["xgboost"], rh, len(actual_reds), bh, len(actual_blues))
+                    _update(algo_stats[algo_name], rh, len(actual_reds), bh, len(actual_blues))
             except Exception:
                 pass
 
-        # 2. MLP
-        if mlp_pred is not None and mlp_pred.is_trained:
-            try:
-                reds, blues, _ = mlp_pred.predict(train_data)
-                if reds:
-                    rh = count_hits(reds, actual_reds, is_repeatable)
-                    bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
-                    _update(algo_stats["mlp"], rh, len(actual_reds), bh, len(actual_blues))
-            except Exception:
-                pass
-
-        # 3. 传统策略
+        # 传统策略
         try:
             strategies = trad_pred.predict_multi_strategy(train_data)
             for sname, (reds, blues) in strategies.items():
@@ -215,10 +385,11 @@ def backtest_lottery(lottery_key, config, n_backtests, use_mlp=False):
         except Exception:
             pass
 
-        # 4. 权重融合
+        # 权重融合
         try:
-            reds, blues = weighted_vote_predict(config, train_data, xgb_pred, mlp_pred,
-                                                trad_pred, backtest_weights, idx)
+            reds, blues = weighted_vote_predict(
+                config, train_data, cached_models, trad_pred, backtest_weights
+            )
             if reds:
                 rh = count_hits(reds, actual_reds, is_repeatable)
                 bh = count_hits(blues, actual_blues, False) if blues and blue_count > 0 else 0
@@ -276,13 +447,10 @@ def _update(stats, rh, rt, bh, bt):
         stats["full_blue"] += 1
     if rh == rt and (bt == 0 or bh == bt):
         stats["full_match"] += 1
-    # 新指标: 至少命中1个红球
     if rh >= 1:
         stats["at_least_1_red"] += 1
-    # 至少命中2个红球
     if rh >= 2:
         stats["at_least_2_red"] += 1
-    # 至少命中1个蓝球
     if bh >= 1:
         stats["at_least_1_blue"] += 1
 
@@ -291,18 +459,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--n", type=int, default=50, help="回测期数")
     parser.add_argument("--lottery", type=str, default="", help="只回测某个彩种")
-    parser.add_argument("--use-mlp", action="store_true", help="回测MLP (慢)")
+    parser.add_argument("--no-slow", action="store_true", help="跳过慢速模型 (MLP/LSTM)")
     args = parser.parse_args()
 
     print(f"回测验证 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"回测期数: {args.n}")
+    print(f"慢速模型 (MLP/LSTM): {'禁用' if args.no_slow else '启用'}")
 
     all_results = []
     for key, config in LOTTERY_CONFIGS.items():
         if args.lottery and key != args.lottery:
             continue
         t0 = time.time()
-        r = backtest_lottery(key, config, args.n, use_mlp=args.use_mlp)
+        r = backtest_lottery(key, config, args.n, use_slow=not args.no_slow)
         if r:
             elapsed = time.time() - t0
             print(f"  完成 ({elapsed:.1f}s)")
@@ -324,7 +493,6 @@ def main():
             at_least_1 = f"{s['at_least_1_red_rate']*100:.1f}% ({s['at_least_1_red']}/{s['count']})"
             at_least_2 = f"{s['at_least_2_red_rate']*100:.1f}% ({s['at_least_2_red']}/{s['count']})"
             full = f"{s['full_match']}/{s['count']}"
-            # 达标条件: "至少命中1个红球" 比例 >= 50%
             reached = "✓" if s["at_least_1_red_rate"] >= 0.5 else ""
             if reached:
                 reached_50.append((name, algo, s["at_least_1_red_rate"], s["count"], "at_least_1_red"))

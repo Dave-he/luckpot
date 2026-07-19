@@ -50,25 +50,34 @@ def build_prediction_table(pred):
     rows.append("| 模型 / 策略 | 红球预测 | 蓝球预测 | 备注 |")
     rows.append("| --- | --- | --- | --- |")
 
-    # XGBoost
-    xgb = predictions.get("xgboost", {})
-    if "reds" in xgb:
-        info = xgb.get("info", {})
-        raw_reds = info.get("raw_red_preds", [])
-        note = f"原始预测: {raw_reds}" if raw_reds else ""
-        rows.append(f"| XGBoost | `{fmt_reds(xgb['reds'])}` | `{fmt_blues(xgb.get('blues', []))}` | {note} |")
-    elif "error" in xgb:
-        rows.append(f"| XGBoost | - | - | 错误: {xgb['error']} |")
+    # 通用 ML 模型行渲染
+    ml_model_meta = [
+        ("xgboost", "XGBoost回归", "raw_red_preds"),
+        ("mlp", "MLP神经网络", "red_top_probs"),
+        ("random_forest", "随机森林", "red_top_probs"),
+        ("markov", "马尔可夫链", "red_top_probs"),
+        ("naive_bayes", "朴素贝叶斯", "red_top_probs"),
+        ("monte_carlo", "蒙特卡洛模拟", "red_top_probs"),
+        ("kmeans", "K-Means聚类", "red_top_probs"),
+        ("lstm", "LSTM时序网络", "red_top_probs"),
+    ]
 
-    # MLP
-    mlp = predictions.get("mlp", {})
-    if "reds" in mlp:
-        info = mlp.get("info", {})
-        top_probs = info.get("red_top_probs", [])[:5]
-        note = "Top5: " + ", ".join(f"{n}({p})" for n, p in top_probs) if top_probs else ""
-        rows.append(f"| MLP神经网络 | `{fmt_reds(mlp['reds'])}` | `{fmt_blues(mlp.get('blues', []))}` | {note} |")
-    elif "error" in mlp:
-        rows.append(f"| MLP神经网络 | - | - | 错误: {mlp['error']} |")
+    for mkey, mlabel, info_field in ml_model_meta:
+        m = predictions.get(mkey, {})
+        if "reds" in m:
+            info = m.get("info", {})
+            note = ""
+            if info_field == "raw_red_preds":
+                raw = info.get("raw_red_preds", [])
+                if raw:
+                    note = f"原始预测: {raw}"
+            else:
+                top_probs = info.get("red_top_probs", [])[:5]
+                if top_probs:
+                    note = "Top5: " + ", ".join(f"{n}({p})" for n, p in top_probs)
+            rows.append(f"| {mlabel} | `{fmt_reds(m['reds'])}` | `{fmt_blues(m.get('blues', []))}` | {note} |")
+        elif "error" in m:
+            rows.append(f"| {mlabel} | - | - | 错误: {m['error']} |")
 
     # 传统策略
     trad = predictions.get("traditional", {})
@@ -97,17 +106,22 @@ def build_training_section(report):
     rows = []
     rows.append("## 模型训练状态")
     rows.append("")
-    rows.append("| 彩种 | 历史期数 | XGBoost | MLP | XGBoost指标 | MLP准确率 |")
-    rows.append("| --- | --- | --- | --- | --- | --- |")
+    rows.append("| 彩种 | 历史期数 | XGBoost | MLP | RandomForest | Markov | NaiveBayes | MonteCarlo | KMeans | LSTM | XGBoost指标 | MLP准确率 |")
+    rows.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+
+    model_keys = ["xgboost", "mlp", "random_forest", "markov",
+                  "naive_bayes", "monte_carlo", "kmeans", "lstm"]
 
     for item in report:
         name = item.get("name", item.get("lottery", "-"))
         history_count = item.get("history_count", "-")
-        xgb = item.get("models", {}).get("xgboost", {})
-        mlp = item.get("models", {}).get("mlp", {})
-        xgb_status = "✓" if xgb.get("success") else "✗"
-        mlp_status = "✓" if mlp.get("success") else "✗"
+        models = item.get("models", {})
 
+        statuses = []
+        for mk in model_keys:
+            statuses.append("✓" if models.get(mk, {}).get("success") else "✗")
+
+        xgb = models.get("xgboost", {})
         xgb_metrics = xgb.get("metrics", {})
         xgb_note = ""
         if xgb_metrics:
@@ -115,6 +129,7 @@ def build_training_section(report):
             if "blue_mae" in xgb_metrics:
                 xgb_note += f", 蓝球MAE={xgb_metrics['blue_mae']}"
 
+        mlp = models.get("mlp", {})
         mlp_metrics = mlp.get("metrics", {})
         mlp_note = ""
         if mlp_metrics:
@@ -122,7 +137,8 @@ def build_training_section(report):
             if "blue_acc_mean" in mlp_metrics:
                 mlp_note += f", 蓝球acc={mlp_metrics['blue_acc_mean']}"
 
-        rows.append(f"| {name} | {history_count} | {xgb_status} | {mlp_status} | {xgb_note} | {mlp_note} |")
+        rows.append(f"| {name} | {history_count} | " + " | ".join(statuses) +
+                    f" | {xgb_note} | {mlp_note} |")
 
     rows.append("")
     return "\n".join(rows)
@@ -285,8 +301,8 @@ def build_weights_section(weights_data):
     # 权重详情
     rows.append("### 权重详情")
     rows.append("")
-    rows.append("| 彩种 | XGBoost | MLP | 热号 | 冷号 | 综合 | 随机 |")
-    rows.append("| --- | --- | --- | --- | --- | --- | --- |")
+    rows.append("| 彩种 | XGBoost | MLP | RF | Markov | NB | MC | KMeans | LSTM | 热号 | 冷号 | 综合 | 随机 |")
+    rows.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
 
     for key, data in weights_data["lotteries"].items():
         name = data.get("name", key)
@@ -297,6 +313,8 @@ def build_weights_section(weights_data):
             return f"{v:.3f}" if v > 0 else "-"
 
         rows.append(f"| {name} | {fmt('xgboost')} | {fmt('mlp')} | "
+                    f"{fmt('random_forest')} | {fmt('markov')} | {fmt('naive_bayes')} | "
+                    f"{fmt('monte_carlo')} | {fmt('kmeans')} | {fmt('lstm')} | "
                     f"{fmt('trad_热号推荐')} | {fmt('trad_冷号回补')} | "
                     f"{fmt('trad_综合推荐')} | {fmt('trad_随机机选')} |")
 
@@ -468,7 +486,8 @@ def main():
     # 模型文件统计
     model_stats = []
     for key in ["ssq", "dlt", "fc3d", "qlc", "qxc", "pls", "plw"]:
-        for mtype in ["xgboost", "mlp"]:
+        for mtype in ["xgboost", "mlp", "random_forest", "markov",
+                      "naive_bayes", "monte_carlo", "kmeans", "lstm"]:
             path = f"data/{key}/models/{mtype}/"
             if os.path.exists(path):
                 files = os.listdir(path)
@@ -479,7 +498,7 @@ def main():
     # 标题
     sections.append("# 彩票号码预测系统")
     sections.append("")
-    sections.append("> 基于历史数据 + XGBoost + 神经网络(MLP) + 传统统计策略的彩票号码预测系统")
+    sections.append("> 基于历史数据 + 8种机器学习算法 + 传统统计策略 + 动态权重融合的彩票号码预测系统")
     sections.append("")
     sections.append("[![每日预测](https://github.com/Dave-he/luckpot/actions/workflows/daily.yml/badge.svg)](https://github.com/Dave-he/luckpot/actions/workflows/daily.yml)")
     sections.append("")
@@ -574,11 +593,47 @@ def main():
     sections.append("- 输出: 每个号码位置的概率分布")
     sections.append("- 不依赖 tensorflow/pytorch，部署轻量")
     sections.append("")
-    sections.append("### 3. 传统统计策略")
+    sections.append("### 3. 随机森林 (Random Forest)")
+    sections.append("- 对每个号码位置训练一个 RandomForestClassifier (80棵树)")
+    sections.append("- 特征: 历史 15 期 + 频率 + 和值/跨度")
+    sections.append("- class_weight='balanced' 处理类别不平衡")
+    sections.append("")
+    sections.append("### 4. 马尔可夫链 (Markov Chain)")
+    sections.append("- 每个号码位置一个状态转移矩阵")
+    sections.append("- 1阶 + 2阶马尔可夫混合 (0.7×1阶 + 0.3×2阶)")
+    sections.append("- Laplace 平滑避免零概率")
+    sections.append("")
+    sections.append("### 5. 朴素贝叶斯 (Naive Bayes)")
+    sections.append("- 对每个号码训练一个 MultinomialNB 二分类器")
+    sections.append("- 特征: 历史 10 期出现情况")
+    sections.append("- 输出: 每个号码的出现概率")
+    sections.append("")
+    sections.append("### 6. 蒙特卡洛模拟 (Monte Carlo)")
+    sections.append("- 基于近 50 期频率分布构建概率模型")
+    sections.append("- 5000 次模拟采样 (可重复/不可重复两种模式)")
+    sections.append("- 取模拟中出现频率最高的号码")
+    sections.append("")
+    sections.append("### 7. K-Means 聚类")
+    sections.append("- 对历史期号进行 one-hot 聚类 (8 个簇)")
+    sections.append("- 找到最近一期所属簇")
+    sections.append("- 用该簇内号码频率分布预测")
+    sections.append("")
+    sections.append("### 8. LSTM 时序网络 (纯 numpy 实现)")
+    sections.append("- 完整 LSTM 单元: 输入门/遗忘门/输出门")
+    sections.append("- seq_len=10, hidden_size=32, epochs=15-20")
+    sections.append("- 梯度裁剪 + Adam 优化器")
+    sections.append("- 不依赖 tensorflow/pytorch")
+    sections.append("")
+    sections.append("### 9. 传统统计策略")
     sections.append("- **热号推荐**: 基于最近 30 期号码频率")
     sections.append("- **冷号回补**: 基于号码遗漏值")
     sections.append("- **综合推荐**: 频率 + 遗漏 + 转移概率综合打分")
     sections.append("- **随机机选**: 加权随机采样(参考综合评分)")
+    sections.append("")
+    sections.append("### 10. Stacking 元学习器")
+    sections.append("- LogisticRegression 元学习器组合所有基础模型")
+    sections.append("- 元特征: 每个基础模型对每个号码的概率")
+    sections.append("- class_weight='balanced'")
     sections.append("")
 
     # 项目结构
@@ -590,10 +645,17 @@ def main():
     sections.append("├── spiders/              # 数据爬虫 (cwl/sporttery/data500)")
     sections.append("├── data/                 # 数据加载与处理")
     sections.append("├── analysis/             # 频率/统计分析")
-    sections.append("└── models/               # 预测模型")
+    sections.append("└── models/               # 预测模型 (8种ML算法+传统策略)")
     sections.append("    ├── predictor.py      # 传统策略预测器")
     sections.append("    ├── xgboost_model.py   # XGBoost 模型")
-    sections.append("    └── mlp_model.py       # MLP 神经网络模型")
+    sections.append("    ├── mlp_model.py       # MLP 神经网络 (纯numpy)")
+    sections.append("    ├── random_forest_model.py # 随机森林")
+    sections.append("    ├── markov_model.py    # 马尔可夫链")
+    sections.append("    ├── naive_bayes_model.py # 朴素贝叶斯")
+    sections.append("    ├── monte_carlo_model.py # 蒙特卡洛模拟")
+    sections.append("    ├── kmeans_model.py    # K-Means 聚类")
+    sections.append("    ├── lstm_model.py      # LSTM 时序网络 (纯numpy)")
+    sections.append("    └── stacking_model.py  # Stacking 元学习器")
     sections.append("scripts/")
     sections.append("├── update_data.py        # 数据抓取脚本")
     sections.append("├── train_models.py       # 模型训练脚本")
@@ -663,8 +725,17 @@ def main():
     sections.append("# 权重融合预测 (综合所有算法)")
     sections.append("python3 scripts/weighted_predict.py")
     sections.append("")
-    sections.append("# 历史回测验证")
+    sections.append("# 历史回测验证 (启用所有算法)")
     sections.append("python3 scripts/backtest.py --n 30")
+    sections.append("")
+    sections.append("# 历史回测验证 (跳过慢速模型加速)")
+    sections.append("python3 scripts/backtest.py --n 30 --no-slow")
+    sections.append("")
+    sections.append("# 更新动态权重 (启用所有算法, 慢)")
+    sections.append("python3 scripts/update_weights.py --backtest 20")
+    sections.append("")
+    sections.append("# 更新动态权重 (跳过慢速模型, 快)")
+    sections.append("python3 scripts/update_weights.py --backtest 20 --skip-slow")
     sections.append("")
     sections.append("# 生成 README")
     sections.append("python3 scripts/generate_readme.py")

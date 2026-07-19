@@ -4,18 +4,12 @@ on:
   schedule:
     # 每天 UTC 00:00 = 北京时间 08:00
     - cron: '0 0 * * *'
-  workflow_dispatch:  # 支持手动触发
+  workflow_dispatch:
   push:
     branches:
       - main
       - master
-    paths:
-      - 'lottery/**'
-      - 'scripts/**'
-      - 'requirements.txt'
-      - '.github/workflows/daily.yml'
 
-# 同一时刻只允许一个工作流运行
 concurrency:
   group: daily-lottery
   cancel-in-progress: false
@@ -62,7 +56,7 @@ jobs:
 
       - name: 检查上次预测命中情况
         run: |
-          echo "=== 步骤3: 检查上次预测是否命中 (在新预测生成前) ==="
+          echo "=== 步骤3: 检查上次预测是否命中 ==="
           python3 scripts/check_hits.py || true
 
       - name: 更新动态算法权重
@@ -97,17 +91,10 @@ jobs:
           if git diff --staged --quiet; then
             echo "无变更，跳过提交"
           else
-            git commit -m "chore: 每日数据更新+预测+权重更新 $(date -u '+%Y-%m-%d %H:%M:%S UTC')
-
-            - 更新历史数据 CSV
-            - 重新训练 XGBoost + MLP 模型
-            - 检查上次预测命中情况 (永久记录)
-            - 更新动态算法权重 (EMA平滑)
-            - 生成下一期预测+权重融合预测
-            - 更新 README"
+            git commit -m "chore: 每日数据更新+预测+权重更新 $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             git pull --rebase origin ${{ github.ref_name }} || true
             git push
-            echo "✓ 已推送到 GitHub"
+            echo "已推送到 GitHub"
           fi
 
       - name: 工作流总结
@@ -118,24 +105,15 @@ jobs:
           echo ""
           echo "权重文件:"
           if [ -f data/algorithm_weights.json ]; then
-            echo "  ✓ data/algorithm_weights.json"
-            python3 -c "
-import json
-with open('data/algorithm_weights.json') as f:
-    d = json.load(f)
-for k, v in d.get('lotteries', {}).items():
-    w = v.get('weights', {})
-    top = max(w.items(), key=lambda x: x[1]) if w else ('-', 0)
-    print(f'  {v.get(\"name\",k)}: Top={top[0]}({top[1]:.3f})')
-" 2>/dev/null || true
+            echo "  ok data/algorithm_weights.json"
           fi
           echo ""
           echo "权重融合预测:"
           if [ -f data/weighted_predictions.json ]; then
-            echo "  ✓ data/weighted_predictions.json"
+            echo "  ok data/weighted_predictions.json"
           fi
           echo ""
           echo "命中记录:"
           if [ -f data/prediction_hits.json ]; then
-            echo "  ✓ data/prediction_hits.json ($(python3 -c 'import json;print(len(json.load(open("data/prediction_hits.json"))))' 2>/dev/null || echo 0) 条)"
+            echo "  ok data/prediction_hits.json"
           fi

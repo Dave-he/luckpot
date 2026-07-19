@@ -1,0 +1,236 @@
+[
+  {
+    "lottery": "ssq",
+    "name": "双色球",
+    "history_count": 4558,
+    "latest_issue": "2026081",
+    "models": {
+      "xgboost": {
+        "success": true,
+        "elapsed": 1.57,
+        "metrics": {
+          "red_mse": 11.5799,
+          "red_mae": 2.6951,
+          "blue_mse": 12.2461,
+          "blue_mae": 2.93
+        },
+        "samples": 4538
+      },
+      "mlp": {
+        "success": true,
+        "elapsed": 72.15,
+        "metrics": {
+          "red_acc_mean": 0.1183,
+          "red_acc_per_pos": [
+            0.1941,
+            0.0911,
+            0.0795,
+            0.0799,
+            0.0931,
+            0.1719
+          ],
+          "blue_acc_mean": 0.074
+        },
+        "samples": 4543
+      }
+    }
+  },
+  {
+    "lottery": "dlt",
+    "name": "大乐透",
+    "history_count": 2898,
+    "latest_issue": "26080",
+    "models": {
+      "xgboost": {
+        "success": true,
+        "elapsed": 1.37,
+        "metrics": {
+          "red_mse": 15.9331,
+          "red_mae": 3.2174,
+          "blue_mse": 3.636,
+          "blue_mae": 1.5846
+        },
+        "samples": 2878
+      },
+      "mlp": {
+        "success": true,
+        "elapsed": 34.67,
+        "metrics": {
+          "red_acc_mean": 0.1058,
+          "red_acc_per_pos": [
+            0.1568,
+            0.0728,
+            0.0663,
+            0.0773,
+            0.1557
+          ],
+          "blue_acc_mean": 0.166
+        },
+        "samples": 2883
+      }
+    }
+  },
+  {
+    "lottery": "fc3d",
+    "name": "福彩3D",
+    "history_count": 4694,
+    "latest_issue": "2026189",
+    "models": {
+      "xgboost": {
+        "success": true,
+        "elapsed": 0.42,
+        "metrics": {
+          "red_mse": 2.9668,
+          "red_mae": 1.4094
+        },
+        "samples": 4674
+      },
+      "mlp": {
+        "success": true,
+        "elapsed": 13.25,
+        "metrics": {
+          "red_acc_mean": 0.2124,
+          "red_acc_per_pos": [
+            0.2492,
+            0.1445,
+            0.2436
+          ]
+        },
+        "samples": 4679
+      }
+    }
+  },
+  {
+    "lottery": "qlc",
+    "name": "七乐彩",
+    "history_count": 2040,
+    "latest_issue": "2026081",
+    "models": {
+      "xgboost": {
+        "success": true,
+        "elapsed": 1.39,
+        "metrics": {
+          "red_mse": 5.6794,
+          "red_mae": 1.9043,
+          "blue_mse": 27.5846,
+          "blue_mae": 4.4068
+        },
+        "samples": 2020
+      },
+      "mlp": {
+        "success": true,
+        "elapsed": 33.31,
+        "metrics": {
+          "red_acc_mean": 0.1527,
+          "red_acc_per_pos": [
+            0.2346,
+            0.1472,
+            0.1081,
+            0.1047,
+            0.1136,
+            0.1299,
+            0.2311
+          ],
+          "blue_acc_mean": 0.0519
+        },
+        "samples": 2025
+      }
+    }
+  },
+  {
+    "lottery": "qxc",
+    "name": "七星彩",
+    "history_count": 3365,
+    "latest_issue": "26081",
+    "models": {
+      "xgboost": {
+        "success": true,
+        "elapsed": 1.08,
+        "metrics": {
+          "red_mse": 1.3406,
+          "red_mae": 0.9232
+        },
+        "samples": 3345
+      },
+      "mlp": {
+        "success": true,
+        "elapsed": 20.94,
+        "metrics": {
+          "red_acc_mean": 0.319,
+          "red_acc_per_pos": [
+            0.483,
+            0.2743,
+            0.2101,
+            0.2173,
+            0.2185,
+            0.2606,
+            0.569
+          ]
+        },
+        "samples": 3350
+      }
+    }
+  },
+  {
+    "lottery": "pls",
+    "name": "排列3",
+    "history_count": 7664,
+    "latest_issue": "26189",
+    "models": {
+      "xgboost": {
+        "success": true,
+        "elapsed": 0.6,
+        "metrics": {
+          "red_mse": 3.3216,
+          "red_mae": 1.4982
+        },
+        "samples": 7644
+      },
+      "mlp": {
+        "success": true,
+        "elapsed": 22.02,
+        "metrics": {
+          "red_acc_mean": 0.209,
+          "red_acc_per_pos": [
+            0.2309,
+            0.1396,
+            0.2564
+          ]
+        },
+        "samples": 7649
+      }
+    }
+  },
+  {
+    "lottery": "plw",
+    "name": "排列5",
+    "history_count": 7664,
+    "latest_issue": "26189",
+    "models": {
+      "xgboost": {
+        "success": true,
+        "elapsed": 1.14,
+        "metrics": {
+          "red_mse": 2.207,
+          "red_mae": 1.1948
+        },
+        "samples": 7644
+      },
+      "mlp": {
+        "success": true,
+        "elapsed": 36.96,
+        "metrics": {
+          "red_acc_mean": 0.2628,
+          "red_acc_per_pos": [
+            0.3649,
+            0.1945,
+            0.1799,
+            0.1875,
+            0.3874
+          ]
+        },
+        "samples": 7649
+      }
+    }
+  }
+]

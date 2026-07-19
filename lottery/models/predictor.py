@@ -20,25 +20,28 @@ class LotteryPredictor:
 
     def _score_numbers(self, history: List[Dict], method: str = "combined") -> Tuple[Dict[int, float], Dict[int, float]]:
         red_scores = {n: 0.0 for n in self.red_range}
-        blue_scores = {n: 0.0 for n in self.blue_range}
+        # 无蓝球彩种: blue_scores直接置空, 跳过所有蓝球相关计算
+        blue_scores = {n: 0.0 for n in self.blue_range} if self.blue_count > 0 else {}
 
         if method in ("frequency", "combined"):
             hot = self.freq_analyzer.get_hot_numbers(history, recent_n=30, top_n=self.red_max)
-            red_max_count = max(c for _, c in hot["red"]) if hot["red"] else 1
-            blue_max_count = max(c for _, c in hot["blue"]) if hot["blue"] else 1
+            red_max_count = max((c for _, c in hot["red"]), default=1) or 1
             for n, c in hot["red"]:
                 red_scores[n] += (c / red_max_count) * 1.0
-            for n, c in hot["blue"]:
-                blue_scores[n] += (c / blue_max_count) * 1.0
+            if self.blue_count > 0:
+                blue_max_count = max((c for _, c in hot["blue"]), default=1) or 1
+                for n, c in hot["blue"]:
+                    blue_scores[n] += (c / blue_max_count) * 1.0
 
         if method in ("missing", "combined"):
             missing = self.processor.get_missing_values(history)
-            red_max_miss = max(missing["red"].values()) if missing["red"] else 1
-            blue_max_miss = max(missing["blue"].values()) if missing["blue"] else 1
+            red_max_miss = max(missing["red"].values(), default=1) or 1
             for n, m in missing["red"].items():
                 red_scores[n] += (m / red_max_miss) * 0.8
-            for n, m in missing["blue"].items():
-                blue_scores[n] += (m / blue_max_miss) * 0.8
+            if self.blue_count > 0:
+                blue_max_miss = max(missing["blue"].values(), default=1) or 1
+                for n, m in missing["blue"].items():
+                    blue_scores[n] += (m / blue_max_miss) * 0.8
 
         if method in ("ratio", "combined"):
             ratio = self.freq_analyzer.get_frequency_ratio(history, recent_n=50)
@@ -47,11 +50,12 @@ class LotteryPredictor:
                     red_scores[n] += 0.5
                 elif r < 0.8:
                     red_scores[n] += 0.3
-            for n, r in ratio["blue"].items():
-                if r > 1.2:
-                    blue_scores[n] += 0.5
-                elif r < 0.8:
-                    blue_scores[n] += 0.3
+            if self.blue_count > 0:
+                for n, r in ratio["blue"].items():
+                    if r > 1.2:
+                        blue_scores[n] += 0.5
+                    elif r < 0.8:
+                        blue_scores[n] += 0.3
 
         if method in ("transition", "combined"):
             if len(history) >= 2:
@@ -61,9 +65,10 @@ class LotteryPredictor:
                     for prev in history[i - 1]["reds"]:
                         for curr in history[i]["reds"]:
                             red_trans[prev][curr] += 1
-                    for prev in history[i - 1]["blues"]:
-                        for curr in history[i]["blues"]:
-                            blue_trans[prev][curr] += 1
+                    if self.blue_count > 0:
+                        for prev in history[i - 1]["blues"]:
+                            for curr in history[i]["blues"]:
+                                blue_trans[prev][curr] += 1
 
                 last_reds = history[-1]["reds"]
                 last_blues = history[-1]["blues"]
@@ -74,18 +79,22 @@ class LotteryPredictor:
                         total = sum(red_trans[lr].values())
                         if total > 0:
                             red_next_scores[nxt] += cnt / total
-                for lb in last_blues:
-                    for nxt, cnt in blue_trans[lb].items():
-                        total = sum(blue_trans[lb].values())
-                        if total > 0:
-                            blue_next_scores[nxt] += cnt / total
+                if self.blue_count > 0:
+                    for lb in last_blues:
+                        for nxt, cnt in blue_trans[lb].items():
+                            total = sum(blue_trans[lb].values())
+                            if total > 0:
+                                blue_next_scores[nxt] += cnt / total
 
-                red_max_ts = max(red_next_scores.values()) if red_next_scores else 1
-                blue_max_ts = max(blue_next_scores.values()) if blue_next_scores else 1
+                red_max_ts = max(red_next_scores.values(), default=1) or 1
                 for n, s in red_next_scores.items():
-                    red_scores[n] += (s / red_max_ts) * 0.6
-                for n, s in blue_next_scores.items():
-                    blue_scores[n] += (s / blue_max_ts) * 0.6
+                    if n in red_scores:
+                        red_scores[n] += (s / red_max_ts) * 0.6
+                if self.blue_count > 0:
+                    blue_max_ts = max(blue_next_scores.values(), default=1) or 1
+                    for n, s in blue_next_scores.items():
+                        if n in blue_scores:
+                            blue_scores[n] += (s / blue_max_ts) * 0.6
 
         return red_scores, blue_scores
 
@@ -100,7 +109,7 @@ class LotteryPredictor:
 
     def predict_random(self) -> Tuple[List[int], List[int]]:
         reds = sorted(random.sample(self.red_range, self.red_count))
-        blues = sorted(random.sample(self.blue_range, self.blue_count))
+        blues = sorted(random.sample(self.blue_range, self.blue_count)) if self.blue_count > 0 else []
         return reds, blues
 
     def predict_weighted_random(self, history: List[Dict], n_sets: int = 5) -> List[Tuple[List[int], List[int]]]:

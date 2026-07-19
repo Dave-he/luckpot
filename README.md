@@ -2,6 +2,8 @@
 
 > 基于历史数据 + XGBoost + 神经网络(MLP) + 传统统计策略的彩票号码预测系统
 
+[![每日预测](https://github.com/Dave-he/luckpot/actions/workflows/daily.yml/badge.svg)](https://github.com/Dave-he/luckpot/actions/workflows/daily.yml)
+
 系统每日通过 GitHub Actions 自动运行：抓取最新数据 → 训练模型 → 生成预测 → 推送更新。
 
 **最近预测时间**: `2026-07-19 11:01:41`

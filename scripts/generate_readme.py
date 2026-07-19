@@ -154,12 +154,121 @@ def build_data_update_section(update_report):
     return "\n".join(rows)
 
 
+def build_hits_section(hits):
+    """构建预测命中记录部分"""
+    if not hits:
+        return ""
+
+    rows = []
+    rows.append("## 预测命中记录 (永久保存)")
+    rows.append("")
+    rows.append(f"> 累计记录 {len(hits)} 次对比结果 (命中即永久存档)")
+    rows.append("")
+
+    # 统计各模型命中情况
+    model_stats = {}
+    for h in hits:
+        for r in h.get("results", []):
+            m = r["model"]
+            if m not in model_stats:
+                model_stats[m] = {"total": 0, "red_hits": 0, "blue_hits": 0,
+                                  "full_red": 0, "full_blue": 0, "full_match": 0}
+            model_stats[m]["total"] += 1
+            model_stats[m]["red_hits"] += r["red_hits"]
+            model_stats[m]["blue_hits"] += r["blue_hits"]
+            if r["full_red_match"]:
+                model_stats[m]["full_red"] += 1
+            if r["full_blue_match"]:
+                model_stats[m]["full_blue"] += 1
+            if r["full_match"]:
+                model_stats[m]["full_match"] += 1
+
+    rows.append("### 模型命中统计")
+    rows.append("")
+    rows.append("| 模型 | 对比次数 | 红球命中总数 | 蓝球命中总数 | 红球全中 | 蓝球全中 | 完全命中 |")
+    rows.append("| --- | --- | --- | --- | --- | --- | --- |")
+    for m, s in sorted(model_stats.items(), key=lambda x: -x[1]["red_hits"]):
+        rows.append(f"| {m} | {s['total']} | {s['red_hits']} | {s['blue_hits']} | "
+                    f"{s['full_red']} | {s['full_blue']} | {s['full_match']} |")
+    rows.append("")
+
+    # 完全命中 / 红球全中 / 蓝球全中的高亮记录
+    highlights = []
+    for h in hits:
+        for r in h.get("results", []):
+            if r["full_match"] or r["full_red_match"] or (r["full_blue_match"] and r["blue_total"] > 0):
+                tag = []
+                if r["full_match"]:
+                    tag.append("★完全命中")
+                elif r["full_red_match"]:
+                    tag.append("★红球全中")
+                elif r["full_blue_match"]:
+                    tag.append("★蓝球全中")
+                highlights.append({
+                    "lottery": h.get("name", h.get("lottery")),
+                    "issue": h.get("predict_for_issue"),
+                    "date": h.get("predict_for_date", ""),
+                    "model": r["model"],
+                    "predicted_reds": r["predicted_reds"],
+                    "predicted_blues": r["predicted_blues"],
+                    "actual_reds": r["actual_reds"],
+                    "actual_blues": r["actual_blues"],
+                    "tag": " ".join(tag),
+                    "red_hits": r["red_hits"],
+                    "red_total": r["red_total"],
+                    "blue_hits": r["blue_hits"],
+                    "blue_total": r["blue_total"],
+                })
+
+    if highlights:
+        rows.append("### 高亮命中 (红球全中 / 蓝球全中 / 完全命中)")
+        rows.append("")
+        rows.append("| 彩种 | 期号 | 模型 | 预测红球 | 实际红球 | 预测蓝球 | 实际蓝球 | 命中 | 标记 |")
+        rows.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+        for h in highlights:
+            rows.append(
+                f"| {h['lottery']} | {h['issue']} | {h['model']} | "
+                f"`{fmt_reds(h['predicted_reds'])}` | `{fmt_reds(h['actual_reds'])}` | "
+                f"`{fmt_blues(h['predicted_blues'])}` | `{fmt_blues(h['actual_blues'])}` | "
+                f"红{h['red_hits']}/{h['red_total']} 蓝{h['blue_hits']}/{h['blue_total']} | {h['tag']} |"
+            )
+        rows.append("")
+
+    # 最近10次对比记录
+    rows.append("### 最近对比记录 (最多20条)")
+    rows.append("")
+    rows.append("| 彩种 | 期号 | 模型 | 预测红球 | 实际红球 | 预测蓝球 | 实际蓝球 | 命中 |")
+    rows.append("| --- | --- | --- | --- | --- | --- | --- | --- |")
+    recent = hits[-20:]
+    for h in recent:
+        name = h.get("name", h.get("lottery"))
+        issue = h.get("predict_for_issue")
+        for r in h.get("results", []):
+            tag = ""
+            if r["full_match"]:
+                tag = " ★完全命中"
+            elif r["full_red_match"]:
+                tag = " ★红球全中"
+            elif r["full_blue_match"] and r["blue_total"] > 0:
+                tag = " ★蓝球全中"
+            rows.append(
+                f"| {name} | {issue} | {r['model']} | "
+                f"`{fmt_reds(r['predicted_reds'])}` | `{fmt_reds(r['actual_reds'])}` | "
+                f"`{fmt_blues(r['predicted_blues'])}` | `{fmt_blues(r['actual_blues'])}` | "
+                f"红{r['red_hits']}/{r['red_total']} 蓝{r['blue_hits']}/{r['blue_total']}{tag} |"
+            )
+    rows.append("")
+
+    return "\n".join(rows)
+
+
 def main():
     print(f"生成 README - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     predictions = load_json("data/predictions.json", default=[])
     training_report = load_json("data/training_report.json", default=[])
     update_report = load_json("data/update_report.json", default=[])
+    hits = load_json("data/prediction_hits.json", default=[])
 
     # 模型文件统计
     model_stats = []
@@ -198,6 +307,11 @@ def main():
 
     for pred in predictions:
         sections.append(build_prediction_table(pred))
+
+    # 预测命中记录
+    hits_section = build_hits_section(hits)
+    if hits_section:
+        sections.append(hits_section)
 
     # 模型训练状态
     train_section = build_training_section(training_report)
@@ -274,11 +388,13 @@ def main():
     sections.append("├── update_data.py        # 数据抓取脚本")
     sections.append("├── train_models.py       # 模型训练脚本")
     sections.append("├── predict.py            # 预测脚本")
+    sections.append("├── check_hits.py         # 预测命中检查脚本")
     sections.append("└── generate_readme.py    # README 生成脚本")
     sections.append("data/")
     sections.append("├── {lottery}/history.csv # 各彩种历史数据")
     sections.append("├── {lottery}/models/     # 训练好的模型")
-    sections.append("├── predictions.json      # 预测结果")
+    sections.append("├── predictions.json      # 当前预测结果")
+    sections.append("├── prediction_hits.json  # 预测命中记录 (永久保存)")
     sections.append("├── training_report.json  # 训练报告")
     sections.append("└── update_report.json    # 数据更新报告")
     sections.append(".github/workflows/daily.yml # GitHub Actions 每日定时任务")
@@ -292,9 +408,10 @@ def main():
     sections.append("")
     sections.append("1. **抓取数据** - `python3 scripts/update_data.py`")
     sections.append("2. **训练模型** - `python3 scripts/train_models.py`")
-    sections.append("3. **生成预测** - `python3 scripts/predict.py`")
-    sections.append("4. **更新 README** - `python3 scripts/generate_readme.py`")
-    sections.append("5. **提交推送** - 自动 commit 并 push 到 GitHub")
+    sections.append("3. **检查上次预测命中** - `python3 scripts/check_hits.py` (永久记录到 prediction_hits.json)")
+    sections.append("4. **生成新预测** - `python3 scripts/predict.py`")
+    sections.append("5. **更新 README** - `python3 scripts/generate_readme.py`")
+    sections.append("6. **提交推送** - 自动 commit 并 push 到 GitHub")
     sections.append("")
     sections.append("也可手动在 GitHub Actions 页面触发运行。")
     sections.append("")
@@ -317,6 +434,9 @@ def main():
     sections.append("")
     sections.append("# 生成预测")
     sections.append("python3 scripts/predict.py")
+    sections.append("")
+    sections.append("# 检查上次预测命中情况 (永久记录命中)")
+    sections.append("python3 scripts/check_hits.py")
     sections.append("")
     sections.append("# 生成 README")
     sections.append("python3 scripts/generate_readme.py")

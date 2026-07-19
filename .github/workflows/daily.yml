@@ -60,19 +60,24 @@ jobs:
           echo "=== 步骤2: 训练 XGBoost + MLP 模型 ==="
           python3 scripts/train_models.py
 
-      - name: 生成预测
+      - name: 检查上次预测命中情况
         run: |
-          echo "=== 步骤3: 生成下一期预测 ==="
+          echo "=== 步骤3: 检查上次预测是否命中 (在新预测生成前) ==="
+          python3 scripts/check_hits.py || true
+
+      - name: 生成新预测
+        run: |
+          echo "=== 步骤4: 生成下一期预测 ==="
           python3 scripts/predict.py
 
       - name: 生成 README
         run: |
-          echo "=== 步骤4: 生成 README ==="
+          echo "=== 步骤5: 生成 README ==="
           python3 scripts/generate_readme.py
 
       - name: 提交并推送
         run: |
-          echo "=== 步骤5: 提交并推送 ==="
+          echo "=== 步骤6: 提交并推送 ==="
           git add -A
           if git diff --staged --quiet; then
             echo "无变更，跳过提交"

@@ -260,6 +260,8 @@ def backtest_lottery(lottery_key, config, n_backtests, use_slow=True):
         "full_red": 0, "full_blue": 0, "full_match": 0,
         "at_least_1_red": 0, "at_least_2_red": 0, "at_least_1_blue": 0,
         "count": 0,
+        "prize_1": 0, "prize_2": 0, "prize_3": 0,
+        "prize_4": 0, "prize_5": 0, "prize_6": 0, "no_prize": 0,
     })
 
     print(f"\n  [{name}] 回测 {n_bt} 期 (is_repeatable={is_repeatable})...")
@@ -417,12 +419,35 @@ def backtest_lottery(lottery_key, config, n_backtests, use_slow=True):
             "full_match": stats["full_match"],
             "full_red": stats["full_red"],
             "full_blue": stats["full_blue"],
+            "full_match_rate": round(stats["full_match"] / max(stats["count"], 1), 4),
             "at_least_1_red": stats["at_least_1_red"],
             "at_least_2_red": stats["at_least_2_red"],
             "at_least_1_blue": stats["at_least_1_blue"],
             "at_least_1_red_rate": round(stats["at_least_1_red"] / max(stats["count"], 1), 4),
             "at_least_2_red_rate": round(stats["at_least_2_red"] / max(stats["count"], 1), 4),
             "at_least_1_blue_rate": round(stats["at_least_1_blue"] / max(stats["count"], 1), 4),
+            # 各奖项等级获奖次数及概率
+            "prize_1": stats.get("prize_1", 0),
+            "prize_2": stats.get("prize_2", 0),
+            "prize_3": stats.get("prize_3", 0),
+            "prize_4": stats.get("prize_4", 0),
+            "prize_5": stats.get("prize_5", 0),
+            "prize_6": stats.get("prize_6", 0),
+            "no_prize": stats.get("no_prize", 0),
+            "prize_1_rate": round(stats.get("prize_1", 0) / max(stats["count"], 1), 4),
+            "prize_2_rate": round(stats.get("prize_2", 0) / max(stats["count"], 1), 4),
+            "prize_3_rate": round(stats.get("prize_3", 0) / max(stats["count"], 1), 4),
+            "prize_4_rate": round(stats.get("prize_4", 0) / max(stats["count"], 1), 4),
+            "prize_5_rate": round(stats.get("prize_5", 0) / max(stats["count"], 1), 4),
+            "prize_6_rate": round(stats.get("prize_6", 0) / max(stats["count"], 1), 4),
+            # 总获奖次数 (二等及以上算高奖)
+            "total_prize": stats.get("prize_1", 0) + stats.get("prize_2", 0) + stats.get("prize_3", 0)
+                           + stats.get("prize_4", 0) + stats.get("prize_5", 0) + stats.get("prize_6", 0),
+            "total_prize_rate": round(
+                (stats.get("prize_1", 0) + stats.get("prize_2", 0) + stats.get("prize_3", 0)
+                 + stats.get("prize_4", 0) + stats.get("prize_5", 0) + stats.get("prize_6", 0))
+                / max(stats["count"], 1), 4),
+            "high_prize": stats.get("prize_1", 0) + stats.get("prize_2", 0) + stats.get("prize_3", 0),
             "count": stats["count"],
         }
 
@@ -454,6 +479,33 @@ def _update(stats, rh, rt, bh, bt):
     if bh >= 1:
         stats["at_least_1_blue"] += 1
 
+    # --- 各奖项等级获奖次数统计 ---
+    # 等级判定依据中国福彩/体彩通用规则 (红球命中数 + 蓝球命中数)
+    # 一等奖: 全中 (红球全中 + 蓝球全中)
+    # 二等奖: 红球全中 + 蓝球未全中
+    # 三等奖: 红球命中 rt-1 + 蓝球全中
+    # 四等奖: 红球命中 rt-1 + 蓝球未全中, 或 红球命中 rt-2 + 蓝球全中
+    # 五等奖: 红球命中 rt-2 + 蓝球未全中, 或 红球命中 rt-3 + 蓝球全中
+    # 六等奖: 红球命中 < rt-3 + 蓝球全中
+    # 注: 简化模型, 适用于双色球/大乐透; 纯数字彩种(福彩3D/排列3/排列5/七星彩)按全中或部分中
+    full_blue = (bt > 0 and bh == bt) or bt == 0
+    full_red = (rh == rt)
+
+    if full_red and full_blue:
+        stats["prize_1"] = stats.get("prize_1", 0) + 1  # 一等奖 (全中)
+    elif full_red and not full_blue:
+        stats["prize_2"] = stats.get("prize_2", 0) + 1  # 二等奖 (红全中, 蓝未全中)
+    elif rh == rt - 1 and full_blue:
+        stats["prize_3"] = stats.get("prize_3", 0) + 1  # 三等奖
+    elif (rh == rt - 1 and not full_blue) or (rh == rt - 2 and full_blue):
+        stats["prize_4"] = stats.get("prize_4", 0) + 1  # 四等奖
+    elif (rh == rt - 2 and not full_blue) or (rh == rt - 3 and full_blue):
+        stats["prize_5"] = stats.get("prize_5", 0) + 1  # 五等奖
+    elif full_blue and not full_red:
+        stats["prize_6"] = stats.get("prize_6", 0) + 1  # 六等奖
+    else:
+        stats["no_prize"] = stats.get("no_prize", 0) + 1
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -482,8 +534,8 @@ def main():
     print("回测结果汇总:")
     print(f"{'='*80}")
     print(f"\n各彩种各算法命中率:")
-    print(f"{'彩种':<10} {'算法':<22} {'红球命中率':<14} {'至少1红':<14} {'至少2红':<14} {'完全命中':<10} {'达标≥50%':<10}")
-    print("-" * 100)
+    print(f"{'彩种':<10} {'算法':<22} {'红球命中率':<14} {'至少1红':<14} {'至少2红':<14} {'全中率':<14} {'达标≥50%':<10}")
+    print("-" * 110)
 
     reached_50 = []
     for r in all_results:
@@ -492,13 +544,13 @@ def main():
             red_pct = f"{s['red_rate']*100:.1f}% ({s['red_hits']}/{s['red_total']})"
             at_least_1 = f"{s['at_least_1_red_rate']*100:.1f}% ({s['at_least_1_red']}/{s['count']})"
             at_least_2 = f"{s['at_least_2_red_rate']*100:.1f}% ({s['at_least_2_red']}/{s['count']})"
-            full = f"{s['full_match']}/{s['count']}"
+            full_rate = f"{s['full_match_rate']*100:.1f}% ({s['full_match']}/{s['count']})"
             reached = "✓" if s["at_least_1_red_rate"] >= 0.5 else ""
             if reached:
                 reached_50.append((name, algo, s["at_least_1_red_rate"], s["count"], "at_least_1_red"))
-            print(f"{name:<10} {algo:<22} {red_pct:<14} {at_least_1:<14} {at_least_2:<14} {full:<10} {reached:<10}")
+            print(f"{name:<10} {algo:<22} {red_pct:<14} {at_least_1:<14} {at_least_2:<14} {full_rate:<14} {reached:<10}")
 
-    print(f"\n{'='*100}")
+    print(f"\n{'='*110}")
     if reached_50:
         print(f"★ 达到 50% 准确率的算法 ({len(reached_50)} 个) [指标: 至少命中1个红球]:")
         for name, algo, rate, count, metric in reached_50:
@@ -513,6 +565,69 @@ def main():
         print("\nTop 5 '至少命中1红' 准确率最高的算法:")
         for name, algo, rate, count in all_algos[:5]:
             print(f"  - {name} / {algo}: {rate*100:.1f}% (基于 {count} 期回测)")
+
+    # --- 按获奖次数排名 ---
+    print(f"\n{'='*110}")
+    print("按获奖次数排名 (总获奖次数 = 一等+二等+...+六等):")
+    print(f"{'='*110}")
+    print(f"\n{'彩种':<10} {'算法':<22} {'一等':<6} {'二等':<6} {'三等':<6} {'四等':<6} {'五等':<6} {'六等':<6} {'总获奖':<8} {'获奖率':<10}")
+    print("-" * 110)
+
+    all_prize_ranking = []
+    for r in all_results:
+        name = r["name"]
+        for algo, s in r["results"].items():
+            p1 = s.get("prize_1", 0)
+            p2 = s.get("prize_2", 0)
+            p3 = s.get("prize_3", 0)
+            p4 = s.get("prize_4", 0)
+            p5 = s.get("prize_5", 0)
+            p6 = s.get("prize_6", 0)
+            total_prize = s.get("total_prize", 0)
+            total_prize_rate = s.get("total_prize_rate", 0)
+            all_prize_ranking.append((name, algo, p1, p2, p3, p4, p5, p6,
+                                       total_prize, total_prize_rate, s["count"]))
+            print(f"{name:<10} {algo:<22} {p1:<6} {p2:<6} {p3:<6} {p4:<6} {p5:<6} {p6:<6} {total_prize:<8} {total_prize_rate*100:.1f}%")
+
+    # 按总获奖次数排序 (跨彩种全局排名)
+    all_prize_ranking.sort(key=lambda x: -x[8])  # 按总获奖次数降序
+
+    print(f"\n{'='*110}")
+    print("★ 全局 Top 10 获奖次数最多的算法 (跨彩种排名):")
+    print(f"{'='*110}")
+    for i, (name, algo, p1, p2, p3, p4, p5, p6, tp, tpr, cnt) in enumerate(all_prize_ranking[:10], 1):
+        high_prize = p1 + p2 + p3
+        print(f"  {i:>2}. {name:<10} / {algo:<22} | "
+              f"一等={p1} 二等={p2} 三等={p3} 四等={p4} 五等={p5} 六等={p6} | "
+              f"总获奖={tp}/{cnt} ({tpr*100:.1f}%) 高等奖(1-3等)={high_prize}")
+
+    # 按高等奖排名
+    all_prize_ranking.sort(key=lambda x: -(x[2] + x[3] + x[4]))
+    print(f"\n{'='*110}")
+    print("★ 全局 Top 10 高等奖 (一等+二等+三等) 最多的算法:")
+    print(f"{'='*110}")
+    for i, (name, algo, p1, p2, p3, p4, p5, p6, tp, tpr, cnt) in enumerate(all_prize_ranking[:10], 1):
+        high_prize = p1 + p2 + p3
+        if high_prize == 0:
+            break
+        print(f"  {i:>2}. {name:<10} / {algo:<22} | "
+              f"一等={p1} 二等={p2} 三等={p3} | 高等奖合计={high_prize}/{cnt} ({high_prize/cnt*100:.1f}%)")
+
+    # 全中概率排名
+    all_full_match = []
+    for r in all_results:
+        for algo, s in r["results"].items():
+            if s["full_match"] > 0:
+                all_full_match.append((r["name"], algo, s["full_match"], s["count"], s["full_match_rate"]))
+    all_full_match.sort(key=lambda x: -x[2])
+
+    print(f"\n{'='*110}")
+    if all_full_match:
+        print(f"★ 全中 (一等奖) 算法排名 - 共 {len(all_full_match)} 个算法实现过全中:")
+        for name, algo, fm, cnt, fmr in all_full_match:
+            print(f"  - {name:<10} / {algo:<22}: 全中 {fm} 次 / {cnt} 期 ({fmr*100:.2f}%)")
+    else:
+        print("★ 全中 (一等奖): 暂无算法在回测中实现过全中。")
 
     # 保存结果
     output_path = "data/backtest_report.json"

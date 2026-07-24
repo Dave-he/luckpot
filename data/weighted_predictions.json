@@ -3,7 +3,7 @@
     "lottery": "ssq",
     "name": "双色球",
     "schedule": "每周二、四、日",
-    "predict_time": "2026-07-24 01:56:07",
+    "predict_time": "2026-07-24 10:54:54",
     "latest_issue": "2026084",
     "latest_reds": [
       1,
@@ -124,7 +124,7 @@
     "lottery": "dlt",
     "name": "大乐透",
     "schedule": "每周一、三、六",
-    "predict_time": "2026-07-24 01:56:08",
+    "predict_time": "2026-07-24 10:54:56",
     "latest_issue": "26082",
     "latest_reds": [
       16,
@@ -245,7 +245,7 @@
     "lottery": "fc3d",
     "name": "福彩3D",
     "schedule": "每日开奖",
-    "predict_time": "2026-07-24 01:56:08",
+    "predict_time": "2026-07-24 10:54:57",
     "latest_issue": "2026194",
     "latest_reds": [
       2,
@@ -335,7 +335,7 @@
     "lottery": "qlc",
     "name": "七乐彩",
     "schedule": "每周一、三、五",
-    "predict_time": "2026-07-24 01:56:10",
+    "predict_time": "2026-07-24 10:54:59",
     "latest_issue": "2026083",
     "latest_reds": [
       1,
@@ -458,7 +458,7 @@
     "lottery": "qxc",
     "name": "七星彩",
     "schedule": "每周二、五、日",
-    "predict_time": "2026-07-24 01:56:10",
+    "predict_time": "2026-07-24 10:54:59",
     "latest_issue": "26083",
     "latest_reds": [
       1,
@@ -556,7 +556,7 @@
     "lottery": "pls",
     "name": "排列3",
     "schedule": "每日开奖",
-    "predict_time": "2026-07-24 01:56:10",
+    "predict_time": "2026-07-24 10:55:00",
     "latest_issue": "26194",
     "latest_reds": [
       0,
@@ -646,7 +646,7 @@
     "lottery": "plw",
     "name": "排列5",
     "schedule": "每日开奖",
-    "predict_time": "2026-07-24 01:56:11",
+    "predict_time": "2026-07-24 10:55:00",
     "latest_issue": "26191",
     "latest_reds": [
       0,

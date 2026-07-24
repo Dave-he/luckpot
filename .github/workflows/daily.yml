@@ -51,7 +51,7 @@ jobs:
 
       - name: 训练模型
         run: |
-          echo "=== 步骤2: 训练所有模型 (XGBoost+MLP+RF+Markov+NB+MC+KMeans+LSTM) ==="
+          echo "=== 步骤2: 训练所有模型 (XGBoost+MLP+RF+Markov+NB+MC+KMeans+LSTM+LotteryAi) ==="
           python3 scripts/train_models.py
 
       - name: 检查上次预测命中情况

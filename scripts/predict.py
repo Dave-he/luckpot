@@ -21,6 +21,8 @@ from lottery.models import (
     RandomForestPredictor, MarkovPredictor,
     NaiveBayesPredictor, MonteCarloPredictor,
     KMeansPredictor, LSTMPredictor,
+    RecencyWeightedPredictor, TriggersFollowersPredictor,
+    GhostVariancesPredictor, MoEPredictor,
 )
 from lottery.models.predictor import LotteryPredictor
 
@@ -82,6 +84,10 @@ def predict_lottery(lottery_key: str, config: dict) -> dict:
         ("monte_carlo", MonteCarloPredictor),
         ("kmeans", KMeansPredictor),
         ("lstm", LSTMPredictor),
+        ("recency_weighted", RecencyWeightedPredictor),
+        ("triggers_followers", TriggersFollowersPredictor),
+        ("ghost_variances", GhostVariancesPredictor),
+        ("moe", MoEPredictor),
     ]
 
     for model_name, cls in ml_models:

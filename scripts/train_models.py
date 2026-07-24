@@ -22,6 +22,8 @@ from lottery.models import (
     RandomForestPredictor, MarkovPredictor,
     NaiveBayesPredictor, MonteCarloPredictor,
     KMeansPredictor, LSTMPredictor,
+    RecencyWeightedPredictor, TriggersFollowersPredictor,
+    GhostVariancesPredictor, MoEPredictor,
 )
 
 
@@ -96,6 +98,10 @@ def train_lottery(lottery_key: str, config: dict, skip_lstm: bool = False) -> di
         ("naive_bayes", NaiveBayesPredictor),
         ("monte_carlo", MonteCarloPredictor),
         ("kmeans", KMeansPredictor),
+        ("recency_weighted", RecencyWeightedPredictor),
+        ("triggers_followers", TriggersFollowersPredictor),
+        ("ghost_variances", GhostVariancesPredictor),
+        ("moe", MoEPredictor),
     ]
     if not skip_lstm:
         base_models.append(("lstm", LSTMPredictor))
@@ -142,7 +148,9 @@ def main():
     print("训练完成汇总:")
     print(f"{'='*80}")
     model_types = ["xgboost", "mlp", "random_forest", "markov",
-                   "naive_bayes", "monte_carlo", "kmeans", "lstm"]
+                   "naive_bayes", "monte_carlo", "kmeans",
+                   "recency_weighted", "triggers_followers",
+                   "ghost_variances", "moe", "lstm"]
     header = f"{'彩种':<10} " + " ".join(f"{m[:8]:<10}" for m in model_types)
     print(header)
     print("-" * len(header))

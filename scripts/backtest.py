@@ -28,6 +28,8 @@ from lottery.data import DataLoader
 from lottery.models import (
     XGBoostPredictor, MLPredictor,
     RandomForestPredictor, MarkovPredictor,
+    RecencyWeightedPredictor, TriggersFollowersPredictor,
+    GhostVariancesPredictor, MoEPredictor,
     NaiveBayesPredictor, MonteCarloPredictor,
     KMeansPredictor, LSTMPredictor,
 )
@@ -339,6 +341,39 @@ def backtest_lottery(lottery_key, config, n_backtests, use_slow=True):
         except Exception:
             cached_models["monte_carlo"] = None
 
+        # LotteryAi 思想: Recency-Weighted (快速)
+        try:
+            m = RecencyWeightedPredictor(config)
+            m.train(train_data)
+            cached_models["recency_weighted"] = m
+        except Exception:
+            cached_models["recency_weighted"] = None
+
+        # LotteryAi 思想: Triggers & Followers (快速)
+        try:
+            m = TriggersFollowersPredictor(config)
+            m.train(train_data)
+            cached_models["triggers_followers"] = m
+        except Exception:
+            cached_models["triggers_followers"] = None
+
+        # LotteryAi 思想: Ghost Variances (快速)
+        try:
+            m = GhostVariancesPredictor(config)
+            m.train(train_data)
+            cached_models["ghost_variances"] = m
+        except Exception:
+            cached_models["ghost_variances"] = None
+
+        # LotteryAi 思想: MoE 动态路由 (稍慢, 每5期重训)
+        if i % 5 == 0:
+            try:
+                m = MoEPredictor(config)
+                m.train(train_data)
+                cached_models["moe"] = m if m.is_trained else None
+            except Exception:
+                cached_models["moe"] = None
+
         # MLP & LSTM (慢, 仅前3期用)
         if use_slow and i < 3:
             try:
@@ -364,7 +399,9 @@ def backtest_lottery(lottery_key, config, n_backtests, use_slow=True):
 
         # --- 评估每个算法 ---
         for algo_name in ["xgboost", "mlp", "random_forest", "markov",
-                          "naive_bayes", "monte_carlo", "kmeans", "lstm"]:
+                          "naive_bayes", "monte_carlo", "kmeans", "lstm",
+                          "recency_weighted", "triggers_followers",
+                          "ghost_variances", "moe"]:
             m = cached_models.get(algo_name)
             if m is None or not m.is_trained:
                 continue

@@ -8,6 +8,10 @@ from .monte_carlo_model import MonteCarloPredictor
 from .kmeans_model import KMeansPredictor
 from .lstm_model import LSTMPredictor
 from .stacking_model import StackingPredictor
+from .recency_weighted_model import RecencyWeightedPredictor
+from .triggers_followers_model import TriggersFollowersPredictor
+from .ghost_variances_model import GhostVariancesPredictor
+from .moe_model import MoEPredictor
 
 __all__ = [
     "LotteryPredictor",
@@ -20,4 +24,8 @@ __all__ = [
     "KMeansPredictor",
     "LSTMPredictor",
     "StackingPredictor",
+    "RecencyWeightedPredictor",
+    "TriggersFollowersPredictor",
+    "GhostVariancesPredictor",
+    "MoEPredictor",
 ]

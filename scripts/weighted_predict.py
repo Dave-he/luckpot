@@ -26,6 +26,8 @@ from lottery.models import (
     RandomForestPredictor, MarkovPredictor,
     NaiveBayesPredictor, MonteCarloPredictor,
     KMeansPredictor, LSTMPredictor,
+    RecencyWeightedPredictor, TriggersFollowersPredictor,
+    GhostVariancesPredictor, MoEPredictor,
 )
 from lottery.models.predictor import LotteryPredictor
 
@@ -47,7 +49,7 @@ def save_json(path, data):
 
 def get_algo_red_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None, trad_pred=None,
                         rf_pred=None, mk_pred=None, nb_pred=None, mc_pred=None, km_pred=None,
-                        lstm_pred=None):
+                        lstm_pred=None, rw_pred=None, tf_pred=None, gv_pred=None, moe_pred=None):
     """获取某算法对每个红球号码的偏好分数 (归一化到0-1)"""
     red_min, red_max = config["red_range"]
     red_count = config["red_count"]
@@ -138,7 +140,7 @@ def get_algo_red_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None
 
 def get_algo_blue_scores(algo_name, config, history, xgb_pred=None, mlp_pred=None, trad_pred=None,
                          rf_pred=None, mk_pred=None, nb_pred=None, mc_pred=None, km_pred=None,
-                         lstm_pred=None):
+                         lstm_pred=None, rw_pred=None, tf_pred=None, gv_pred=None, moe_pred=None):
     """获取某算法对每个蓝球号码的偏好分数"""
     blue_min, blue_max = config["blue_range"]
     blue_count = config["blue_count"]
@@ -154,6 +156,10 @@ def get_algo_blue_scores(algo_name, config, history, xgb_pred=None, mlp_pred=Non
         "random_forest": rf_pred, "markov": mk_pred,
         "naive_bayes": nb_pred, "monte_carlo": mc_pred,
         "kmeans": km_pred, "lstm": lstm_pred,
+        "recency_weighted": rw_pred,
+        "triggers_followers": tf_pred,
+        "ghost_variances": gv_pred,
+        "moe": moe_pred,
     }
 
     try:
@@ -213,6 +219,10 @@ def weighted_predict_lottery(lottery_key, config, weights_data):
         ("monte_carlo", MonteCarloPredictor),
         ("kmeans", KMeansPredictor),
         ("lstm", LSTMPredictor),
+        ("recency_weighted", RecencyWeightedPredictor),
+        ("triggers_followers", TriggersFollowersPredictor),
+        ("ghost_variances", GhostVariancesPredictor),
+        ("moe", MoEPredictor),
     ]
     for mname, cls in model_classes:
         try:
@@ -231,6 +241,10 @@ def weighted_predict_lottery(lottery_key, config, weights_data):
     mc_pred = loaded_models.get("monte_carlo")
     km_pred = loaded_models.get("kmeans")
     lstm_pred = loaded_models.get("lstm")
+    rw_pred = loaded_models.get("recency_weighted")
+    tf_pred = loaded_models.get("triggers_followers")
+    gv_pred = loaded_models.get("ghost_variances")
+    moe_pred = loaded_models.get("moe")
 
     trad_pred = LotteryPredictor(config)
 
@@ -255,10 +269,12 @@ def weighted_predict_lottery(lottery_key, config, weights_data):
     for algo in weights.keys():
         rs = get_algo_red_scores(algo, config, history, xgb_pred, mlp_pred, trad_pred,
                                  rf_pred=rf_pred, mk_pred=mk_pred, nb_pred=nb_pred,
-                                 mc_pred=mc_pred, km_pred=km_pred, lstm_pred=lstm_pred)
+                                 mc_pred=mc_pred, km_pred=km_pred, lstm_pred=lstm_pred,
+                                 rw_pred=rw_pred, tf_pred=tf_pred, gv_pred=gv_pred, moe_pred=moe_pred)
         bs = get_algo_blue_scores(algo, config, history, xgb_pred, mlp_pred, trad_pred,
                                   rf_pred=rf_pred, mk_pred=mk_pred, nb_pred=nb_pred,
-                                  mc_pred=mc_pred, km_pred=km_pred, lstm_pred=lstm_pred)
+                                  mc_pred=mc_pred, km_pred=km_pred, lstm_pred=lstm_pred,
+                                  rw_pred=rw_pred, tf_pred=tf_pred, gv_pred=gv_pred, moe_pred=moe_pred)
         if any(v > 0 for v in rs.values()):
             algo_red_scores[algo] = rs
             algo_blue_scores[algo] = bs

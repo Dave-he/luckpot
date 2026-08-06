@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "update_time": "2026-08-05 01:48:45",
+    "update_time": "2026-08-06 01:48:41",
     "backtest_count": 12,
     "merge_alpha": 0.3,
     "description": "动态算法权重 - 基于历史回测命中率计算, EMA平滑更新"
@@ -12,7 +12,7 @@
       "backtest_count": 12,
       "is_repeatable": false,
       "blue_count": 1,
-      "update_time": "2026-08-05 01:47:31",
+      "update_time": "2026-08-06 01:47:26",
       "algorithm_scores": {
         "xgboost": {
           "score": 0.15,
@@ -132,20 +132,32 @@
           "count": 12
         },
         "trad_随机机选": {
-          "score": 0.1417,
+          "score": 0.225,
           "red_rate": 0.1667,
-          "blue_rate": 0.0833,
+          "blue_rate": 0.25,
           "red_hits": 12,
           "red_total": 72,
-          "blue_hits": 1,
+          "blue_hits": 3,
           "blue_total": 12,
           "full_match": 0,
           "full_red": 0,
-          "full_blue": 1,
+          "full_blue": 3,
           "count": 12
         }
       },
       "weights": {
+        "trad_冷号回补": 0.0895,
+        "trad_综合推荐": 0.033,
+        "xgboost": 0.0895,
+        "naive_bayes": 0.2867,
+        "kmeans": 0.0296,
+        "trad_热号推荐": 0.0279,
+        "random_forest": 0.1474,
+        "monte_carlo": 0.046,
+        "trad_随机机选": 0.2116,
+        "markov": 0.0389
+      },
+      "previous_weights": {
         "monte_carlo": 0.0491,
         "trad_热号推荐": 0.0298,
         "naive_bayes": 0.3061,
@@ -156,18 +168,6 @@
         "trad_综合推荐": 0.0352,
         "trad_冷号回补": 0.0956,
         "trad_随机机选": 0.1577
-      },
-      "previous_weights": {
-        "trad_冷号回补": 0.0921,
-        "markov": 0.04,
-        "xgboost": 0.0921,
-        "trad_热号推荐": 0.0287,
-        "kmeans": 0.0321,
-        "trad_综合推荐": 0.0339,
-        "naive_bayes": 0.2947,
-        "monte_carlo": 0.0473,
-        "trad_随机机选": 0.1877,
-        "random_forest": 0.1514
       }
     },
     "dlt": {
@@ -176,7 +176,7 @@
       "backtest_count": 12,
       "is_repeatable": false,
       "blue_count": 2,
-      "update_time": "2026-08-05 01:47:49",
+      "update_time": "2026-08-06 01:47:44",
       "algorithm_scores": {
         "xgboost": {
           "score": 0.1067,
@@ -296,12 +296,12 @@
           "count": 12
         },
         "trad_随机机选": {
-          "score": 0.15,
+          "score": 0.1833,
           "red_rate": 0.1667,
-          "blue_rate": 0.125,
+          "blue_rate": 0.2083,
           "red_hits": 10,
           "red_total": 60,
-          "blue_hits": 3,
+          "blue_hits": 5,
           "blue_total": 24,
           "full_match": 0,
           "full_red": 0,
@@ -310,6 +310,18 @@
         }
       },
       "weights": {
+        "trad_冷号回补": 0.1194,
+        "trad_综合推荐": 0.1191,
+        "xgboost": 0.0241,
+        "naive_bayes": 0.358,
+        "kmeans": 0.041,
+        "trad_热号推荐": 0.0911,
+        "random_forest": 0.08,
+        "monte_carlo": 0.0241,
+        "trad_随机机选": 0.0913,
+        "markov": 0.0518
+      },
+      "previous_weights": {
         "monte_carlo": 0.0243,
         "trad_热号推荐": 0.0919,
         "naive_bayes": 0.3609,
@@ -320,18 +332,6 @@
         "trad_综合推荐": 0.1201,
         "trad_冷号回补": 0.1205,
         "trad_随机机选": 0.0837
-      },
-      "previous_weights": {
-        "trad_冷号回补": 0.1193,
-        "markov": 0.0516,
-        "xgboost": 0.024,
-        "trad_热号推荐": 0.0908,
-        "kmeans": 0.0408,
-        "trad_综合推荐": 0.1187,
-        "naive_bayes": 0.3566,
-        "monte_carlo": 0.024,
-        "trad_随机机选": 0.0942,
-        "random_forest": 0.0798
       }
     },
     "fc3d": {
@@ -340,7 +340,7 @@
       "backtest_count": 12,
       "is_repeatable": true,
       "blue_count": 0,
-      "update_time": "2026-08-05 01:47:55",
+      "update_time": "2026-08-06 01:47:50",
       "algorithm_scores": {
         "xgboost": {
           "score": 0.1389,
@@ -474,6 +474,18 @@
         }
       },
       "weights": {
+        "trad_冷号回补": 0.0292,
+        "trad_综合推荐": 0.0097,
+        "xgboost": 0.0167,
+        "naive_bayes": 0.0054,
+        "kmeans": 0.0054,
+        "trad_热号推荐": 0.017,
+        "random_forest": 0.0169,
+        "monte_carlo": 0.0507,
+        "trad_随机机选": 0.0343,
+        "markov": 0.8147
+      },
+      "previous_weights": {
         "monte_carlo": 0.0506,
         "trad_热号推荐": 0.0171,
         "naive_bayes": 0.0054,
@@ -484,18 +496,6 @@
         "trad_综合推荐": 0.0097,
         "trad_冷号回补": 0.0292,
         "trad_随机机选": 0.0364
-      },
-      "previous_weights": {
-        "trad_冷号回补": 0.0291,
-        "markov": 0.8097,
-        "xgboost": 0.0165,
-        "trad_热号推荐": 0.0172,
-        "kmeans": 0.0054,
-        "trad_综合推荐": 0.0097,
-        "naive_bayes": 0.0054,
-        "monte_carlo": 0.0505,
-        "trad_随机机选": 0.0395,
-        "random_forest": 0.017
       }
     },
     "qlc": {
@@ -504,7 +504,7 @@
       "backtest_count": 12,
       "is_repeatable": false,
       "blue_count": 1,
-      "update_time": "2026-08-05 01:48:13",
+      "update_time": "2026-08-06 01:48:08",
       "algorithm_scores": {
         "xgboost": {
           "score": 0.1702,
@@ -624,20 +624,32 @@
           "count": 12
         },
         "trad_随机机选": {
-          "score": 0.1917,
+          "score": 0.15,
           "red_rate": 0.25,
-          "blue_rate": 0.0833,
+          "blue_rate": 0.0,
           "red_hits": 21,
           "red_total": 84,
-          "blue_hits": 1,
+          "blue_hits": 0,
           "blue_total": 12,
           "full_match": 0,
           "full_red": 0,
-          "full_blue": 1,
+          "full_blue": 0,
           "count": 12
         }
       },
       "weights": {
+        "trad_冷号回补": 0.0785,
+        "trad_综合推荐": 0.0591,
+        "xgboost": 0.1562,
+        "naive_bayes": 0.1045,
+        "kmeans": 0.0746,
+        "trad_热号推荐": 0.1206,
+        "random_forest": 0.0787,
+        "monte_carlo": 0.0785,
+        "trad_随机机选": 0.1725,
+        "markov": 0.0767
+      },
+      "previous_weights": {
         "monte_carlo": 0.0758,
         "trad_热号推荐": 0.1165,
         "naive_bayes": 0.1009,
@@ -648,18 +660,6 @@
         "trad_综合推荐": 0.0571,
         "trad_冷号回补": 0.0758,
         "trad_随机机选": 0.198
-      },
-      "previous_weights": {
-        "trad_冷号回补": 0.0766,
-        "markov": 0.0749,
-        "xgboost": 0.152,
-        "trad_热号推荐": 0.1178,
-        "kmeans": 0.0798,
-        "trad_综合推荐": 0.0577,
-        "naive_bayes": 0.102,
-        "monte_carlo": 0.0766,
-        "trad_随机机选": 0.1857,
-        "random_forest": 0.0769
       }
     },
     "qxc": {
@@ -668,7 +668,7 @@
       "backtest_count": 12,
       "is_repeatable": true,
       "blue_count": 0,
-      "update_time": "2026-08-05 01:48:25",
+      "update_time": "2026-08-06 01:48:20",
       "algorithm_scores": {
         "xgboost": {
           "score": 0.2857,
@@ -788,10 +788,10 @@
           "count": 12
         },
         "trad_随机机选": {
-          "score": 0.3333,
-          "red_rate": 0.3333,
+          "score": 0.2976,
+          "red_rate": 0.2976,
           "blue_rate": 0,
-          "red_hits": 28,
+          "red_hits": 25,
           "red_total": 84,
           "blue_hits": 0,
           "blue_total": 0,
@@ -802,6 +802,18 @@
         }
       },
       "weights": {
+        "trad_冷号回补": 0.0241,
+        "trad_综合推荐": 0.2584,
+        "xgboost": 0.204,
+        "naive_bayes": 0.0058,
+        "kmeans": 0.0301,
+        "trad_热号推荐": 0.0786,
+        "random_forest": 0.0303,
+        "monte_carlo": 0.0028,
+        "trad_随机机选": 0.2393,
+        "markov": 0.1265
+      },
+      "previous_weights": {
         "monte_carlo": 0.0028,
         "trad_热号推荐": 0.0794,
         "naive_bayes": 0.0059,
@@ -812,18 +824,6 @@
         "trad_综合推荐": 0.2613,
         "trad_冷号回补": 0.0244,
         "trad_随机机选": 0.2341
-      },
-      "previous_weights": {
-        "trad_冷号回补": 0.0269,
-        "markov": 0.1409,
-        "xgboost": 0.2275,
-        "trad_热号推荐": 0.0875,
-        "kmeans": 0.0259,
-        "trad_综合推荐": 0.2877,
-        "naive_bayes": 0.0065,
-        "monte_carlo": 0.0031,
-        "trad_随机机选": 0.16,
-        "random_forest": 0.0339
       }
     },
     "pls": {
@@ -832,7 +832,7 @@
       "backtest_count": 12,
       "is_repeatable": true,
       "blue_count": 0,
-      "update_time": "2026-08-05 01:48:33",
+      "update_time": "2026-08-06 01:48:28",
       "algorithm_scores": {
         "xgboost": {
           "score": 0.1389,
@@ -952,10 +952,10 @@
           "count": 12
         },
         "trad_随机机选": {
-          "score": 0.1667,
-          "red_rate": 0.1667,
+          "score": 0.0556,
+          "red_rate": 0.0556,
           "blue_rate": 0,
-          "red_hits": 6,
+          "red_hits": 2,
           "red_total": 36,
           "blue_hits": 0,
           "blue_total": 0,
@@ -966,6 +966,18 @@
         }
       },
       "weights": {
+        "trad_冷号回补": 0.0548,
+        "trad_综合推荐": 0.3463,
+        "xgboost": 0.0177,
+        "naive_bayes": 0.0034,
+        "kmeans": 0.0034,
+        "trad_热号推荐": 0.0177,
+        "random_forest": 0.0178,
+        "monte_carlo": 0.0101,
+        "trad_随机机选": 0.0327,
+        "markov": 0.4962
+      },
+      "previous_weights": {
         "monte_carlo": 0.01,
         "trad_热号推荐": 0.0175,
         "naive_bayes": 0.0033,
@@ -976,18 +988,6 @@
         "trad_综合推荐": 0.3418,
         "trad_冷号回补": 0.0546,
         "trad_随机机选": 0.0452
-      },
-      "previous_weights": {
-        "trad_冷号回补": 0.0549,
-        "markov": 0.4855,
-        "xgboost": 0.0173,
-        "trad_热号推荐": 0.0174,
-        "kmeans": 0.0033,
-        "trad_综合推荐": 0.3396,
-        "naive_bayes": 0.0033,
-        "monte_carlo": 0.0099,
-        "trad_随机机选": 0.0513,
-        "random_forest": 0.0175
       }
     },
     "plw": {
@@ -996,7 +996,7 @@
       "backtest_count": 12,
       "is_repeatable": true,
       "blue_count": 0,
-      "update_time": "2026-08-05 01:48:45",
+      "update_time": "2026-08-06 01:48:41",
       "algorithm_scores": {
         "xgboost": {
           "score": 0.1167,
@@ -1130,6 +1130,18 @@
         }
       },
       "weights": {
+        "trad_冷号回补": 0.1413,
+        "trad_综合推荐": 0.0138,
+        "xgboost": 0.0138,
+        "naive_bayes": 0.0036,
+        "kmeans": 0.0034,
+        "trad_热号推荐": 0.0267,
+        "random_forest": 0.1013,
+        "monte_carlo": 0.0026,
+        "trad_随机机选": 0.1574,
+        "markov": 0.5362
+      },
+      "previous_weights": {
         "monte_carlo": 0.0026,
         "trad_热号推荐": 0.0271,
         "naive_bayes": 0.0036,
@@ -1140,18 +1152,6 @@
         "trad_综合推荐": 0.014,
         "trad_冷号回补": 0.1436,
         "trad_随机机选": 0.1436
-      },
-      "previous_weights": {
-        "trad_冷号回补": 0.1469,
-        "markov": 0.5578,
-        "xgboost": 0.0143,
-        "trad_热号推荐": 0.0277,
-        "kmeans": 0.0032,
-        "trad_综合推荐": 0.0143,
-        "naive_bayes": 0.0037,
-        "monte_carlo": 0.0027,
-        "trad_随机机选": 0.1239,
-        "random_forest": 0.1054
       }
     }
   }

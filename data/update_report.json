@@ -3,7 +3,7 @@
     "lottery": "ssq",
     "name": "双色球",
     "provider": "cwl",
-    "update_time": "2026-08-22 00:40:09",
+    "update_time": "2026-08-23 00:43:48",
     "old_count": 4561,
     "old_latest": "2026084",
     "status": "no_data"
@@ -12,7 +12,7 @@
     "lottery": "dlt",
     "name": "大乐透",
     "provider": "sporttery",
-    "update_time": "2026-08-22 00:40:10",
+    "update_time": "2026-08-23 00:43:49",
     "old_count": 2900,
     "old_latest": "26082",
     "status": "no_data"
@@ -21,7 +21,7 @@
     "lottery": "fc3d",
     "name": "福彩3D",
     "provider": "cwl",
-    "update_time": "2026-08-22 00:40:12",
+    "update_time": "2026-08-23 00:43:51",
     "old_count": 4699,
     "old_latest": "2026194",
     "status": "no_data"
@@ -30,7 +30,7 @@
     "lottery": "qlc",
     "name": "七乐彩",
     "provider": "cwl",
-    "update_time": "2026-08-22 00:40:12",
+    "update_time": "2026-08-23 00:43:51",
     "old_count": 2042,
     "old_latest": "2026083",
     "status": "no_data"
@@ -39,7 +39,7 @@
     "lottery": "qxc",
     "name": "七星彩",
     "provider": "sporttery",
-    "update_time": "2026-08-22 00:40:13",
+    "update_time": "2026-08-23 00:43:51",
     "old_count": 3367,
     "old_latest": "26083",
     "status": "no_data"
@@ -48,7 +48,7 @@
     "lottery": "pls",
     "name": "排列3",
     "provider": "sporttery",
-    "update_time": "2026-08-22 00:40:14",
+    "update_time": "2026-08-23 00:43:53",
     "old_count": 7669,
     "old_latest": "26194",
     "status": "no_data"
@@ -57,7 +57,7 @@
     "lottery": "plw",
     "name": "排列5",
     "provider": "sporttery",
-    "update_time": "2026-08-22 00:40:15",
+    "update_time": "2026-08-23 00:43:54",
     "old_count": 7666,
     "old_latest": "26191",
     "status": "no_data"

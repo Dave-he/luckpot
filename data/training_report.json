@@ -7,7 +7,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.54,
+        "elapsed": 1.51,
         "metrics": {
           "red_mse": 11.4027,
           "red_mae": 2.6723,
@@ -18,7 +18,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 47.21,
+        "elapsed": 45.26,
         "metrics": {
           "red_acc_mean": 0.1182,
           "red_acc_per_pos": [
@@ -35,7 +35,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 2.6,
+        "elapsed": 2.48,
         "metrics": {
           "red_acc_mean": 0.5408,
           "blue_acc_mean": 0.8363
@@ -44,7 +44,7 @@
       },
       "markov": {
         "success": true,
-        "elapsed": 0.02,
+        "elapsed": 0.01,
         "metrics": {
           "avg_diag_prob": 0.2021
         },
@@ -66,7 +66,7 @@
       },
       "kmeans": {
         "success": true,
-        "elapsed": 0.16,
+        "elapsed": 0.14,
         "metrics": {
           "n_clusters": 8,
           "cluster_sizes": [
@@ -121,7 +121,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 1.11,
+        "elapsed": 1.1,
         "metrics": {
           "expert_weights": {
             "hot": 0.0,
@@ -138,7 +138,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 9.44,
+        "elapsed": 9.0,
         "metrics": {
           "final_loss": 4.5384
         },
@@ -154,7 +154,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.21,
+        "elapsed": 1.2,
         "metrics": {
           "red_mse": 15.9706,
           "red_mae": 3.2146,
@@ -165,7 +165,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 27.33,
+        "elapsed": 26.22,
         "metrics": {
           "red_acc_mean": 0.1058,
           "red_acc_per_pos": [
@@ -181,7 +181,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 2.03,
+        "elapsed": 1.95,
         "metrics": {
           "red_acc_mean": 0.5371,
           "blue_acc_mean": 0.8693
@@ -271,7 +271,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.54,
+        "elapsed": 0.53,
         "metrics": {
           "expert_weights": {
             "hot": 0.1129,
@@ -288,7 +288,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 9.31,
+        "elapsed": 8.94,
         "metrics": {
           "final_loss": 4.2728
         },
@@ -304,7 +304,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 0.37,
+        "elapsed": 0.36,
         "metrics": {
           "red_mse": 2.9555,
           "red_mae": 1.408
@@ -313,7 +313,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 8.6,
+        "elapsed": 8.25,
         "metrics": {
           "red_acc_mean": 0.2125,
           "red_acc_per_pos": [
@@ -326,7 +326,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 0.95,
+        "elapsed": 0.9,
         "metrics": {
           "red_acc_mean": 0.7235
         },
@@ -356,7 +356,7 @@
       },
       "kmeans": {
         "success": true,
-        "elapsed": 0.06,
+        "elapsed": 0.05,
         "metrics": {
           "n_clusters": 8,
           "cluster_sizes": [
@@ -429,7 +429,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 8.16,
+        "elapsed": 7.86,
         "metrics": {
           "final_loss": 2.7583
         },
@@ -445,7 +445,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.2,
+        "elapsed": 1.18,
         "metrics": {
           "red_mse": 5.7095,
           "red_mae": 1.9044,
@@ -456,7 +456,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 25.25,
+        "elapsed": 24.55,
         "metrics": {
           "red_acc_mean": 0.1531,
           "red_acc_per_pos": [
@@ -474,7 +474,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 2.1,
+        "elapsed": 1.96,
         "metrics": {
           "red_acc_mean": 0.6806,
           "blue_acc_mean": 0.9112
@@ -505,7 +505,7 @@
       },
       "kmeans": {
         "success": true,
-        "elapsed": 0.08,
+        "elapsed": 0.07,
         "metrics": {
           "n_clusters": 8,
           "cluster_sizes": [
@@ -539,7 +539,7 @@
       },
       "triggers_followers": {
         "success": true,
-        "elapsed": 0.07,
+        "elapsed": 0.06,
         "metrics": {
           "red_avg_trigger_prob": 0.2321,
           "red_max_trigger_prob": 0.2966,
@@ -563,7 +563,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.62,
+        "elapsed": 0.61,
         "metrics": {
           "expert_weights": {
             "hot": 0.2919,
@@ -580,7 +580,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 9.6,
+        "elapsed": 9.28,
         "metrics": {
           "final_loss": 3.7739
         },
@@ -605,7 +605,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 14.44,
+        "elapsed": 13.59,
         "metrics": {
           "red_acc_mean": 0.3192,
           "red_acc_per_pos": [
@@ -622,7 +622,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 1.91,
+        "elapsed": 1.79,
         "metrics": {
           "red_acc_mean": 0.8145
         },
@@ -694,7 +694,7 @@
       },
       "ghost_variances": {
         "success": true,
-        "elapsed": 0.01,
+        "elapsed": 0.0,
         "metrics": {
           "red_ghost_count": 0,
           "red_ghost_numbers": [],
@@ -707,7 +707,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.85,
+        "elapsed": 0.83,
         "metrics": {
           "expert_weights": {
             "hot": 0.1228,
@@ -724,7 +724,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 8.2,
+        "elapsed": 7.82,
         "metrics": {
           "final_loss": 4.1026
         },
@@ -740,7 +740,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 0.57,
+        "elapsed": 0.55,
         "metrics": {
           "red_mse": 3.3169,
           "red_mae": 1.4971
@@ -749,7 +749,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 14.58,
+        "elapsed": 13.4,
         "metrics": {
           "red_acc_mean": 0.209,
           "red_acc_per_pos": [
@@ -762,7 +762,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 1.23,
+        "elapsed": 1.19,
         "metrics": {
           "red_acc_mean": 0.6521
         },
@@ -770,7 +770,7 @@
       },
       "markov": {
         "success": true,
-        "elapsed": 0.02,
+        "elapsed": 0.01,
         "metrics": {
           "avg_diag_prob": 0.1001
         },
@@ -778,7 +778,7 @@
       },
       "naive_bayes": {
         "success": true,
-        "elapsed": 0.08,
+        "elapsed": 0.07,
         "metrics": {},
         "samples": 7659
       },
@@ -847,7 +847,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.65,
+        "elapsed": 0.61,
         "metrics": {
           "expert_weights": {
             "hot": 0.0144,
@@ -864,7 +864,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 8.11,
+        "elapsed": 7.84,
         "metrics": {
           "final_loss": 2.7282
         },
@@ -880,7 +880,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.02,
+        "elapsed": 0.98,
         "metrics": {
           "red_mse": 2.2126,
           "red_mae": 1.1969
@@ -889,7 +889,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 23.79,
+        "elapsed": 22.27,
         "metrics": {
           "red_acc_mean": 0.263,
           "red_acc_per_pos": [
@@ -904,7 +904,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 1.99,
+        "elapsed": 1.89,
         "metrics": {
           "red_acc_mean": 0.6285
         },
@@ -934,7 +934,7 @@
       },
       "kmeans": {
         "success": true,
-        "elapsed": 0.12,
+        "elapsed": 0.11,
         "metrics": {
           "n_clusters": 8,
           "cluster_sizes": [
@@ -990,7 +990,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.92,
+        "elapsed": 0.9,
         "metrics": {
           "expert_weights": {
             "hot": 0.0494,
@@ -1007,7 +1007,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 8.14,
+        "elapsed": 7.78,
         "metrics": {
           "final_loss": 2.7097
         },

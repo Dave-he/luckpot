@@ -4,7 +4,7 @@
     "name": "双色球",
     "schedule": "每周二、四、日",
     "provider": "cwl",
-    "predict_time": "2026-10-31 03:24:47",
+    "predict_time": "2026-11-01 03:23:21",
     "latest_issue": "2026084",
     "latest_reds": [
       1,
@@ -959,15 +959,15 @@
         },
         "随机机选": {
           "reds": [
-            1,
-            7,
-            17,
-            18,
-            28,
-            30
+            8,
+            11,
+            13,
+            15,
+            19,
+            25
           ],
           "blues": [
-            8
+            7
           ]
         }
       }
@@ -978,7 +978,7 @@
     "name": "大乐透",
     "schedule": "每周一、三、六",
     "provider": "sporttery",
-    "predict_time": "2026-10-31 03:24:49",
+    "predict_time": "2026-11-01 03:23:23",
     "latest_issue": "26082",
     "latest_reds": [
       16,
@@ -1929,14 +1929,14 @@
         },
         "随机机选": {
           "reds": [
-            3,
-            11,
-            14,
-            26,
-            28
+            5,
+            22,
+            23,
+            34,
+            35
           ],
           "blues": [
-            7,
+            6,
             12
           ]
         }
@@ -1948,7 +1948,7 @@
     "name": "福彩3D",
     "schedule": "每日开奖",
     "provider": "cwl",
-    "predict_time": "2026-10-31 03:24:50",
+    "predict_time": "2026-11-01 03:23:24",
     "latest_issue": "2026194",
     "latest_reds": [
       2,
@@ -2503,7 +2503,7 @@
     "name": "七乐彩",
     "schedule": "每周一、三、五",
     "provider": "cwl",
-    "predict_time": "2026-10-31 03:24:51",
+    "predict_time": "2026-11-01 03:23:25",
     "latest_issue": "2026083",
     "latest_reds": [
       1,
@@ -3526,16 +3526,16 @@
         },
         "随机机选": {
           "reds": [
-            1,
-            6,
+            2,
             7,
-            14,
-            15,
-            17,
-            28
+            12,
+            20,
+            22,
+            24,
+            27
           ],
           "blues": [
-            14
+            23
           ]
         }
       }
@@ -3546,7 +3546,7 @@
     "name": "七星彩",
     "schedule": "每周二、五、日",
     "provider": "sporttery",
-    "predict_time": "2026-10-31 03:24:52",
+    "predict_time": "2026-11-01 03:23:26",
     "latest_issue": "26083",
     "latest_reds": [
       1,
@@ -4171,8 +4171,8 @@
             0,
             1,
             2,
-            4,
-            6,
+            5,
+            7,
             8,
             9
           ],
@@ -4186,7 +4186,7 @@
     "name": "排列3",
     "schedule": "每日开奖",
     "provider": "sporttery",
-    "predict_time": "2026-10-31 03:24:53",
+    "predict_time": "2026-11-01 03:23:27",
     "latest_issue": "26194",
     "latest_reds": [
       0,
@@ -4727,7 +4727,7 @@
         "随机机选": {
           "reds": [
             1,
-            7,
+            4,
             8
           ],
           "blues": []
@@ -4740,7 +4740,7 @@
     "name": "排列5",
     "schedule": "每日开奖",
     "provider": "sporttery",
-    "predict_time": "2026-10-31 03:24:54",
+    "predict_time": "2026-11-01 03:23:28",
     "latest_issue": "26191",
     "latest_reds": [
       0,
@@ -5323,7 +5323,7 @@
         },
         "随机机选": {
           "reds": [
-            1,
+            0,
             2,
             3,
             4,

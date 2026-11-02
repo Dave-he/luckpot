@@ -3,63 +3,155 @@
     "lottery": "ssq",
     "name": "双色球",
     "provider": "cwl",
-    "update_time": "2026-11-02 03:27:05",
+    "update_time": "2026-11-02 19:34:05",
     "old_count": 4561,
     "old_latest": "2026084",
-    "status": "no_data"
+    "used_provider": "cwl",
+    "new_count": 4602,
+    "new_latest": "2026125",
+    "added": 41,
+    "status": "success",
+    "latest_reds": [
+      4,
+      6,
+      10,
+      15,
+      26,
+      27
+    ],
+    "latest_blues": [
+      11
+    ]
   },
   {
     "lottery": "dlt",
     "name": "大乐透",
     "provider": "sporttery",
-    "update_time": "2026-11-02 03:27:07",
+    "update_time": "2026-11-02 19:34:28",
     "old_count": 2900,
     "old_latest": "26082",
-    "status": "no_data"
+    "used_provider": "sporttery",
+    "new_count": 2942,
+    "new_latest": "26124",
+    "added": 42,
+    "status": "success",
+    "latest_reds": [
+      12,
+      14,
+      18,
+      22,
+      27
+    ],
+    "latest_blues": [
+      1,
+      9
+    ]
   },
   {
     "lottery": "fc3d",
     "name": "福彩3D",
     "provider": "cwl",
-    "update_time": "2026-11-02 03:27:08",
+    "update_time": "2026-11-02 19:34:59",
     "old_count": 4699,
     "old_latest": "2026194",
-    "status": "no_data"
+    "used_provider": "cwl",
+    "new_count": 4796,
+    "new_latest": "2026291",
+    "added": 97,
+    "status": "success",
+    "latest_reds": [
+      0,
+      6,
+      8
+    ],
+    "latest_blues": []
   },
   {
     "lottery": "qlc",
     "name": "七乐彩",
     "provider": "cwl",
-    "update_time": "2026-11-02 03:27:08",
+    "update_time": "2026-11-02 19:35:53",
     "old_count": 2042,
     "old_latest": "2026083",
-    "status": "no_data"
+    "used_provider": "cwl",
+    "new_count": 2084,
+    "new_latest": "2026125",
+    "added": 42,
+    "status": "success",
+    "latest_reds": [
+      2,
+      5,
+      10,
+      15,
+      22,
+      23,
+      28
+    ],
+    "latest_blues": [
+      3
+    ]
   },
   {
     "lottery": "qxc",
     "name": "七星彩",
     "provider": "sporttery",
-    "update_time": "2026-11-02 03:27:09",
+    "update_time": "2026-11-02 19:36:16",
     "old_count": 3367,
     "old_latest": "26083",
-    "status": "no_data"
+    "used_provider": "sporttery",
+    "new_count": 3409,
+    "new_latest": "26125",
+    "added": 42,
+    "status": "success",
+    "latest_reds": [
+      2,
+      2,
+      3,
+      4,
+      5,
+      6,
+      9
+    ],
+    "latest_blues": []
   },
   {
     "lottery": "pls",
     "name": "排列3",
     "provider": "sporttery",
-    "update_time": "2026-11-02 03:27:10",
+    "update_time": "2026-11-02 19:37:15",
     "old_count": 7669,
     "old_latest": "26194",
-    "status": "no_data"
+    "used_provider": "sporttery",
+    "new_count": 7766,
+    "new_latest": "26291",
+    "added": 97,
+    "status": "success",
+    "latest_reds": [
+      2,
+      6,
+      7
+    ],
+    "latest_blues": []
   },
   {
     "lottery": "plw",
     "name": "排列5",
     "provider": "sporttery",
-    "update_time": "2026-11-02 03:27:11",
+    "update_time": "2026-11-02 19:38:56",
     "old_count": 7666,
     "old_latest": "26191",
-    "status": "no_data"
+    "used_provider": "sporttery",
+    "new_count": 7766,
+    "new_latest": "26291",
+    "added": 100,
+    "status": "success",
+    "latest_reds": [
+      2,
+      2,
+      4,
+      6,
+      7
+    ],
+    "latest_blues": []
   }
 ]

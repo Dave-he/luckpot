@@ -364,110 +364,56 @@ def build_weighted_predictions_section(weighted_preds):
     return "\n".join(rows)
 
 
-def build_hits_section(hits):
-    """构建预测命中记录部分"""
-    if not hits:
+def build_hits_summary(history):
+    """构建历史预测摘要 (README 用, 详细内容见 docs/prediction-history.md)"""
+    if not history:
         return ""
 
+    settled = [h for h in history if h.get("status") == "settled"]
+    pending = [h for h in history if h.get("status") == "pending"]
+
     rows = []
-    rows.append("## 预测命中记录 (永久保存)")
+    rows.append("## 历史预测概况")
     rows.append("")
-    rows.append(f"> 累计记录 {len(hits)} 次对比结果 (命中即永久存档)")
-    rows.append("")
-
-    # 统计各模型命中情况
-    model_stats = {}
-    for h in hits:
-        for r in h.get("results", []):
-            m = r["model"]
-            if m not in model_stats:
-                model_stats[m] = {"total": 0, "red_hits": 0, "blue_hits": 0,
-                                  "full_red": 0, "full_blue": 0, "full_match": 0}
-            model_stats[m]["total"] += 1
-            model_stats[m]["red_hits"] += r["red_hits"]
-            model_stats[m]["blue_hits"] += r["blue_hits"]
-            if r["full_red_match"]:
-                model_stats[m]["full_red"] += 1
-            if r["full_blue_match"]:
-                model_stats[m]["full_blue"] += 1
-            if r["full_match"]:
-                model_stats[m]["full_match"] += 1
-
-    rows.append("### 模型命中统计")
-    rows.append("")
-    rows.append("| 模型 | 对比次数 | 红球命中总数 | 蓝球命中总数 | 红球全中 | 蓝球全中 | 完全命中 |")
-    rows.append("| --- | --- | --- | --- | --- | --- | --- |")
-    for m, s in sorted(model_stats.items(), key=lambda x: -x[1]["red_hits"]):
-        rows.append(f"| {m} | {s['total']} | {s['red_hits']} | {s['blue_hits']} | "
-                    f"{s['full_red']} | {s['full_blue']} | {s['full_match']} |")
+    rows.append(f"> 累计归档 **{len(history)}** 期预测 (已开奖 **{len(settled)}**, 待开奖 **{len(pending)}**)"
+                f" | [查看完整历史 →](docs/prediction-history.md)")
     rows.append("")
 
-    # 完全命中 / 红球全中 / 蓝球全中的高亮记录
-    highlights = []
-    for h in hits:
-        for r in h.get("results", []):
-            if r["full_match"] or r["full_red_match"] or (r["full_blue_match"] and r["blue_total"] > 0):
-                tag = []
-                if r["full_match"]:
-                    tag.append("★完全命中")
-                elif r["full_red_match"]:
-                    tag.append("★红球全中")
-                elif r["full_blue_match"]:
-                    tag.append("★蓝球全中")
-                highlights.append({
-                    "lottery": h.get("name", h.get("lottery")),
-                    "issue": h.get("predict_for_issue"),
-                    "date": h.get("predict_for_date", ""),
-                    "model": r["model"],
-                    "predicted_reds": r["predicted_reds"],
-                    "predicted_blues": r["predicted_blues"],
-                    "actual_reds": r["actual_reds"],
-                    "actual_blues": r["actual_blues"],
-                    "tag": " ".join(tag),
-                    "red_hits": r["red_hits"],
-                    "red_total": r["red_total"],
-                    "blue_hits": r["blue_hits"],
-                    "blue_total": r["blue_total"],
-                })
+    # 按彩种汇总命中表现
+    rows.append("| 彩种 | 已开奖期数 | 平均最佳红球命中 | 最佳单期 | 红球全中 |")
+    rows.append("| --- | --- | --- | --- | --- |")
 
-    if highlights:
-        rows.append("### 高亮命中 (红球全中 / 蓝球全中 / 完全命中)")
+    by_lottery = {}
+    for h in settled:
+        key = h.get("name", h.get("lottery", "-"))
+        by_lottery.setdefault(key, []).append(h)
+
+    for name, entries in by_lottery.items():
+        bests = [e.get("best_red_hits", 0) for e in entries]
+        avg = sum(bests) / len(bests) if bests else 0
+        total_red = entries[0]["models"][0].get("red_total", 0) if entries and entries[0].get("models") else 0
+        full_red = sum(
+            1 for e in entries for m in e.get("models", []) if m.get("full_red")
+        )
+        rows.append(f"| {name} | {len(entries)} | {avg:.2f}/{total_red} | {max(bests) if bests else 0}/{total_red} | {full_red} |")
+
+    rows.append("")
+
+    # 最近已开奖的 5 期
+    if settled:
+        rows.append("### 最近已开奖 (最近5期)")
         rows.append("")
-        rows.append("| 彩种 | 期号 | 模型 | 预测红球 | 实际红球 | 预测蓝球 | 实际蓝球 | 命中 | 标记 |")
-        rows.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- |")
-        for h in highlights:
-            rows.append(
-                f"| {h['lottery']} | {h['issue']} | {h['model']} | "
-                f"`{fmt_reds(h['predicted_reds'])}` | `{fmt_reds(h['actual_reds'])}` | "
-                f"`{fmt_blues(h['predicted_blues'])}` | `{fmt_blues(h['actual_blues'])}` | "
-                f"红{h['red_hits']}/{h['red_total']} 蓝{h['blue_hits']}/{h['blue_total']} | {h['tag']} |"
-            )
+        rows.append("| 彩种 | 期号 | 开奖日期 | 实际号码 | 最佳命中 |")
+        rows.append("| --- | --- | --- | --- | --- |")
+        for h in settled[:5]:
+            actual = fmt_reds(h.get("actual_reds", []))
+            if h.get("actual_blues"):
+                actual += f" + {fmt_blues(h['actual_blues'])}"
+            best = h.get("best_red_hits", 0)
+            total = h["models"][0].get("red_total", 0) if h.get("models") else 0
+            rows.append(f"| {h.get('name', h['lottery'])} | {h['target_issue']} | "
+                        f"{h.get('draw_date', '-')} | `{actual}` | {best}/{total} |")
         rows.append("")
-
-    # 最近10次对比记录
-    rows.append("### 最近对比记录 (最多20条)")
-    rows.append("")
-    rows.append("| 彩种 | 期号 | 模型 | 预测红球 | 实际红球 | 预测蓝球 | 实际蓝球 | 命中 |")
-    rows.append("| --- | --- | --- | --- | --- | --- | --- | --- |")
-    recent = hits[-20:]
-    for h in recent:
-        name = h.get("name", h.get("lottery"))
-        issue = h.get("predict_for_issue")
-        for r in h.get("results", []):
-            tag = ""
-            if r["full_match"]:
-                tag = " ★完全命中"
-            elif r["full_red_match"]:
-                tag = " ★红球全中"
-            elif r["full_blue_match"] and r["blue_total"] > 0:
-                tag = " ★蓝球全中"
-            rows.append(
-                f"| {name} | {issue} | {r['model']} | "
-                f"`{fmt_reds(r['predicted_reds'])}` | `{fmt_reds(r['actual_reds'])}` | "
-                f"`{fmt_blues(r['predicted_blues'])}` | `{fmt_blues(r['actual_blues'])}` | "
-                f"红{r['red_hits']}/{r['red_total']} 蓝{r['blue_hits']}/{r['blue_total']}{tag} |"
-            )
-    rows.append("")
 
     return "\n".join(rows)
 
@@ -478,7 +424,7 @@ def main():
     predictions = load_json("data/predictions.json", default=[])
     training_report = load_json("data/training_report.json", default=[])
     update_report = load_json("data/update_report.json", default=[])
-    hits = load_json("data/prediction_hits.json", default=[])
+    history = load_json("data/prediction_history.json", default=[])
     weights_data = load_json("data/algorithm_weights.json", default={})
     weighted_preds = load_json("data/weighted_predictions.json", default=[])
     backtest_data = load_json("data/backtest_report.json", default={})
@@ -503,6 +449,10 @@ def main():
     sections.append("[![每日预测](https://github.com/Dave-he/luckpot/actions/workflows/daily.yml/badge.svg)](https://github.com/Dave-he/luckpot/actions/workflows/daily.yml)")
     sections.append("")
     sections.append("系统每日通过 GitHub Actions 自动运行：抓取最新数据 → 训练模型 → 生成预测 → 推送更新。")
+    sections.append("")
+
+    # 历史归档入口
+    sections.append("📜 **[查看完整预测历史与命中统计 →](docs/prediction-history.md)**")
     sections.append("")
 
     # 预测时间
@@ -538,7 +488,7 @@ def main():
         sections.append(backtest_section)
 
     # 预测命中记录
-    hits_section = build_hits_section(hits)
+    hits_section = build_hits_summary(history)
     if hits_section:
         sections.append(hits_section)
 
@@ -661,20 +611,24 @@ def main():
     sections.append("├── train_models.py       # 模型训练脚本")
     sections.append("├── predict.py            # 预测脚本")
     sections.append("├── check_hits.py         # 预测命中检查脚本")
+    sections.append("├── update_history.py     # 预测历史归档脚本 (record/settle)")
     sections.append("├── update_weights.py     # 动态算法权重更新脚本")
     sections.append("├── weighted_predict.py   # 权重融合预测脚本")
     sections.append("├── backtest.py           # 历史回测验证脚本")
-    sections.append("└── generate_readme.py    # README 生成脚本")
+    sections.append("├── generate_readme.py    # README 生成脚本 (下一期预测)")
+    sections.append("└── generate_history.py   # 预测历史文件生成脚本")
     sections.append("data/")
     sections.append("├── {lottery}/history.csv # 各彩种历史数据")
     sections.append("├── {lottery}/models/     # 训练好的模型")
     sections.append("├── predictions.json      # 当前各算法预测结果")
     sections.append("├── weighted_predictions.json # 权重融合预测结果")
     sections.append("├── algorithm_weights.json # 动态算法权重 (永久保存)")
-    sections.append("├── prediction_hits.json  # 预测命中记录 (永久保存)")
+    sections.append("├── prediction_history.json # 预测历史归档 (永久保存)")
     sections.append("├── backtest_report.json  # 历史回测报告")
     sections.append("├── training_report.json  # 训练报告")
     sections.append("└── update_report.json    # 数据更新报告")
+    sections.append("docs/")
+    sections.append("└── prediction-history.md # 完整预测历史与命中统计 (自动生成)")
     sections.append(".github/workflows/daily.yml # GitHub Actions 每日定时任务")
     sections.append("```")
     sections.append("")
@@ -684,15 +638,17 @@ def main():
     sections.append("")
     sections.append("GitHub Actions 每天北京时间 08:00 自动执行:")
     sections.append("")
-    sections.append("1. **抓取数据** - `python3 scripts/update_data.py`")
+    sections.append("1. **抓取数据** - `python3 scripts/update_data.py` (主源失败自动降级 500.com)")
     sections.append("2. **训练模型** - `python3 scripts/train_models.py`")
-    sections.append("3. **检查上次预测命中** - `python3 scripts/check_hits.py` (永久记录到 prediction_hits.json)")
+    sections.append("3. **检查上次预测命中** - `python3 scripts/check_hits.py`")
     sections.append("4. **更新动态权重** - `python3 scripts/update_weights.py` (基于历史回测)")
     sections.append("5. **生成新预测** - `python3 scripts/predict.py`")
     sections.append("6. **权重融合预测** - `python3 scripts/weighted_predict.py` (综合所有算法)")
-    sections.append("7. **历史回测验证** - `python3 scripts/backtest.py` (每周一/四)")
-    sections.append("8. **更新 README** - `python3 scripts/generate_readme.py`")
-    sections.append("9. **提交推送** - 自动 commit 并 push 到 GitHub")
+    sections.append("7. **历史回测验证** - `python3 scripts/backtest.py`")
+    sections.append("8. **归档预测历史** - `python3 scripts/update_history.py` (结算已开奖 + 归档新预测)")
+    sections.append("9. **更新 README** - `python3 scripts/generate_readme.py` (下一期预测)")
+    sections.append("10. **更新历史文件** - `python3 scripts/generate_history.py` (docs/prediction-history.md)")
+    sections.append("11. **提交推送** - 自动 commit 并 push 到 GitHub")
     sections.append("")
     sections.append("也可手动在 GitHub Actions 页面触发运行。")
     sections.append("")

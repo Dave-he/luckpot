@@ -1,0 +1,2876 @@
+[
+  {
+    "lottery": "ssq",
+    "name": "双色球",
+    "target_issue": "2026126",
+    "based_on_issue": "2026125",
+    "predict_time": "2026-11-02 19:41:02",
+    "status": "pending",
+    "actual_reds": [],
+    "actual_blues": [],
+    "draw_date": "",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          5,
+          8,
+          13,
+          18,
+          26,
+          29
+        ],
+        "blues": [
+          8
+        ]
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          1,
+          2,
+          22,
+          25,
+          27,
+          30
+        ],
+        "blues": [
+          6
+        ]
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          15,
+          16,
+          17,
+          19,
+          20,
+          21
+        ],
+        "blues": [
+          12
+        ]
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "blues": [
+          11
+        ]
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          4,
+          6,
+          7,
+          11,
+          29,
+          30
+        ],
+        "blues": [
+          12
+        ]
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          14,
+          24,
+          25,
+          28,
+          30
+        ],
+        "blues": [
+          1
+        ]
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          2,
+          4,
+          6,
+          17,
+          25,
+          31
+        ],
+        "blues": [
+          11
+        ]
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          3,
+          8,
+          9,
+          17,
+          22,
+          32
+        ],
+        "blues": [
+          15
+        ]
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          4,
+          13,
+          14,
+          22,
+          26,
+          30
+        ],
+        "blues": [
+          4
+        ]
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          8,
+          9,
+          12,
+          28,
+          32,
+          33
+        ],
+        "blues": [
+          13
+        ]
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          4,
+          8,
+          13,
+          14,
+          22,
+          30
+        ],
+        "blues": [
+          11
+        ]
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          4,
+          5,
+          6,
+          14,
+          29,
+          30
+        ],
+        "blues": [
+          12
+        ]
+      }
+    ]
+  },
+  {
+    "lottery": "ssq",
+    "name": "双色球",
+    "target_issue": "2026085",
+    "based_on_issue": "2026084",
+    "predict_time": "2026-11-02 03:31:49",
+    "status": "settled",
+    "actual_reds": [
+      6,
+      9,
+      13,
+      17,
+      24,
+      28
+    ],
+    "actual_blues": [
+      15
+    ],
+    "draw_date": "2026-07-26(日)",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          4,
+          10,
+          14,
+          17,
+          22,
+          29
+        ],
+        "blues": [
+          9
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          6,
+          17,
+          30,
+          31,
+          32,
+          33
+        ],
+        "blues": [
+          12
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          10,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "blues": [
+          16
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          1,
+          5,
+          6,
+          10,
+          12,
+          16
+        ],
+        "blues": [
+          5
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          1,
+          2,
+          4,
+          6,
+          8,
+          14
+        ],
+        "blues": [
+          2
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          14,
+          24,
+          25,
+          28,
+          30
+        ],
+        "blues": [
+          1
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          1,
+          7,
+          9,
+          16,
+          17,
+          22
+        ],
+        "blues": [
+          7
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          3,
+          8,
+          9,
+          17,
+          22,
+          32
+        ],
+        "blues": [
+          15
+        ],
+        "red_hits": 2,
+        "blue_hits": 1,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          1,
+          7,
+          16,
+          24,
+          28,
+          29
+        ],
+        "blues": [
+          4
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          2,
+          8,
+          9,
+          13,
+          26,
+          31
+        ],
+        "blues": [
+          14
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          16,
+          24,
+          25,
+          28,
+          29,
+          30
+        ],
+        "blues": [
+          5
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          1,
+          2,
+          4,
+          13,
+          14,
+          16
+        ],
+        "blues": [
+          2
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-02 19:41:19",
+    "best_red_hits": 2
+  },
+  {
+    "lottery": "qxc",
+    "name": "七星彩",
+    "target_issue": "26126",
+    "based_on_issue": "26125",
+    "predict_time": "2026-11-02 19:41:05",
+    "status": "pending",
+    "actual_reds": [],
+    "actual_blues": [],
+    "draw_date": "",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          0,
+          3,
+          3,
+          3,
+          6,
+          6,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          9,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          1,
+          3,
+          5,
+          6,
+          8,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          1,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          0,
+          1,
+          3,
+          5,
+          6,
+          8,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          7,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          0,
+          1,
+          2,
+          5,
+          7,
+          8,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9
+        ],
+        "blues": []
+      }
+    ]
+  },
+  {
+    "lottery": "qxc",
+    "name": "七星彩",
+    "target_issue": "26084",
+    "based_on_issue": "26083",
+    "predict_time": "2026-11-02 03:31:53",
+    "status": "settled",
+    "actual_reds": [
+      0,
+      3,
+      4,
+      4,
+      6,
+      7,
+      8
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-07-24",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          1,
+          3,
+          4,
+          4,
+          6,
+          7,
+          9
+        ],
+        "blues": [],
+        "red_hits": 5,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          0,
+          1,
+          3,
+          3,
+          6,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          0,
+          0,
+          3,
+          6,
+          6,
+          9,
+          9
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          0,
+          1,
+          3,
+          5,
+          6,
+          8
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          0,
+          1,
+          3,
+          5,
+          6,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "blues": [],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          1,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          7,
+          8
+        ],
+        "blues": [],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          0,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "blues": [],
+        "red_hits": 6,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          1,
+          3,
+          4,
+          4,
+          6,
+          7,
+          9
+        ],
+        "blues": [],
+        "red_hits": 5,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-02 19:41:19",
+    "best_red_hits": 6
+  },
+  {
+    "lottery": "qlc",
+    "name": "七乐彩",
+    "target_issue": "2026126",
+    "based_on_issue": "2026125",
+    "predict_time": "2026-11-02 19:41:05",
+    "status": "pending",
+    "actual_reds": [],
+    "actual_blues": [],
+    "draw_date": "",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          4,
+          8,
+          10,
+          15,
+          19,
+          25,
+          27
+        ],
+        "blues": [
+          16
+        ]
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          3,
+          4,
+          11,
+          25,
+          27,
+          28,
+          29
+        ],
+        "blues": [
+          9
+        ]
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          10,
+          11,
+          12,
+          13,
+          16,
+          17,
+          23
+        ],
+        "blues": [
+          2
+        ]
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          6,
+          7,
+          8,
+          17,
+          19,
+          21,
+          23
+        ],
+        "blues": [
+          9
+        ]
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          3,
+          9,
+          11,
+          12,
+          13,
+          20,
+          28
+        ],
+        "blues": [
+          19
+        ]
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          12,
+          14,
+          16,
+          25,
+          26,
+          27,
+          30
+        ],
+        "blues": [
+          16
+        ]
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          3,
+          12,
+          13,
+          18,
+          24,
+          28,
+          30
+        ],
+        "blues": [
+          9
+        ]
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          1,
+          6,
+          8,
+          13,
+          22,
+          25,
+          27
+        ],
+        "blues": [
+          15
+        ]
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          1,
+          5,
+          6,
+          8,
+          14,
+          23,
+          29
+        ],
+        "blues": [
+          27
+        ]
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          1,
+          9,
+          13,
+          16,
+          19,
+          25,
+          27
+        ],
+        "blues": [
+          4
+        ]
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          6,
+          8,
+          9,
+          13,
+          14,
+          23
+        ],
+        "blues": [
+          9
+        ]
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          8,
+          9,
+          12,
+          13,
+          14,
+          23,
+          25
+        ],
+        "blues": [
+          9
+        ]
+      }
+    ]
+  },
+  {
+    "lottery": "qlc",
+    "name": "七乐彩",
+    "target_issue": "2026084",
+    "based_on_issue": "2026083",
+    "predict_time": "2026-11-02 03:31:52",
+    "status": "settled",
+    "actual_reds": [
+      4,
+      9,
+      14,
+      16,
+      18,
+      22,
+      23
+    ],
+    "actual_blues": [
+      11
+    ],
+    "draw_date": "2026-07-24(五)",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          3,
+          6,
+          11,
+          14,
+          18,
+          22,
+          26
+        ],
+        "blues": [
+          13
+        ],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          3,
+          8,
+          10,
+          21,
+          24,
+          25,
+          29
+        ],
+        "blues": [
+          23
+        ],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          16
+        ],
+        "blues": [
+          22
+        ],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          2,
+          5,
+          6,
+          8,
+          10,
+          12,
+          18
+        ],
+        "blues": [
+          28
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          1,
+          3,
+          9,
+          11,
+          14,
+          15,
+          22
+        ],
+        "blues": [
+          24
+        ],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          12,
+          14,
+          16,
+          25,
+          26,
+          27,
+          30
+        ],
+        "blues": [
+          16
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          3,
+          12,
+          13,
+          18,
+          24,
+          28,
+          30
+        ],
+        "blues": [
+          9
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          1,
+          6,
+          8,
+          13,
+          22,
+          25,
+          27
+        ],
+        "blues": [
+          15
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          6,
+          7,
+          8,
+          10,
+          12,
+          14,
+          30
+        ],
+        "blues": [
+          16
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          2,
+          9,
+          10,
+          11,
+          13,
+          15,
+          17
+        ],
+        "blues": [
+          15
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          10,
+          11,
+          12,
+          14,
+          15,
+          17,
+          30
+        ],
+        "blues": [
+          21
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          9,
+          10,
+          11,
+          12,
+          14,
+          15,
+          17
+        ],
+        "blues": [
+          21
+        ],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-02 19:41:19",
+    "best_red_hits": 3
+  },
+  {
+    "lottery": "plw",
+    "name": "排列5",
+    "target_issue": "26292",
+    "based_on_issue": "26291",
+    "predict_time": "2026-11-02 19:41:07",
+    "status": "pending",
+    "actual_reds": [],
+    "actual_blues": [],
+    "draw_date": "",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          1,
+          3,
+          4,
+          6,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          0,
+          2,
+          3,
+          7,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          0,
+          3,
+          5,
+          7,
+          7
+        ],
+        "blues": []
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          2,
+          4,
+          7,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          0,
+          3,
+          5,
+          6,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          3,
+          4,
+          5,
+          7
+        ],
+        "blues": []
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          2,
+          3,
+          4,
+          6,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          3,
+          4,
+          5,
+          6,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          0,
+          1,
+          2,
+          4,
+          6
+        ],
+        "blues": []
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          0,
+          1,
+          3,
+          5,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          5,
+          6,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          1,
+          3,
+          4,
+          6,
+          8
+        ],
+        "blues": []
+      }
+    ]
+  },
+  {
+    "lottery": "plw",
+    "name": "排列5",
+    "target_issue": "26192",
+    "based_on_issue": "26191",
+    "predict_time": "2026-11-02 03:31:54",
+    "status": "settled",
+    "actual_reds": [
+      0,
+      1,
+      3,
+      4,
+      6
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-07-21",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          1,
+          3,
+          5,
+          6,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          0,
+          2,
+          4,
+          6,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          4,
+          5,
+          5,
+          8,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          2,
+          4,
+          7,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          0,
+          4,
+          7,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          3,
+          4,
+          5,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          0,
+          3,
+          5,
+          6,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          3,
+          4,
+          5,
+          6,
+          9
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          1,
+          2,
+          4,
+          5,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          1,
+          2,
+          3,
+          4,
+          7
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          4,
+          7,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          1,
+          3,
+          5,
+          6,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-02 19:41:19",
+    "best_red_hits": 2
+  },
+  {
+    "lottery": "pls",
+    "name": "排列3",
+    "target_issue": "26292",
+    "based_on_issue": "26291",
+    "predict_time": "2026-11-02 19:41:06",
+    "status": "pending",
+    "actual_reds": [],
+    "actual_blues": [],
+    "draw_date": "",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          2,
+          5,
+          7
+        ],
+        "blues": []
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          0,
+          5,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          3,
+          4,
+          4
+        ],
+        "blues": []
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          6,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          1,
+          3,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          3,
+          5
+        ],
+        "blues": []
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          4,
+          7,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          2,
+          3,
+          7
+        ],
+        "blues": []
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          1,
+          2,
+          6
+        ],
+        "blues": []
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          1,
+          4,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          2,
+          5,
+          7
+        ],
+        "blues": []
+      }
+    ]
+  },
+  {
+    "lottery": "pls",
+    "name": "排列3",
+    "target_issue": "26195",
+    "based_on_issue": "26194",
+    "predict_time": "2026-11-02 03:31:54",
+    "status": "settled",
+    "actual_reds": [
+      5,
+      5,
+      9
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-07-24",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          2,
+          4,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          0,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          0,
+          6,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          4,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          3,
+          4,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          1,
+          3,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          1,
+          7,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          2,
+          3,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          0,
+          1,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          2,
+          4,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          2,
+          4,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-02 19:41:19",
+    "best_red_hits": 1
+  },
+  {
+    "lottery": "fc3d",
+    "name": "福彩3D",
+    "target_issue": "2026292",
+    "based_on_issue": "2026291",
+    "predict_time": "2026-11-02 19:41:04",
+    "status": "pending",
+    "actual_reds": [],
+    "actual_blues": [],
+    "draw_date": "",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          2,
+          5,
+          7
+        ],
+        "blues": []
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          0,
+          4,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          6,
+          8,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          4,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          0,
+          7,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          2,
+          6,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          3,
+          8,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          1,
+          4,
+          5
+        ],
+        "blues": []
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          0,
+          1,
+          8
+        ],
+        "blues": []
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          1,
+          2,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          9
+        ],
+        "blues": []
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          2,
+          5,
+          7
+        ],
+        "blues": []
+      }
+    ]
+  },
+  {
+    "lottery": "fc3d",
+    "name": "福彩3D",
+    "target_issue": "2026195",
+    "based_on_issue": "2026194",
+    "predict_time": "2026-11-02 03:31:51",
+    "status": "settled",
+    "actual_reds": [
+      2,
+      5,
+      7
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-07-24(五)",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          2,
+          5,
+          7
+        ],
+        "blues": [],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": true,
+        "full_blue": true,
+        "full_match": true
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          1,
+          5,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          5,
+          6,
+          6
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          0,
+          5,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          1,
+          4,
+          8
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          2,
+          6,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          3,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          1,
+          4,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          0,
+          2,
+          6
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          0,
+          1,
+          7
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          6
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          2,
+          5,
+          7
+        ],
+        "blues": [],
+        "red_hits": 3,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": true,
+        "full_blue": true,
+        "full_match": true
+      }
+    ],
+    "settle_time": "2026-11-02 19:41:19",
+    "best_red_hits": 3
+  },
+  {
+    "lottery": "dlt",
+    "name": "大乐透",
+    "target_issue": "26125",
+    "based_on_issue": "26124",
+    "predict_time": "2026-11-02 19:41:03",
+    "status": "pending",
+    "actual_reds": [],
+    "actual_blues": [],
+    "draw_date": "",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          8,
+          12,
+          18,
+          25,
+          29
+        ],
+        "blues": [
+          4,
+          8
+        ]
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          7,
+          30,
+          31,
+          34,
+          35
+        ],
+        "blues": [
+          11,
+          12
+        ]
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          13,
+          15,
+          16,
+          17,
+          23
+        ],
+        "blues": [
+          4,
+          10
+        ]
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          9,
+          13,
+          28,
+          32,
+          33
+        ],
+        "blues": [
+          7,
+          10
+        ]
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          5,
+          6,
+          10,
+          29,
+          32
+        ],
+        "blues": [
+          2,
+          4
+        ]
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          6,
+          13,
+          20,
+          21,
+          26
+        ],
+        "blues": [
+          2,
+          8
+        ]
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          22,
+          30,
+          32,
+          33,
+          35
+        ],
+        "blues": [
+          1,
+          6
+        ]
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          5,
+          6,
+          8,
+          11,
+          22
+        ],
+        "blues": [
+          5,
+          7
+        ]
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          2,
+          3,
+          6,
+          10,
+          14
+        ],
+        "blues": [
+          4,
+          9
+        ]
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          7,
+          16,
+          17,
+          23,
+          34
+        ],
+        "blues": [
+          5,
+          10
+        ]
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          3,
+          6,
+          10,
+          14,
+          26
+        ],
+        "blues": [
+          4,
+          9
+        ]
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          6,
+          10,
+          14,
+          29,
+          32
+        ],
+        "blues": [
+          4,
+          7
+        ]
+      }
+    ]
+  },
+  {
+    "lottery": "dlt",
+    "name": "大乐透",
+    "target_issue": "26083",
+    "based_on_issue": "26082",
+    "predict_time": "2026-11-02 03:31:51",
+    "status": "settled",
+    "actual_reds": [
+      14,
+      15,
+      16,
+      23,
+      26
+    ],
+    "actual_blues": [
+      7,
+      9
+    ],
+    "draw_date": "2026-07-25",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          6,
+          10,
+          17,
+          23,
+          30
+        ],
+        "blues": [
+          3,
+          9
+        ],
+        "red_hits": 1,
+        "blue_hits": 1,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          1,
+          6,
+          7,
+          14,
+          33
+        ],
+        "blues": [
+          1,
+          4
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          15,
+          17,
+          19,
+          21,
+          24
+        ],
+        "blues": [
+          5,
+          6
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          1,
+          12,
+          19,
+          27,
+          29
+        ],
+        "blues": [
+          9,
+          10
+        ],
+        "red_hits": 0,
+        "blue_hits": 1,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          13,
+          19,
+          22,
+          28,
+          29
+        ],
+        "blues": [
+          1,
+          3
+        ],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          6,
+          13,
+          20,
+          21,
+          26
+        ],
+        "blues": [
+          2,
+          8
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          21,
+          27,
+          29,
+          30,
+          31
+        ],
+        "blues": [
+          5,
+          6
+        ],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          5,
+          6,
+          8,
+          11,
+          22
+        ],
+        "blues": [
+          5,
+          7
+        ],
+        "red_hits": 0,
+        "blue_hits": 1,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          6,
+          10,
+          13,
+          21,
+          26
+        ],
+        "blues": [
+          2,
+          11
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          3,
+          7,
+          9,
+          17,
+          31
+        ],
+        "blues": [
+          1,
+          3
+        ],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          12,
+          13,
+          20,
+          21,
+          26
+        ],
+        "blues": [
+          1,
+          11
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          13,
+          19,
+          21,
+          22,
+          29
+        ],
+        "blues": [
+          1,
+          3
+        ],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 2,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-02 19:41:19",
+    "best_red_hits": 1
+  }
+]

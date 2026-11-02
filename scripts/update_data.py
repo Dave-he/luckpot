@@ -15,6 +15,35 @@ from lottery.spiders import get_provider
 from lottery.data import DataLoader
 
 
+# 主数据源失败时的降级顺序。
+# GitHub Actions 的出口 IP 常被 cwl.gov.cn / webapi.sporttery.cn 的 WAF 拦截
+# (403 / 567), 而 500.com 始终可用, 因此把它作为通用兜底源。
+FALLBACK_PROVIDERS = ["data500"]
+
+
+def _fetch_with_fallback(lottery_key: str, config: dict) -> tuple:
+    """依次尝试主数据源与备用数据源, 返回 (records, used_provider)"""
+    chain = [config["provider"]] + [
+        p for p in FALLBACK_PROVIDERS if p != config["provider"]
+    ]
+
+    for provider_name in chain:
+        try:
+            provider = get_provider(provider_name)
+            # 备用源用自己的彩种 key, 主源用 provider_code
+            code = lottery_key if provider_name == "data500" else config["provider_code"]
+            records = provider.fetch_all(code)
+        except Exception as e:
+            print(f"  [{provider_name}] 抓取异常: {e}")
+            continue
+
+        if records:
+            return records, provider_name
+        print(f"  [{provider_name}] 无数据, 尝试下一个数据源")
+
+    return [], None
+
+
 def update_lottery(lottery_key: str, config: dict) -> dict:
     """更新指定彩种的数据"""
     name = config["name"]
@@ -32,8 +61,11 @@ def update_lottery(lottery_key: str, config: dict) -> dict:
     result["old_latest"] = old_latest
 
     try:
-        provider = get_provider(config["provider"])
-        records = provider.fetch_all(config["provider_code"])
+        records, used_provider = _fetch_with_fallback(lottery_key, config)
+        result["used_provider"] = used_provider or config["provider"]
+        if used_provider and used_provider != config["provider"]:
+            print(f"  ⚠ 主源 {config['provider']} 不可用, 已降级到 {used_provider}")
+
         if not records:
             result["status"] = "no_data"
             return result

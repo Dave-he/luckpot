@@ -22,6 +22,18 @@ def issue_sort_key(issue: str) -> Tuple[int, int]:
         return (num, 0)
 
 
+def next_issue(issue: str) -> Optional[str]:
+    """推算下一期期号
+
+    期号格式为 年+序号 (如双色球 2026084、大乐透 26082), 直接按数值 +1,
+    并保持原有位宽 (不足时左补 0)。无法解析时返回 None。
+    """
+    issue = (issue or "").strip()
+    if not issue.isdigit():
+        return None
+    return str(int(issue) + 1).zfill(len(issue))
+
+
 class DataLoader:
     def __init__(self, config: Dict):
         self.config = config

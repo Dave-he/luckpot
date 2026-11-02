@@ -79,14 +79,24 @@ jobs:
           echo "=== 步骤6.5: 历史回测验证 ==="
           python3 scripts/backtest.py --n 20 --no-slow || true
 
+      - name: 归档预测历史
+        run: |
+          echo "=== 步骤7: 归档预测历史 (结算已开奖 + 记录新预测) ==="
+          python3 scripts/update_history.py
+
       - name: 生成 README
         run: |
-          echo "=== 步骤7: 生成 README ==="
+          echo "=== 步骤8: 生成 README (下一期预测) ==="
           python3 scripts/generate_readme.py
+
+      - name: 生成预测历史文件
+        run: |
+          echo "=== 步骤9: 生成 docs/prediction-history.md ==="
+          python3 scripts/generate_history.py
 
       - name: 提交并推送
         run: |
-          echo "=== 步骤8: 提交并推送 ==="
+          echo "=== 步骤10: 提交并推送 ==="
           git add -A
           if git diff --staged --quiet; then
             echo "无变更，跳过提交"

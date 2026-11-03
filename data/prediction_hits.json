@@ -3419,5 +3419,512 @@
         "full_match": false
       }
     ]
+  },
+  {
+    "lottery": "ssq",
+    "name": "双色球",
+    "predict_for_issue": "26125",
+    "predict_for_date": "2026-11-01",
+    "predicted_after_issue": "2026125",
+    "actual_reds": [
+      4,
+      6,
+      10,
+      15,
+      26,
+      27
+    ],
+    "actual_blues": [
+      11
+    ],
+    "is_repeatable": false,
+    "check_time": "2026-11-03 02:56:23",
+    "results": [
+      {
+        "model": "xgboost",
+        "predicted_reds": [
+          5,
+          9,
+          14,
+          17,
+          27,
+          29
+        ],
+        "predicted_blues": [
+          9
+        ],
+        "actual_reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "actual_blues": [
+          11
+        ],
+        "red_hits": 1,
+        "red_total": 6,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "mlp",
+        "predicted_reds": [
+          1,
+          2,
+          22,
+          25,
+          27,
+          30
+        ],
+        "predicted_blues": [
+          6
+        ],
+        "actual_reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "actual_blues": [
+          11
+        ],
+        "red_hits": 1,
+        "red_total": 6,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "trad_热号推荐",
+        "predicted_reds": [
+          4,
+          13,
+          14,
+          22,
+          26,
+          30
+        ],
+        "predicted_blues": [
+          4
+        ],
+        "actual_reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "actual_blues": [
+          11
+        ],
+        "red_hits": 2,
+        "red_total": 6,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "trad_冷号回补",
+        "predicted_reds": [
+          8,
+          9,
+          12,
+          28,
+          32,
+          33
+        ],
+        "predicted_blues": [
+          13
+        ],
+        "actual_reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "actual_blues": [
+          11
+        ],
+        "red_hits": 0,
+        "red_total": 6,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "trad_综合推荐",
+        "predicted_reds": [
+          4,
+          8,
+          13,
+          14,
+          22,
+          30
+        ],
+        "predicted_blues": [
+          11
+        ],
+        "actual_reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "actual_blues": [
+          11
+        ],
+        "red_hits": 1,
+        "red_total": 6,
+        "blue_hits": 1,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": true,
+        "full_match": false
+      },
+      {
+        "model": "trad_随机机选",
+        "predicted_reds": [
+          6,
+          10,
+          15,
+          21,
+          23,
+          26
+        ],
+        "predicted_blues": [
+          1
+        ],
+        "actual_reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "actual_blues": [
+          11
+        ],
+        "red_hits": 4,
+        "red_total": 6,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "weighted_ensemble",
+        "predicted_reds": [
+          4,
+          5,
+          6,
+          14,
+          29,
+          30
+        ],
+        "predicted_blues": [
+          9
+        ],
+        "actual_reds": [
+          4,
+          6,
+          10,
+          15,
+          26,
+          27
+        ],
+        "actual_blues": [
+          11
+        ],
+        "red_hits": 2,
+        "red_total": 6,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      }
+    ]
+  },
+  {
+    "lottery": "qlc",
+    "name": "七乐彩",
+    "predict_for_issue": "26126",
+    "predict_for_date": "2026-11-02",
+    "predicted_after_issue": "2026126",
+    "actual_reds": [
+      9,
+      15,
+      20,
+      23,
+      24,
+      25,
+      30
+    ],
+    "actual_blues": [
+      7
+    ],
+    "is_repeatable": false,
+    "check_time": "2026-11-03 02:56:23",
+    "results": [
+      {
+        "model": "xgboost",
+        "predicted_reds": [
+          4,
+          9,
+          15,
+          16,
+          20,
+          24,
+          27
+        ],
+        "predicted_blues": [
+          15
+        ],
+        "actual_reds": [
+          9,
+          15,
+          20,
+          23,
+          24,
+          25,
+          30
+        ],
+        "actual_blues": [
+          7
+        ],
+        "red_hits": 4,
+        "red_total": 7,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "mlp",
+        "predicted_reds": [
+          1,
+          2,
+          5,
+          10,
+          15,
+          20,
+          30
+        ],
+        "predicted_blues": [
+          9
+        ],
+        "actual_reds": [
+          9,
+          15,
+          20,
+          23,
+          24,
+          25,
+          30
+        ],
+        "actual_blues": [
+          7
+        ],
+        "red_hits": 3,
+        "red_total": 7,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "trad_热号推荐",
+        "predicted_reds": [
+          1,
+          5,
+          6,
+          7,
+          8,
+          14,
+          23
+        ],
+        "predicted_blues": [
+          27
+        ],
+        "actual_reds": [
+          9,
+          15,
+          20,
+          23,
+          24,
+          25,
+          30
+        ],
+        "actual_blues": [
+          7
+        ],
+        "red_hits": 1,
+        "red_total": 7,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "trad_冷号回补",
+        "predicted_reds": [
+          1,
+          13,
+          14,
+          16,
+          19,
+          21,
+          27
+        ],
+        "predicted_blues": [
+          4
+        ],
+        "actual_reds": [
+          9,
+          15,
+          20,
+          23,
+          24,
+          25,
+          30
+        ],
+        "actual_blues": [
+          7
+        ],
+        "red_hits": 0,
+        "red_total": 7,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "trad_综合推荐",
+        "predicted_reds": [
+          6,
+          8,
+          12,
+          13,
+          14,
+          23,
+          27
+        ],
+        "predicted_blues": [
+          27
+        ],
+        "actual_reds": [
+          9,
+          15,
+          20,
+          23,
+          24,
+          25,
+          30
+        ],
+        "actual_blues": [
+          7
+        ],
+        "red_hits": 1,
+        "red_total": 7,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "trad_随机机选",
+        "predicted_reds": [
+          6,
+          7,
+          10,
+          11,
+          17,
+          20,
+          22
+        ],
+        "predicted_blues": [
+          12
+        ],
+        "actual_reds": [
+          9,
+          15,
+          20,
+          23,
+          24,
+          25,
+          30
+        ],
+        "actual_blues": [
+          7
+        ],
+        "red_hits": 1,
+        "red_total": 7,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      },
+      {
+        "model": "weighted_ensemble",
+        "predicted_reds": [
+          5,
+          6,
+          8,
+          14,
+          21,
+          23,
+          27
+        ],
+        "predicted_blues": [
+          27
+        ],
+        "actual_reds": [
+          9,
+          15,
+          20,
+          23,
+          24,
+          25,
+          30
+        ],
+        "actual_blues": [
+          7
+        ],
+        "red_hits": 1,
+        "red_total": 7,
+        "blue_hits": 0,
+        "blue_total": 1,
+        "full_red_match": false,
+        "full_blue_match": false,
+        "full_match": false
+      }
+    ]
   }
 ]

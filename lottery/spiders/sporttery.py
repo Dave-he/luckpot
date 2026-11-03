@@ -108,7 +108,7 @@ class SportteryProvider(BaseProvider):
                     # 七星彩/排列3/排列5: 全部为红球
                     if len(nums) < red_count:
                         continue
-                    reds = sorted(nums[:red_count])
+                    reds = nums[:red_count]
                     blues = []
 
                 if len(reds) == red_count:

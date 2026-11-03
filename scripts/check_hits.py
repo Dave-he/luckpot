@@ -87,7 +87,7 @@ def check_lottery(pred_entry, history_hits):
     # 判断彩种类型
     red_min, red_max = config["red_range"]
     red_count = config["red_count"]
-    is_repeatable = (red_max - red_min + 1) <= 10 and red_count >= 3
+    is_repeatable = config.get("ordered", False)
 
     # 检查每个模型的预测
     predictions = pred_entry.get("predictions", {})

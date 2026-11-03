@@ -181,13 +181,13 @@ def build_backtest_section(backtest_data):
     rows.append(f"> 回测期数: `{backtest_data.get('backtest_count', '-')}` | "
                 f"更新时间: `{backtest_data.get('update_time', '-')}`")
     rows.append("")
-    rows.append("> 用历史数据回测各算法，**指标: 至少命中1个红球的比例** (50%为达标线)")
+    rows.append("> 指标为号码命中比例，不等于中奖率；位置型彩种按原始位置比较。须与同规则随机基线比较，不能用统一50%认定有效。")
     rows.append("")
 
     # 达标统计
     rows.append("### 各彩种 Top 算法 (按'至少命中1红'准确率)")
     rows.append("")
-    rows.append("| 彩种 | Top算法 | 至少1红准确率 | 至少2红准确率 | 红球命中率 | 完全命中 | 达标 |")
+    rows.append("| 彩种 | Top算法 | 至少1红准确率 | 至少2红准确率 | 红球命中率 | 完全命中 | 说明 |")
     rows.append("| --- | --- | --- | --- | --- | --- | --- |")
 
     reached_count = 0
@@ -210,7 +210,7 @@ def build_backtest_section(backtest_data):
         if reached:
             reached_count += 1
         total_count += 1
-        icon = "✓ 达标" if reached else "✗ 未达标"
+        icon = "描述性统计"
 
         rows.append(f"| {name} | {top_algo_name} | "
                     f"{at_least_1*100:.1f}% ({top.get('at_least_1_red',0)}/{count}) | "
@@ -218,7 +218,7 @@ def build_backtest_section(backtest_data):
                     f"{red_rate*100:.1f}% | {full}/{count} | {icon} |")
 
     rows.append("")
-    rows.append(f"**达标统计**: {reached_count}/{total_count} 个彩种的 Top 算法达到 50% 准确率")
+    rows.append("小样本选出的最佳算法不代表未来优势；实际中奖须按具体玩法判定。")
     rows.append("")
 
     # weighted_ensemble 表现
@@ -264,7 +264,7 @@ def build_weights_section(weights_data):
 
     rows.append("### 各彩种 Top 算法 & 命中率")
     rows.append("")
-    rows.append("| 彩种 | Top算法 | 权重 | 红球命中率 | 蓝球命中率 | 完全命中 | 是否达标(≥50%) |")
+    rows.append("| 彩种 | Top算法 | 权重 | 红球命中率 | 蓝球命中率 | 完全命中 | 说明 |")
     rows.append("| --- | --- | --- | --- | --- | --- | --- |")
 
     for key, data in weights_data["lotteries"].items():
@@ -284,7 +284,7 @@ def build_weights_section(weights_data):
 
         # 综合准确率 (红球命中率为主)
         accuracy = red_rate
-        reached = "✓ 达标" if accuracy >= 0.5 else f"○ {accuracy*100:.1f}%"
+        reached = "历史样本"
 
         rows.append(f"| {name} | {top_algo_name} | {top_weight:.3f} | "
                     f"{red_rate*100:.1f}% | "
@@ -454,6 +454,9 @@ def main():
     # 历史归档入口
     sections.append("📜 **[查看完整预测历史与命中统计 →](docs/prediction-history.md)**")
     sections.append("")
+    # 彩种玩法分析入口
+    sections.append("🎯 **[买哪种彩票最合适？7 大彩种玩法规则与理性分析 →](docs/lottery-guide/00-总览-买哪种彩票最合适.md)**")
+    sections.append("")
 
     # 预测时间
     if predictions:
@@ -512,7 +515,7 @@ def main():
         ("大乐透", "dlt", "5个 (1-35)", "2个 (1-12)", "每周一、三、六"),
         ("福彩3D", "fc3d", "3个 (0-9)", "无", "每日开奖"),
         ("七乐彩", "qlc", "7个 (1-30)", "1个 (1-30)", "每周一、三、五"),
-        ("七星彩", "qxc", "7个 (0-9)", "无", "每周二、五、日"),
+        ("七星彩", "qxc", "前6位0-9，末位0-14（按位）", "无", "每周二、五、日"),
         ("排列3", "pls", "3个 (0-9)", "无", "每日开奖"),
         ("排列5", "plw", "5个 (0-9)", "无", "每日开奖"),
     ]
@@ -628,7 +631,16 @@ def main():
     sections.append("├── training_report.json  # 训练报告")
     sections.append("└── update_report.json    # 数据更新报告")
     sections.append("docs/")
-    sections.append("└── prediction-history.md # 完整预测历史与命中统计 (自动生成)")
+    sections.append("├── prediction-history.md # 完整预测历史与命中统计 (自动生成)")
+    sections.append("└── lottery-guide/        # 7 大彩种玩法规则与理性分析 (手工维护)")
+    sections.append("    ├── 00-总览-买哪种彩票最合适.md")
+    sections.append("    ├── 01-双色球-SSQ.md")
+    sections.append("    ├── 02-大乐透-DLT.md")
+    sections.append("    ├── 03-福彩3D-FC3D.md")
+    sections.append("    ├── 04-七乐彩-QLC.md")
+    sections.append("    ├── 05-七星彩-QXC.md")
+    sections.append("    ├── 06-排列3-PLS.md")
+    sections.append("    └── 07-排列5-PLW.md")
     sections.append(".github/workflows/daily.yml # GitHub Actions 每日定时任务")
     sections.append("```")
     sections.append("")
@@ -636,7 +648,7 @@ def main():
     # 自动化流程
     sections.append("## 自动化流程")
     sections.append("")
-    sections.append("GitHub Actions 每天北京时间 08:00 自动执行:")
+    sections.append("GitHub Actions 每天北京时间 08:00、23:00 自动执行（也支持 push / 手动触发）:")
     sections.append("")
     sections.append("1. **抓取数据** - `python3 scripts/update_data.py` (主源失败自动降级 500.com)")
     sections.append("2. **训练模型** - `python3 scripts/train_models.py`")

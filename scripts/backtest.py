@@ -247,9 +247,13 @@ def backtest_lottery(lottery_key, config, n_backtests, use_slow=True):
     if len(history) < 100:
         return None
 
+    if config.get("ordered"):
+        from lottery.models.positional import backtest
+        return backtest(lottery_key, config, history, n_backtests)
+
     red_min, red_max = config["red_range"]
     red_count = config["red_count"]
-    is_repeatable = (red_max - red_min + 1) <= 10 and red_count >= 3
+    is_repeatable = config.get("ordered", False)
     blue_count = config["blue_count"]
 
     total = len(history)

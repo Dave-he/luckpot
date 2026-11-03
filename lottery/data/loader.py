@@ -69,7 +69,7 @@ class DataLoader:
                         results.append({
                             "issue": issue,
                             "date": date,
-                            "reds": sorted(reds),
+                            "reds": list(reds) if self.config.get("ordered") else sorted(reds),
                             "blues": sorted(blues),
                         })
                 except (ValueError, KeyError):
@@ -98,7 +98,7 @@ class DataLoader:
             fieldnames.extend([f"red{i}" for i in range(1, self.red_count + 1)])
             fieldnames.extend([f"blue{i}" for i in range(1, self.blue_count + 1)])
 
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
             if not file_exists or mode == "w":
                 writer.writeheader()
 
@@ -147,7 +147,7 @@ class DataLoader:
                             all_records[issue] = {
                                 "issue": issue,
                                 "date": "",
-                                "reds": sorted(reds),
+                                "reds": list(reds) if self.config.get("ordered") else sorted(reds),
                                 "blues": sorted(blues),
                             }
                     except (ValueError, IndexError):

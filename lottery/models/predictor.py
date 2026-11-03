@@ -98,16 +98,39 @@ class LotteryPredictor:
 
         return red_scores, blue_scores
 
+    def _predict_positions(self, history, method):
+        """每一位单独计分；允许重复数字，保留百/十/个位。"""
+        reds = []
+        for pos, (lo, hi) in enumerate(self.config["red_position_ranges"]):
+            counts = {n: 0 for n in range(lo, hi + 1)}
+            for rec in history[-30:]:
+                counts[rec["reds"][pos]] += 1
+            if method == "missing":
+                scores = {n: next((i for i, rec in enumerate(reversed(history))
+                                   if rec["reds"][pos] == n), len(history)) for n in counts}
+            else:
+                scores = counts
+            reds.append(max(scores, key=scores.get))
+        return reds, []
+
     def predict_by_frequency(self, history: List[Dict]) -> Tuple[List[int], List[int]]:
+        if self.config.get("ordered"):
+            return self._predict_positions(history, "frequency")
         return self._select_by_scores(*self._score_numbers(history, "frequency"))
 
     def predict_by_missing(self, history: List[Dict]) -> Tuple[List[int], List[int]]:
+        if self.config.get("ordered"):
+            return self._predict_positions(history, "missing")
         return self._select_by_scores(*self._score_numbers(history, "missing"))
 
     def predict_combined(self, history: List[Dict]) -> Tuple[List[int], List[int]]:
+        if self.config.get("ordered"):
+            return self._predict_positions(history, "frequency")
         return self._select_by_scores(*self._score_numbers(history, "combined"))
 
     def predict_random(self) -> Tuple[List[int], List[int]]:
+        if self.config.get("ordered"):
+            return [random.randint(lo, hi) for lo, hi in self.config["red_position_ranges"]], []
         reds = sorted(random.sample(self.red_range, self.red_count))
         blues = sorted(random.sample(self.blue_range, self.blue_count)) if self.blue_count > 0 else []
         return reds, blues

@@ -69,9 +69,18 @@ def backtest_lottery(lottery_key, config, n_backtests=20, use_slow=True):
     if len(history) < 100:
         return None
 
+    if config.get("ordered"):
+        from lottery.models.positional import backtest
+        report = backtest(lottery_key, config, history, n_backtests)
+        scores = {name: dict(s, score=s['red_rate'])
+                  for name, s in report.pop('results').items()
+                  if name != 'weighted_ensemble'}
+        return dict(report, algorithm_scores=scores,
+                    weights={name: 1 / len(scores) for name in scores})
+
     red_min, red_max = config["red_range"]
     red_count = config["red_count"]
-    is_repeatable = (red_max - red_min + 1) <= 10 and red_count >= 3
+    is_repeatable = config.get("ordered", False)
     blue_count = config["blue_count"]
 
     # 回测点 (最近 n_backtests 期)
@@ -328,6 +337,9 @@ def merge_with_history_weights(new_weights, history_weights):
     alpha = 0.3  # 新权重占比
     merged = {}
     for lottery_key, lot_data in new_weights.items():
+        if LOTTERY_CONFIGS[lottery_key].get('ordered'):
+            merged[lottery_key] = dict(lot_data, previous_weights={})
+            continue
         old_lot = history_weights.get(lottery_key, {})
         merged_w = {}
         all_algos = set(lot_data["weights"].keys()) | set(old_lot.get("weights", {}).keys())

@@ -203,10 +203,30 @@ def weighted_predict_lottery(lottery_key, config, weights_data):
     if not history or len(history) < 50:
         return {"lottery": lottery_key, "name": name, "error": "数据不足"}
 
+    if config.get("ordered"):
+        from lottery.models.positional import blend
+        model = XGBoostPredictor(config)
+        model_dir = os.path.join(os.path.dirname(config['data_file']), 'models', 'xgboost')
+        if not model.load(model_dir):
+            raise RuntimeError(f'{lottery_key}: 缺少本轮训练的 XGBoost 模型')
+        candidates = {'xgboost': model.predict(history)[0]}
+        candidates.update({f'trad_{name}': pair[0] for name, pair in
+                           LotteryPredictor(config).predict_multi_strategy(history).items()})
+        # 不沿用旧排序数据产生的历史权重。
+        weights = {name: 1 / len(candidates) for name in candidates}
+        last = history[-1]
+        return dict(lottery=lottery_key, name=name, schedule=config['schedule'],
+                    predict_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    latest_issue=last['issue'], latest_reds=last['reds'], latest_blues=[],
+                    history_count=len(history), is_repeatable=True,
+                    weighted_prediction={'reds': blend(config, candidates, weights), 'blues': []},
+                    weights_used=weights, active_algos=list(candidates),
+                    top_red_scores=[], top_blue_scores=[])
+
     red_min, red_max = config["red_range"]
     red_count = config["red_count"]
     blue_count = config["blue_count"]
-    is_repeatable = (red_max - red_min + 1) <= 10 and red_count >= 3
+    is_repeatable = config.get("ordered", False)
 
     # 加载训练好的模型 (没有就跳过)
     loaded_models = {}

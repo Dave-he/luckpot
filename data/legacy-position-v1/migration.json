@@ -1,0 +1,9 @@
+{
+  "reason": "旧记录丢失原始位置，不能作为中奖证据",
+  "isolated_records": {
+    "prediction_hits.json": 15,
+    "prediction_history.json": 8,
+    "predictions.json": 4,
+    "weighted_predictions.json": 4
+  }
+}

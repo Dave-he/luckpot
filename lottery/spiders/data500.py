@@ -98,7 +98,9 @@ class Data500Provider(BaseProvider):
                 if blue_count > 0 and not blues and len(all_nums) > red_count:
                     all_nums, blues = all_nums[:red_count], all_nums[red_count:]
 
-                reds = sorted(all_nums[:red_count])
+                reds = all_nums[:red_count]
+                if lottery_key not in {"fc3d", "pls", "plw", "qxc"}:
+                    reds.sort()
 
                 if len(reds) != red_count:
                     continue

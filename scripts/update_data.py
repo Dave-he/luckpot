@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lottery.config import LOTTERY_CONFIGS
 from lottery.spiders import get_provider
 from lottery.data import DataLoader
+from lottery.data.loader import issue_sort_key
 
 
 # 主数据源失败时的降级顺序。
@@ -33,6 +34,17 @@ def _fetch_with_fallback(lottery_key: str, config: dict) -> tuple:
             # 备用源用自己的彩种 key, 主源用 provider_code
             code = lottery_key if provider_name == "data500" else config["provider_code"]
             records = provider.fetch_all(code)
+            old = DataLoader(config).load_history()
+            if records and old and max(issue_sort_key(r['issue']) for r in records) < issue_sort_key(old[-1]['issue']):
+                print(f'  [{provider_name}] 最新期落后于本地，尝试备用源')
+                continue
+            if config.get('ordered'):
+                ranges = config['red_position_ranges']
+                if len(records) < 50 or any(len(r['reds']) != len(ranges) or
+                        any(not lo <= value <= hi for value, (lo, hi) in zip(r['reds'], ranges))
+                        for r in records):
+                    print(f'  [{provider_name}] 位置数据不完整或越界，尝试备用源')
+                    continue
         except Exception as e:
             print(f"  [{provider_name}] 抓取异常: {e}")
             continue
@@ -70,7 +82,21 @@ def update_lottery(lottery_key: str, config: dict) -> dict:
             result["status"] = "no_data"
             return result
 
-        loader.save_data(records, append=True)
+        schema_path = config['data_file'] + '.schema.json'
+        migrate = config.get('ordered') and not os.path.exists(schema_path)
+        # 旧排序数据无法逆转。首次迁移只使用来源重新抓取的原始数据，
+        # 备用源仅提供最近500期时也不能把旧排序数据拼回训练集。
+        merged = {} if migrate else {r['issue']: r for r in old_history}
+        merged.update({r['issue']: r for r in records})
+        repaired = sorted(merged.values(), key=lambda r: issue_sort_key(r['issue']))
+        temp_config = dict(config, data_file=config['data_file'] + '.tmp')
+        DataLoader(temp_config).save_data(repaired, append=False)
+        os.replace(temp_config['data_file'], config['data_file'])
+        if config.get('ordered'):
+            with open(schema_path, 'w', encoding='utf-8') as f:
+                json.dump({'version': 2, 'ordered': True, 'source': used_provider,
+                           'restored_count': len(repaired)}, f, ensure_ascii=False, indent=2)
+        result['rebuilt_positions'] = bool(migrate)
         new_history = loader.load_history()
         new_latest = new_history[-1]["issue"] if new_history else None
 
@@ -117,6 +143,8 @@ def main():
         added = r.get("added", 0)
         latest = r.get("new_latest", "-")
         print(f"  {status_icon} {r['name']:<8}: 新增{added}期, 最新={latest}")
+    if any(r.get('status') != 'success' for r in all_results):
+        raise SystemExit('数据更新失败：停止训练及发布，防止使用过期数据')
 
 
 if __name__ == "__main__":

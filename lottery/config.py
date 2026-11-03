@@ -22,6 +22,9 @@ def _config(name, short_name, red_count, red_range, blue_count, blue_range,
         "provider": provider,
         "provider_code": provider_code,
         "schedule": schedule,
+        "ordered": short_name in {"fc3d", "pls", "plw", "qxc"},
+        "red_position_ranges": ([(0, 9)] * 6 + [(0, 14)] if short_name == "qxc"
+                                else [red_range] * red_count),
     }
 
 
@@ -37,7 +40,7 @@ FC3D_CONFIG = _config("福彩3D", "fc3d", 3, (0, 9), 0, (0, 0),
 QLC_CONFIG = _config("七乐彩", "qlc", 7, (1, 30), 1, (1, 30),
                      "cwl", "qlc", "每周一、三、五")
 
-QXC_CONFIG = _config("七星彩", "qxc", 7, (0, 9), 0, (0, 0),
+QXC_CONFIG = _config("七星彩", "qxc", 7, (0, 14), 0, (0, 0),
                      "sporttery", "04", "每周二、五、日")
 
 PLS_CONFIG = _config("排列3", "pls", 3, (0, 9), 0, (0, 0),

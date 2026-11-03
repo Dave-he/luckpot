@@ -90,6 +90,9 @@ def predict_lottery(lottery_key: str, config: dict) -> dict:
         ("moe", MoEPredictor),
     ]
 
+    if config.get("ordered"):
+        ml_models = [("xgboost", XGBoostPredictor)]
+
     for model_name, cls in ml_models:
         predictions[model_name] = predict_with_model(model_name, cls, config, history)
 

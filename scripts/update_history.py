@@ -71,8 +71,7 @@ def _get_path(pred, dotted_key):
 
 def is_repeatable(config):
     """可重复号码彩种(七星彩/排列3/排列5)需按位置匹配"""
-    red_min, red_max = config["red_range"]
-    return (red_max - red_min + 1) <= 10 and config["red_count"] >= 3
+    return config.get("ordered", False)
 
 
 def count_hits(predicted, actual, repeatable=False):

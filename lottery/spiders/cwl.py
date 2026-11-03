@@ -75,7 +75,9 @@ class CWLProvider(BaseProvider):
                 if not code or not red_str:
                     continue
 
-                reds = sorted([int(x.strip()) for x in red_str.split(",") if x.strip()])
+                reds = [int(x.strip()) for x in red_str.split(",") if x.strip()]
+                if lottery_key != "3d":
+                    reds.sort()
                 blues = []
                 if blue_str:
                     blues = sorted([int(x.strip()) for x in blue_str.split(",") if x.strip()])

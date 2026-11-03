@@ -103,7 +103,10 @@ def train_lottery(lottery_key: str, config: dict, skip_lstm: bool = False) -> di
         ("ghost_variances", GhostVariancesPredictor),
         ("moe", MoEPredictor),
     ]
-    if not skip_lstm:
+    if config.get("ordered"):
+        # 其他集合模型尚未支持位置标签，禁止复用旧排序模型。
+        base_models = [("xgboost", XGBoostPredictor)]
+    elif not skip_lstm:
         base_models.append(("lstm", LSTMPredictor))
 
     for model_type, cls in base_models:

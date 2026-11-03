@@ -2,8 +2,8 @@ name: 每日彩票数据更新与预测
 
 on:
   schedule:
-    # 每天 UTC 00:00 = 北京时间 08:00
-    - cron: '0 0 * * *'
+    # 北京时间 08:00 / 23:00（开奖后再次刷新）；GitHub 调度可能延迟。
+    - cron: '0 0,15 * * *'
   workflow_dispatch:
   push:
     branches:
@@ -17,7 +17,11 @@ concurrency:
 jobs:
   daily-update-and-predict:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
+    env:
+      PYTHONUNBUFFERED: '1'
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
     permissions:
       contents: write
 
@@ -26,6 +30,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 设置 Python 环境
@@ -39,6 +44,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: 回归测试
+        run: python3 -m unittest discover -s tests -v
+
       - name: 配置 Git
         run: |
           git config user.name "github-actions[bot]"
@@ -49,6 +57,9 @@ jobs:
           echo "=== 步骤1: 抓取最新数据 ==="
           python3 scripts/update_data.py
 
+      - name: 隔离旧排序预测归档
+        run: python3 scripts/migrate_position_archives.py
+
       - name: 训练模型
         run: |
           echo "=== 步骤2: 训练所有模型 (XGBoost+MLP+RF+Markov+NB+MC+KMeans+LSTM+LotteryAi) ==="
@@ -57,12 +68,14 @@ jobs:
       - name: 检查上次预测命中情况
         run: |
           echo "=== 步骤3: 检查上次预测是否命中 ==="
-          python3 scripts/check_hits.py || true
+          python3 scripts/check_hits.py
 
       - name: 更新动态算法权重
+        timeout-minutes: 8
+        continue-on-error: true
         run: |
           echo "=== 步骤4: 基于历史回测更新算法权重 (含8种ML+传统策略) ==="
-          python3 scripts/update_weights.py --backtest 12 --skip-slow || true
+          python3 scripts/update_weights.py --backtest 12 --skip-slow
 
       - name: 生成新预测
         run: |
@@ -72,12 +85,17 @@ jobs:
       - name: 权重融合预测
         run: |
           echo "=== 步骤6: 用动态权重融合各算法预测 ==="
-          python3 scripts/weighted_predict.py || true
+          python3 scripts/weighted_predict.py
+
+      - name: 校验本轮数据及预测
+        run: python3 scripts/validate_pipeline.py
 
       - name: 历史回测验证
+        timeout-minutes: 8
+        continue-on-error: true
         run: |
           echo "=== 步骤6.5: 历史回测验证 ==="
-          python3 scripts/backtest.py --n 20 --no-slow || true
+          python3 scripts/backtest.py --n 20 --no-slow
 
       - name: 归档预测历史
         run: |
@@ -102,10 +120,21 @@ jobs:
             echo "无变更，跳过提交"
           else
             git commit -m "chore: 每日数据更新+预测+权重更新 $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-            git pull --rebase origin ${{ github.ref_name }} || true
-            git push
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "HEAD:${{ github.ref_name }}"
             echo "已推送到 GitHub"
           fi
+
+      - name: 保存本轮报告（含失败现场）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lottery-reports-${{ github.run_id }}
+          path: |
+            data/*report.json
+            data/predictions.json
+            data/weighted_predictions.json
+          retention-days: 14
 
       - name: 工作流总结
         if: always()

@@ -77,7 +77,7 @@ class XGBoostPredictor:
                 features.extend([red_sum, red_odd, red_span])
 
             X.append(features)
-            y_red.append(sorted(history[i]["reds"]))
+            y_red.append(list(history[i]["reds"]) if self.config.get("ordered") else sorted(history[i]["reds"]))
             y_blue.append(sorted(history[i]["blues"]))
 
         return np.array(X), np.array(y_red), np.array(y_blue)
@@ -207,13 +207,14 @@ class XGBoostPredictor:
             red_preds.append(pred)
 
         # 判断是否为可重复号码彩种(七星彩/排列3/排列5等数字型)
-        is_repeatable = (self.red_max - self.red_min + 1) <= 10 and self.red_count >= 3
+        is_repeatable = self.config.get("ordered", False)
 
         # 将预测值映射到合法范围
         red_candidates = []
-        for pred in red_preds:
+        for pos, pred in enumerate(red_preds):
             n = int(round(pred))
-            n = max(self.red_min, min(self.red_max, n))
+            lo, hi = self.config["red_position_ranges"][pos]
+            n = max(lo, min(hi, n))
             red_candidates.append(n)
 
         if is_repeatable:
@@ -250,7 +251,7 @@ class XGBoostPredictor:
             "raw_red_preds": [round(float(p), 2) for p in red_preds],
             "raw_blue_preds": [round(float(p), 2) for p in (blue_preds if self.blue_count > 0 else [])],
         }
-        return sorted(reds), sorted(blues[:self.blue_count]), info
+        return (reds if is_repeatable else sorted(reds)), sorted(blues[:self.blue_count]), info
 
     def _deduplicate_reds(self, raw_preds: List[float], candidates: List[int]) -> List[int]:
         """红球去重，保持预测概率最大的号码"""

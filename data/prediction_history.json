@@ -2,9 +2,9 @@
   {
     "lottery": "ssq",
     "name": "双色球",
-    "target_issue": "26128",
-    "based_on_issue": "26127",
-    "predict_time": "2026-11-08 05:14:53",
+    "target_issue": "26129",
+    "based_on_issue": "26128",
+    "predict_time": "2026-11-08 19:29:26",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -13,71 +13,71 @@
       {
         "model": "XGBoost",
         "reds": [
+          5,
           7,
-          10,
-          17,
+          12,
           20,
-          26,
+          25,
           29
         ],
         "blues": [
-          10
+          8
         ]
       },
       {
         "model": "MLP神经网络",
         "reds": [
-          1,
-          2,
           3,
-          9,
+          7,
           25,
-          29
+          26,
+          30,
+          33
+        ],
+        "blues": [
+          16
+        ]
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          16,
+          17,
+          19,
+          20,
+          21,
+          22
         ],
         "blues": [
           11
         ]
       },
       {
-        "model": "随机森林",
-        "reds": [
-          13,
-          15,
-          16,
-          18,
-          21,
-          22
-        ],
-        "blues": [
-          12
-        ]
-      },
-      {
         "model": "马尔可夫链",
         "reds": [
-          13,
-          14,
-          19,
+          5,
+          6,
+          10,
           25,
-          29,
-          32
+          27,
+          30
         ],
         "blues": [
-          12
+          11
         ]
       },
       {
         "model": "朴素贝叶斯",
         "reds": [
-          21,
-          22,
-          23,
-          25,
-          32,
-          33
+          3,
+          4,
+          9,
+          11,
+          19,
+          22
         ],
         "blues": [
-          14
+          5
         ]
       },
       {
@@ -91,32 +91,32 @@
           30
         ],
         "blues": [
-          4
+          11
         ]
       },
       {
         "model": "K-Means",
         "reds": [
+          2,
           6,
-          7,
-          8,
-          14,
-          22,
-          23
+          11,
+          13,
+          17,
+          31
         ],
         "blues": [
-          12
+          11
         ]
       },
       {
         "model": "LSTM",
         "reds": [
-          2,
-          3,
           6,
           9,
+          10,
           13,
-          24
+          24,
+          25
         ],
         "blues": [
           10
@@ -126,9 +126,9 @@
         "model": "热号推荐",
         "reds": [
           4,
-          20,
           22,
           24,
+          27,
           29,
           30
         ],
@@ -154,6 +154,266 @@
         "model": "综合推荐",
         "reds": [
           4,
+          20,
+          22,
+          24,
+          26,
+          30
+        ],
+        "blues": [
+          11
+        ]
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          5,
+          6,
+          10,
+          25,
+          27,
+          30
+        ],
+        "blues": [
+          11
+        ]
+      }
+    ]
+  },
+  {
+    "lottery": "ssq",
+    "name": "双色球",
+    "target_issue": "26128",
+    "based_on_issue": "26127",
+    "predict_time": "2026-11-08 05:14:53",
+    "status": "settled",
+    "actual_reds": [
+      5,
+      6,
+      10,
+      25,
+      27,
+      30
+    ],
+    "actual_blues": [
+      11
+    ],
+    "draw_date": "2026-11-08",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          7,
+          10,
+          17,
+          20,
+          26,
+          29
+        ],
+        "blues": [
+          10
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "MLP神经网络",
+        "reds": [
+          1,
+          2,
+          3,
+          9,
+          25,
+          29
+        ],
+        "blues": [
+          11
+        ],
+        "red_hits": 1,
+        "blue_hits": 1,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "随机森林",
+        "reds": [
+          13,
+          15,
+          16,
+          18,
+          21,
+          22
+        ],
+        "blues": [
+          12
+        ],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "马尔可夫链",
+        "reds": [
+          13,
+          14,
+          19,
+          25,
+          29,
+          32
+        ],
+        "blues": [
+          12
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "朴素贝叶斯",
+        "reds": [
+          21,
+          22,
+          23,
+          25,
+          32,
+          33
+        ],
+        "blues": [
+          14
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "蒙特卡洛",
+        "reds": [
+          4,
+          11,
+          13,
+          14,
+          22,
+          30
+        ],
+        "blues": [
+          4
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "K-Means",
+        "reds": [
+          6,
+          7,
+          8,
+          14,
+          22,
+          23
+        ],
+        "blues": [
+          12
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "LSTM",
+        "reds": [
+          2,
+          3,
+          6,
+          9,
+          13,
+          24
+        ],
+        "blues": [
+          10
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          4,
+          20,
+          22,
+          24,
+          29,
+          30
+        ],
+        "blues": [
+          11
+        ],
+        "red_hits": 1,
+        "blue_hits": 1,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          8,
+          12,
+          16,
+          18,
+          28,
+          33
+        ],
+        "blues": [
+          13
+        ],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          4,
           14,
           20,
           22,
@@ -162,7 +422,14 @@
         ],
         "blues": [
           12
-        ]
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
       },
       {
         "model": "权重融合",
@@ -176,9 +443,18 @@
         ],
         "blues": [
           12
-        ]
+        ],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 6,
+        "blue_total": 1,
+        "full_red": false,
+        "full_blue": false,
+        "full_match": false
       }
-    ]
+    ],
+    "settle_time": "2026-11-08 19:33:32",
+    "best_red_hits": 1
   },
   {
     "lottery": "ssq",
@@ -1192,9 +1468,9 @@
   {
     "lottery": "qxc",
     "name": "七星彩",
-    "target_issue": "26128",
-    "based_on_issue": "26127",
-    "predict_time": "2026-11-08 05:14:58",
+    "target_issue": "26129",
+    "based_on_issue": "26128",
+    "predict_time": "2026-11-08 19:29:30",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -1203,13 +1479,13 @@
       {
         "model": "XGBoost",
         "reds": [
-          3,
           4,
           4,
           4,
           5,
           5,
-          6
+          5,
+          5
         ],
         "blues": []
       },
@@ -1218,11 +1494,11 @@
         "reds": [
           0,
           3,
+          3,
           5,
           5,
           5,
-          8,
-          9
+          8
         ],
         "blues": []
       },
@@ -1244,11 +1520,11 @@
         "reds": [
           0,
           3,
+          3,
           5,
           5,
           5,
-          8,
-          9
+          8
         ],
         "blues": []
       },
@@ -1266,6 +1542,129 @@
         "blues": []
       }
     ]
+  },
+  {
+    "lottery": "qxc",
+    "name": "七星彩",
+    "target_issue": "26128",
+    "based_on_issue": "26127",
+    "predict_time": "2026-11-08 05:14:58",
+    "status": "settled",
+    "actual_reds": [
+      2,
+      3,
+      5,
+      6,
+      8,
+      8,
+      9
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-11-08",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          3,
+          4,
+          4,
+          4,
+          5,
+          5,
+          6
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          0,
+          3,
+          5,
+          5,
+          5,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 4,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          0,
+          2,
+          3,
+          4,
+          4,
+          6,
+          10
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          0,
+          3,
+          5,
+          5,
+          5,
+          8,
+          9
+        ],
+        "blues": [],
+        "red_hits": 4,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          0,
+          3,
+          4,
+          5,
+          5,
+          5,
+          8
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 7,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-08 19:33:32",
+    "best_red_hits": 4
   },
   {
     "lottery": "qxc",
@@ -1518,7 +1917,7 @@
     "name": "七乐彩",
     "target_issue": "26129",
     "based_on_issue": "26128",
-    "predict_time": "2026-11-08 05:14:56",
+    "predict_time": "2026-11-08 19:29:29",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -3058,9 +3457,9 @@
   {
     "lottery": "plw",
     "name": "排列5",
-    "target_issue": "26298",
-    "based_on_issue": "26297",
-    "predict_time": "2026-11-08 05:14:58",
+    "target_issue": "26299",
+    "based_on_issue": "26298",
+    "predict_time": "2026-11-08 19:29:30",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -3070,7 +3469,7 @@
         "model": "XGBoost",
         "reds": [
           4,
-          5,
+          4,
           5,
           5,
           5
@@ -3094,7 +3493,7 @@
           0,
           2,
           3,
-          5,
+          9,
           9
         ],
         "blues": []
@@ -3114,14 +3513,125 @@
         "model": "权重融合",
         "reds": [
           1,
+          2,
           4,
-          5,
-          6,
+          4,
           7
         ],
         "blues": []
       }
     ]
+  },
+  {
+    "lottery": "plw",
+    "name": "排列5",
+    "target_issue": "26298",
+    "based_on_issue": "26297",
+    "predict_time": "2026-11-08 05:14:58",
+    "status": "settled",
+    "actual_reds": [
+      0,
+      5,
+      7,
+      8,
+      9
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-11-08",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          4,
+          5,
+          5,
+          5,
+          5
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          1,
+          2,
+          4,
+          6,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          0,
+          2,
+          3,
+          5,
+          9
+        ],
+        "blues": [],
+        "red_hits": 2,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          4,
+          6,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          1,
+          4,
+          5,
+          6,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 5,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-08 19:33:32",
+    "best_red_hits": 2
   },
   {
     "lottery": "plw",
@@ -3681,9 +4191,9 @@
   {
     "lottery": "pls",
     "name": "排列3",
-    "target_issue": "26298",
-    "based_on_issue": "26297",
-    "predict_time": "2026-11-08 05:14:58",
+    "target_issue": "26299",
+    "based_on_issue": "26298",
+    "predict_time": "2026-11-08 19:29:30",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -3693,7 +4203,7 @@
         "model": "XGBoost",
         "reds": [
           4,
-          4,
+          5,
           5
         ],
         "blues": []
@@ -3712,7 +4222,7 @@
         "reds": [
           0,
           2,
-          5
+          9
         ],
         "blues": []
       },
@@ -3728,13 +4238,112 @@
       {
         "model": "权重融合",
         "reds": [
-          4,
-          5,
+          1,
+          2,
           7
         ],
         "blues": []
       }
     ]
+  },
+  {
+    "lottery": "pls",
+    "name": "排列3",
+    "target_issue": "26298",
+    "based_on_issue": "26297",
+    "predict_time": "2026-11-08 05:14:58",
+    "status": "settled",
+    "actual_reds": [
+      5,
+      7,
+      9
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-11-08",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          4,
+          4,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          1,
+          2,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          0,
+          2,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          2,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          4,
+          5,
+          7
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-08 19:33:32",
+    "best_red_hits": 0
   },
   {
     "lottery": "pls",
@@ -4234,9 +4843,9 @@
   {
     "lottery": "fc3d",
     "name": "福彩3D",
-    "target_issue": "2026298",
-    "based_on_issue": "2026297",
-    "predict_time": "2026-11-08 05:14:56",
+    "target_issue": "2026299",
+    "based_on_issue": "2026298",
+    "predict_time": "2026-11-08 19:29:29",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -4246,7 +4855,7 @@
         "model": "XGBoost",
         "reds": [
           4,
-          4,
+          5,
           5
         ],
         "blues": []
@@ -4282,12 +4891,111 @@
         "model": "权重融合",
         "reds": [
           1,
-          1,
+          5,
           5
         ],
         "blues": []
       }
     ]
+  },
+  {
+    "lottery": "fc3d",
+    "name": "福彩3D",
+    "target_issue": "2026298",
+    "based_on_issue": "2026297",
+    "predict_time": "2026-11-08 05:14:56",
+    "status": "settled",
+    "actual_reds": [
+      0,
+      5,
+      8
+    ],
+    "actual_blues": [],
+    "draw_date": "2026-11-08",
+    "models": [
+      {
+        "model": "XGBoost",
+        "reds": [
+          4,
+          4,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "热号推荐",
+        "reds": [
+          1,
+          1,
+          8
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "冷号回补",
+        "reds": [
+          5,
+          5,
+          9
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "综合推荐",
+        "reds": [
+          1,
+          1,
+          8
+        ],
+        "blues": [],
+        "red_hits": 1,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      },
+      {
+        "model": "权重融合",
+        "reds": [
+          1,
+          1,
+          5
+        ],
+        "blues": [],
+        "red_hits": 0,
+        "blue_hits": 0,
+        "red_total": 3,
+        "blue_total": 0,
+        "full_red": false,
+        "full_blue": true,
+        "full_match": false
+      }
+    ],
+    "settle_time": "2026-11-08 19:33:32",
+    "best_red_hits": 1
   },
   {
     "lottery": "fc3d",
@@ -4789,7 +5497,7 @@
     "name": "大乐透",
     "target_issue": "26128",
     "based_on_issue": "26127",
-    "predict_time": "2026-11-08 05:14:55",
+    "predict_time": "2026-11-08 19:29:28",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],

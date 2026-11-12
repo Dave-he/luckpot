@@ -2,105 +2,105 @@
   {
     "lottery": "ssq",
     "name": "双色球",
-    "history_count": 5106,
-    "latest_issue": "26129",
+    "history_count": 5107,
+    "latest_issue": "26130",
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.68,
+        "elapsed": 1.17,
         "metrics": {
-          "red_mse": 11.2077,
-          "red_mae": 2.6006,
-          "blue_mse": 11.7342,
-          "blue_mae": 2.8209
+          "red_mse": 11.1929,
+          "red_mae": 2.5991,
+          "blue_mse": 11.6477,
+          "blue_mae": 2.8069
         },
-        "samples": 5086
+        "samples": 5087
       },
       "mlp": {
         "success": true,
-        "elapsed": 49.55,
+        "elapsed": 35.39,
         "metrics": {
-          "red_acc_mean": 0.1171,
+          "red_acc_mean": 0.117,
           "red_acc_per_pos": [
-            0.1913,
+            0.1915,
             0.0921,
             0.0764,
-            0.0772,
-            0.0935,
-            0.1721
+            0.0768,
+            0.0933,
+            0.172
           ],
           "blue_acc_mean": 0.0746
         },
-        "samples": 5091
+        "samples": 5092
       },
       "random_forest": {
         "success": true,
-        "elapsed": 2.52,
+        "elapsed": 1.86,
         "metrics": {
-          "red_acc_mean": 0.52,
-          "blue_acc_mean": 0.8093
+          "red_acc_mean": 0.5258,
+          "blue_acc_mean": 0.8276
         },
-        "samples": 5091
+        "samples": 5092
       },
       "markov": {
         "success": true,
-        "elapsed": 0.02,
+        "elapsed": 0.01,
         "metrics": {
           "avg_diag_prob": 0.2535
         },
-        "samples": 5106
+        "samples": 5107
       },
       "naive_bayes": {
         "success": true,
-        "elapsed": 0.19,
+        "elapsed": 0.13,
         "metrics": {},
-        "samples": 5096
+        "samples": 5097
       },
       "monte_carlo": {
         "success": true,
         "elapsed": 0.0,
         "metrics": {
-          "red_max_prob": 0.0667
+          "red_max_prob": 0.0633
         },
         "samples": 50
       },
       "kmeans": {
         "success": true,
-        "elapsed": 0.16,
+        "elapsed": 0.09,
         "metrics": {
           "n_clusters": 8,
           "cluster_sizes": [
-            672,
-            600,
-            474,
-            829,
-            588,
-            411,
-            773,
-            759
+            893,
+            574,
+            394,
+            626,
+            989,
+            550,
+            412,
+            669
           ]
         },
-        "samples": 5106
+        "samples": 5107
       },
       "recency_weighted": {
         "success": true,
         "elapsed": 0.0,
         "metrics": {
-          "red_max_prob": 0.4113,
+          "red_max_prob": 0.3494,
           "red_top5": [
             30,
-            4,
+            20,
+            6,
             10,
-            29,
-            26
+            29
           ],
-          "blue_max_prob": 0.2988
+          "blue_max_prob": 0.2466
         },
         "samples": 0
       },
       "triggers_followers": {
         "success": true,
-        "elapsed": 0.13,
+        "elapsed": 0.08,
         "metrics": {
           "red_avg_trigger_prob": 0.1813,
           "red_max_trigger_prob": 0.4695,
@@ -112,9 +112,10 @@
         "success": true,
         "elapsed": 0.01,
         "metrics": {
-          "red_ghost_count": 2,
+          "red_ghost_count": 3,
           "red_ghost_numbers": [
             8,
+            12,
             33
           ],
           "red_hot_count": 0,
@@ -124,15 +125,15 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 1.13,
+        "elapsed": 0.59,
         "metrics": {
           "expert_weights": {
-            "hot": 0.0,
-            "cold": 0.0,
+            "hot": 0.0001,
+            "cold": 0.0001,
             "balanced": 0.0,
-            "markov_like": 0.5415,
-            "recency_weighted": 0.0,
-            "triggers_followers": 0.4584,
+            "markov_like": 0.7307,
+            "recency_weighted": 0.0003,
+            "triggers_followers": 0.2688,
             "ghost_variances": 0.0
           },
           "top_expert": "markov_like"
@@ -141,9 +142,9 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 8.98,
+        "elapsed": 5.44,
         "metrics": {
-          "final_loss": 6.0114
+          "final_loss": 5.8783
         },
         "samples": 490
       }
@@ -157,7 +158,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.36,
+        "elapsed": 0.86,
         "metrics": {
           "red_mse": 15.9806,
           "red_mae": 3.2128,
@@ -168,7 +169,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 25.24,
+        "elapsed": 16.98,
         "metrics": {
           "red_acc_mean": 0.1063,
           "red_acc_per_pos": [
@@ -184,7 +185,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 1.86,
+        "elapsed": 1.41,
         "metrics": {
           "red_acc_mean": 0.5436,
           "blue_acc_mean": 0.8876
@@ -201,7 +202,7 @@
       },
       "naive_bayes": {
         "success": true,
-        "elapsed": 0.11,
+        "elapsed": 0.08,
         "metrics": {},
         "samples": 2937
       },
@@ -215,18 +216,18 @@
       },
       "kmeans": {
         "success": true,
-        "elapsed": 0.07,
+        "elapsed": 0.05,
         "metrics": {
           "n_clusters": 8,
           "cluster_sizes": [
-            370,
-            259,
+            361,
+            261,
             412,
-            408,
-            318,
-            316,
-            412,
-            452
+            396,
+            320,
+            331,
+            416,
+            450
           ]
         },
         "samples": 2947
@@ -249,7 +250,7 @@
       },
       "triggers_followers": {
         "success": true,
-        "elapsed": 0.06,
+        "elapsed": 0.04,
         "metrics": {
           "red_avg_trigger_prob": 0.1419,
           "red_max_trigger_prob": 0.2072,
@@ -259,7 +260,7 @@
       },
       "ghost_variances": {
         "success": true,
-        "elapsed": 0.01,
+        "elapsed": 0.0,
         "metrics": {
           "red_ghost_count": 3,
           "red_ghost_numbers": [
@@ -274,7 +275,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.56,
+        "elapsed": 0.37,
         "metrics": {
           "expert_weights": {
             "hot": 0.0985,
@@ -291,7 +292,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 8.9,
+        "elapsed": 5.35,
         "metrics": {
           "final_loss": 4.2578
         },
@@ -302,17 +303,17 @@
   {
     "lottery": "fc3d",
     "name": "福彩3D",
-    "history_count": 4806,
-    "latest_issue": "2026301",
+    "history_count": 4807,
+    "latest_issue": "2026302",
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 0.41,
+        "elapsed": 0.3,
         "metrics": {
-          "red_mse": 5.4675,
-          "red_mae": 2.0093
+          "red_mse": 5.4756,
+          "red_mae": 2.0139
         },
-        "samples": 4786
+        "samples": 4787
       }
     }
   },
@@ -324,7 +325,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.37,
+        "elapsed": 0.97,
         "metrics": {
           "red_mse": 6.0839,
           "red_mae": 1.9479,
@@ -335,7 +336,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 29.86,
+        "elapsed": 20.91,
         "metrics": {
           "red_acc_mean": 0.1561,
           "red_acc_per_pos": [
@@ -353,7 +354,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 2.02,
+        "elapsed": 1.47,
         "metrics": {
           "red_acc_mean": 0.6508,
           "blue_acc_mean": 0.8407
@@ -370,7 +371,7 @@
       },
       "naive_bayes": {
         "success": true,
-        "elapsed": 0.14,
+        "elapsed": 0.09,
         "metrics": {},
         "samples": 2579
       },
@@ -384,18 +385,18 @@
       },
       "kmeans": {
         "success": true,
-        "elapsed": 0.08,
+        "elapsed": 0.06,
         "metrics": {
           "n_clusters": 8,
           "cluster_sizes": [
-            276,
-            338,
-            296,
-            387,
-            232,
-            281,
-            351,
-            428
+            268,
+            279,
+            324,
+            396,
+            257,
+            306,
+            465,
+            294
           ]
         },
         "samples": 2589
@@ -418,7 +419,7 @@
       },
       "triggers_followers": {
         "success": true,
-        "elapsed": 0.08,
+        "elapsed": 0.05,
         "metrics": {
           "red_avg_trigger_prob": 0.2323,
           "red_max_trigger_prob": 0.3967,
@@ -446,7 +447,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.76,
+        "elapsed": 0.5,
         "metrics": {
           "expert_weights": {
             "hot": 0.0021,
@@ -463,7 +464,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 9.12,
+        "elapsed": 5.61,
         "metrics": {
           "final_loss": 4.424
         },
@@ -479,7 +480,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 0.96,
+        "elapsed": 0.7,
         "metrics": {
           "red_mse": 4.3536,
           "red_mae": 1.782
@@ -491,34 +492,34 @@
   {
     "lottery": "pls",
     "name": "排列3",
-    "history_count": 7776,
-    "latest_issue": "26301",
+    "history_count": 7777,
+    "latest_issue": "26302",
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 0.56,
+        "elapsed": 0.38,
         "metrics": {
-          "red_mse": 6.3422,
-          "red_mae": 2.169
+          "red_mse": 6.3285,
+          "red_mae": 2.1668
         },
-        "samples": 7756
+        "samples": 7757
       }
     }
   },
   {
     "lottery": "plw",
     "name": "排列5",
-    "history_count": 7776,
-    "latest_issue": "26301",
+    "history_count": 7777,
+    "latest_issue": "26302",
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 1.1,
+        "elapsed": 0.79,
         "metrics": {
-          "red_mse": 6.1325,
-          "red_mae": 2.1314
+          "red_mse": 6.1148,
+          "red_mae": 2.1273
         },
-        "samples": 7756
+        "samples": 7757
       }
     }
   }

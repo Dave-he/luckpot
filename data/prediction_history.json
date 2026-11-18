@@ -4,7 +4,7 @@
     "name": "双色球",
     "target_issue": "26133",
     "based_on_issue": "26132",
-    "predict_time": "2026-11-17 22:52:59",
+    "predict_time": "2026-11-18 06:39:21",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -99,13 +99,13 @@
         "reds": [
           6,
           13,
-          18,
           19,
           20,
+          22,
           25
         ],
         "blues": [
-          7
+          12
         ]
       },
       {
@@ -2574,7 +2574,7 @@
     "name": "七星彩",
     "target_issue": "26133",
     "based_on_issue": "26132",
-    "predict_time": "2026-11-17 22:53:02",
+    "predict_time": "2026-11-18 06:39:25",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -2638,9 +2638,9 @@
           0,
           3,
           4,
+          4,
           5,
           5,
-          6,
           8
         ],
         "blues": []
@@ -3513,7 +3513,7 @@
     "name": "七乐彩",
     "target_issue": "26133",
     "based_on_issue": "26132",
-    "predict_time": "2026-11-17 22:53:01",
+    "predict_time": "2026-11-18 06:39:24",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -3612,8 +3612,8 @@
       {
         "model": "K-Means",
         "reds": [
-          1,
           6,
+          7,
           13,
           18,
           25,
@@ -6211,7 +6211,7 @@
     "name": "排列5",
     "target_issue": "26308",
     "based_on_issue": "26307",
-    "predict_time": "2026-11-17 22:53:02",
+    "predict_time": "2026-11-18 06:39:25",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -6265,10 +6265,10 @@
         "model": "权重融合",
         "reds": [
           2,
+          3,
           4,
           4,
-          4,
-          4
+          7
         ],
         "blues": []
       }
@@ -7944,7 +7944,7 @@
     "name": "排列3",
     "target_issue": "26308",
     "based_on_issue": "26307",
-    "predict_time": "2026-11-17 22:53:02",
+    "predict_time": "2026-11-18 06:39:25",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -9487,7 +9487,7 @@
     "name": "福彩3D",
     "target_issue": "2026308",
     "based_on_issue": "2026307",
-    "predict_time": "2026-11-17 22:53:01",
+    "predict_time": "2026-11-18 06:39:24",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -9532,9 +9532,9 @@
       {
         "model": "权重融合",
         "reds": [
+          1,
           2,
-          5,
-          6
+          5
         ],
         "blues": []
       }
@@ -11030,7 +11030,7 @@
     "name": "大乐透",
     "target_issue": "26132",
     "based_on_issue": "26131",
-    "predict_time": "2026-11-17 22:53:00",
+    "predict_time": "2026-11-18 06:39:22",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],

@@ -3,119 +3,119 @@
     "lottery": "ssq",
     "name": "双色球",
     "schedule": "每周二、四、日",
-    "predict_time": "2026-11-19 06:38:50",
-    "latest_issue": "26132",
+    "predict_time": "2026-11-19 22:41:21",
+    "latest_issue": "26133",
     "latest_reds": [
-      5,
-      9,
-      13,
-      17,
-      18,
-      21
+      7,
+      10,
+      11,
+      14,
+      21,
+      26
     ],
     "latest_blues": [
-      11
+      13
     ],
-    "history_count": 5109,
+    "history_count": 5110,
     "weighted_prediction": {
       "reds": [
-        5,
-        9,
-        13,
-        17,
-        18,
-        21
+        7,
+        10,
+        11,
+        14,
+        21,
+        26
       ],
       "blues": [
-        11
+        13
       ]
     },
     "weights_used": {
-      "xgboost": 0.0003,
-      "kmeans": 0.0006,
-      "random_forest": 0.0007,
-      "monte_carlo": 0.0006,
-      "trad_热号推荐": 0.0013,
-      "trad_随机机选": 0.001,
-      "naive_bayes": 0.002,
-      "markov": 0.9834,
-      "trad_综合推荐": 0.0098,
-      "trad_冷号回补": 0.0003
+      "monte_carlo": 0.0024999999999999996,
+      "trad_随机机选": 0.0027999999999999995,
+      "trad_综合推荐": 0.016299999999999995,
+      "kmeans": 0.0021999999999999997,
+      "naive_bayes": 0.004299999999999999,
+      "trad_冷号回补": 0.0036999999999999993,
+      "markov": 0.9513999999999998,
+      "random_forest": 0.009899999999999999,
+      "trad_热号推荐": 0.003799999999999999,
+      "xgboost": 0.003099999999999999
     },
     "active_algos": [
-      "xgboost",
-      "kmeans",
-      "random_forest",
       "monte_carlo",
-      "trad_热号推荐",
       "trad_随机机选",
-      "naive_bayes",
-      "markov",
       "trad_综合推荐",
-      "trad_冷号回补"
+      "kmeans",
+      "naive_bayes",
+      "trad_冷号回补",
+      "markov",
+      "random_forest",
+      "trad_热号推荐",
+      "xgboost"
     ],
     "top_red_scores": [
       [
-        18,
-        0.9944
+        14,
+        0.988
+      ],
+      [
+        7,
+        0.9441
+      ],
+      [
+        26,
+        0.9002
       ],
       [
         21,
-        0.9248
-      ],
-      [
-        17,
-        0.8928
-      ],
-      [
-        13,
-        0.881
-      ],
-      [
-        5,
-        0.8552
-      ],
-      [
-        9,
-        0.8079
-      ],
-      [
-        32,
-        0.4301
-      ],
-      [
-        12,
-        0.3887
+        0.8941
       ],
       [
         10,
-        0.3768
+        0.8824
       ],
       [
-        33,
-        0.3696
+        11,
+        0.8746
+      ],
+      [
+        22,
+        0.4102
+      ],
+      [
+        3,
+        0.3938
+      ],
+      [
+        9,
+        0.3722
+      ],
+      [
+        32,
+        0.3721
       ]
     ],
     "top_blue_scores": [
       [
-        11,
-        0.9972
-      ],
-      [
-        12,
-        0.1788
+        13,
+        0.9685
       ],
       [
         7,
-        0.148
+        0.1935
       ],
       [
-        14,
-        0.1343
+        10,
+        0.1815
       ],
       [
-        1,
-        0.1325
+        12,
+        0.1805
+      ],
+      [
+        6,
+        0.1442
       ]
     ],
     "is_repeatable": false
@@ -124,7 +124,7 @@
     "lottery": "dlt",
     "name": "大乐透",
     "schedule": "每周一、三、六",
-    "predict_time": "2026-11-19 06:38:50",
+    "predict_time": "2026-11-19 22:41:22",
     "latest_issue": "26132",
     "latest_reds": [
       2,
@@ -143,7 +143,7 @@
         13,
         14,
         17,
-        23,
+        25,
         29
       ],
       "blues": [
@@ -152,91 +152,91 @@
       ]
     },
     "weights_used": {
-      "xgboost": 0.18201820182018202,
-      "kmeans": 0.067006700670067,
-      "random_forest": 0.12011201120112011,
-      "monte_carlo": 0.09700970097009701,
-      "trad_热号推荐": 0.050405040504050404,
-      "trad_随机机选": 0.07720772077207722,
-      "naive_bayes": 0.0779077907790779,
-      "markov": 0.0365036503650365,
-      "trad_综合推荐": 0.0521052105210521,
-      "trad_冷号回补": 0.23972397239723972
+      "monte_carlo": 0.09230000000000001,
+      "trad_随机机选": 0.07270000000000001,
+      "trad_综合推荐": 0.051800000000000006,
+      "kmeans": 0.05720000000000001,
+      "naive_bayes": 0.08060000000000002,
+      "trad_冷号回补": 0.2604000000000001,
+      "markov": 0.036500000000000005,
+      "random_forest": 0.11810000000000001,
+      "trad_热号推荐": 0.04870000000000001,
+      "xgboost": 0.18170000000000003
     },
     "active_algos": [
-      "xgboost",
-      "kmeans",
-      "random_forest",
       "monte_carlo",
-      "trad_热号推荐",
       "trad_随机机选",
-      "naive_bayes",
-      "markov",
       "trad_综合推荐",
-      "trad_冷号回补"
+      "kmeans",
+      "naive_bayes",
+      "trad_冷号回补",
+      "markov",
+      "random_forest",
+      "trad_热号推荐",
+      "xgboost"
     ],
     "top_red_scores": [
       [
         14,
-        0.725
+        0.7322
       ],
       [
         17,
-        0.7097
+        0.716
       ],
       [
         29,
-        0.6208
+        0.6173
       ],
       [
         13,
-        0.5755
-      ],
-      [
-        23,
-        0.5705
-      ],
-      [
-        18,
-        0.5514
+        0.5826
       ],
       [
         25,
-        0.5463
+        0.558
       ],
       [
         12,
-        0.5369
+        0.5455
+      ],
+      [
+        23,
+        0.5328
       ],
       [
         21,
-        0.5204
+        0.5318
       ],
       [
-        6,
-        0.5203
+        30,
+        0.5266
+      ],
+      [
+        15,
+        0.5255
       ]
     ],
     "top_blue_scores": [
       [
         7,
-        0.6729
+        0.6838
       ],
       [
         4,
-        0.6624
+        0.672
       ],
       [
         9,
-        0.6342
+        0.6419
       ],
       [
         8,
-        0.5209
+        0.5247
       ],
       [
         12,
-        0.487
+        0.503
       ]
     ],
     "is_repeatable": false
@@ -245,21 +245,21 @@
     "lottery": "fc3d",
     "name": "福彩3D",
     "schedule": "每日开奖",
-    "predict_time": "2026-11-19 06:38:50",
-    "latest_issue": "2026308",
+    "predict_time": "2026-11-19 22:41:22",
+    "latest_issue": "2026309",
     "latest_reds": [
-      0,
-      4,
-      1
+      1,
+      5,
+      6
     ],
     "latest_blues": [],
-    "history_count": 4813,
+    "history_count": 4814,
     "is_repeatable": true,
     "weighted_prediction": {
       "reds": [
         5,
         0,
-        1
+        2
       ],
       "blues": []
     },
@@ -284,7 +284,7 @@
     "lottery": "qlc",
     "name": "七乐彩",
     "schedule": "每周一、三、五",
-    "predict_time": "2026-11-19 06:38:51",
+    "predict_time": "2026-11-19 22:41:24",
     "latest_issue": "26133",
     "latest_reds": [
       1,
@@ -314,49 +314,49 @@
       ]
     },
     "weights_used": {
-      "xgboost": 0.0006,
-      "kmeans": 0.001,
-      "random_forest": 0.0009,
       "monte_carlo": 0.0003,
-      "trad_热号推荐": 0.0002,
-      "trad_随机机选": 0.0006,
-      "naive_bayes": 0.0031,
-      "markov": 0.9923,
+      "trad_随机机选": 0.0007,
       "trad_综合推荐": 0.0009,
-      "trad_冷号回补": 0.0001
+      "kmeans": 0.0011,
+      "naive_bayes": 0.0032,
+      "trad_冷号回补": 0.0001,
+      "markov": 0.992,
+      "random_forest": 0.0009,
+      "trad_热号推荐": 0.0002,
+      "xgboost": 0.0006
     },
     "active_algos": [
-      "xgboost",
-      "kmeans",
-      "random_forest",
       "monte_carlo",
-      "trad_热号推荐",
       "trad_随机机选",
-      "naive_bayes",
-      "markov",
       "trad_综合推荐",
-      "trad_冷号回补"
+      "kmeans",
+      "naive_bayes",
+      "trad_冷号回补",
+      "markov",
+      "random_forest",
+      "trad_热号推荐",
+      "xgboost"
     ],
     "top_red_scores": [
       [
         8,
-        0.9953
+        0.995
       ],
       [
         22,
-        0.9465
+        0.9463
       ],
       [
         13,
-        0.8932
+        0.8931
       ],
       [
         1,
-        0.8144
+        0.8143
       ],
       [
         11,
-        0.7915
+        0.7914
       ],
       [
         7,
@@ -364,33 +364,33 @@
       ],
       [
         4,
-        0.765
+        0.7647
       ],
       [
         23,
-        0.6563
+        0.6562
       ],
       [
         25,
-        0.611
+        0.6109
       ],
       [
         15,
-        0.5822
+        0.5821
       ]
     ],
     "top_blue_scores": [
       [
         5,
-        0.9963
+        0.9962
       ],
       [
         19,
-        0.4188
+        0.4189
       ],
       [
         9,
-        0.4179
+        0.418
       ],
       [
         1,
@@ -398,7 +398,7 @@
       ],
       [
         22,
-        0.332
+        0.3319
       ]
     ],
     "is_repeatable": false
@@ -407,7 +407,7 @@
     "lottery": "qxc",
     "name": "七星彩",
     "schedule": "每周二、五、日",
-    "predict_time": "2026-11-19 06:38:51",
+    "predict_time": "2026-11-19 22:41:24",
     "latest_issue": "26132",
     "latest_reds": [
       0,
@@ -427,7 +427,7 @@
         4,
         6,
         5,
-        0,
+        5,
         3,
         8
       ],
@@ -454,21 +454,21 @@
     "lottery": "pls",
     "name": "排列3",
     "schedule": "每日开奖",
-    "predict_time": "2026-11-19 06:38:51",
-    "latest_issue": "26308",
+    "predict_time": "2026-11-19 22:41:24",
+    "latest_issue": "26309",
     "latest_reds": [
+      0,
       3,
-      6,
-      2
+      3
     ],
     "latest_blues": [],
-    "history_count": 7783,
+    "history_count": 7784,
     "is_repeatable": true,
     "weighted_prediction": {
       "reds": [
         2,
-        7,
-        7
+        9,
+        5
       ],
       "blues": []
     },
@@ -493,25 +493,25 @@
     "lottery": "plw",
     "name": "排列5",
     "schedule": "每日开奖",
-    "predict_time": "2026-11-19 06:38:51",
-    "latest_issue": "26308",
+    "predict_time": "2026-11-19 22:41:24",
+    "latest_issue": "26309",
     "latest_reds": [
+      0,
       3,
-      6,
-      2,
-      9,
-      1
+      3,
+      0,
+      9
     ],
     "latest_blues": [],
-    "history_count": 7783,
+    "history_count": 7784,
     "is_repeatable": true,
     "weighted_prediction": {
       "reds": [
         2,
-        7,
-        7,
+        9,
+        5,
         4,
-        1
+        9
       ],
       "blues": []
     },

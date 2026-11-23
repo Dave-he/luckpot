@@ -4,7 +4,7 @@
     "name": "双色球",
     "target_issue": "26135",
     "based_on_issue": "26134",
-    "predict_time": "2026-11-22 21:01:03",
+    "predict_time": "2026-11-23 06:37:00",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -3126,7 +3126,7 @@
     "name": "七星彩",
     "target_issue": "26135",
     "based_on_issue": "26134",
-    "predict_time": "2026-11-22 21:01:06",
+    "predict_time": "2026-11-23 06:37:02",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -4311,7 +4311,7 @@
     "name": "七乐彩",
     "target_issue": "26135",
     "based_on_issue": "26134",
-    "predict_time": "2026-11-22 21:01:05",
+    "predict_time": "2026-11-23 06:37:01",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -7587,7 +7587,7 @@
     "name": "排列5",
     "target_issue": "26313",
     "based_on_issue": "26312",
-    "predict_time": "2026-11-22 21:01:06",
+    "predict_time": "2026-11-23 06:37:02",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -7643,8 +7643,8 @@
           2,
           4,
           5,
-          7,
-          9
+          5,
+          7
         ],
         "blues": []
       }
@@ -9764,7 +9764,7 @@
     "name": "排列3",
     "target_issue": "26313",
     "based_on_issue": "26312",
-    "predict_time": "2026-11-22 21:01:06",
+    "predict_time": "2026-11-23 06:37:02",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -9811,7 +9811,7 @@
         "reds": [
           2,
           5,
-          7
+          6
         ],
         "blues": []
       }
@@ -11703,7 +11703,7 @@
     "name": "福彩3D",
     "target_issue": "2026313",
     "based_on_issue": "2026312",
-    "predict_time": "2026-11-22 21:01:05",
+    "predict_time": "2026-11-23 06:37:01",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -13642,7 +13642,7 @@
     "name": "大乐透",
     "target_issue": "26134",
     "based_on_issue": "26133",
-    "predict_time": "2026-11-22 21:01:04",
+    "predict_time": "2026-11-23 06:37:01",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -13809,7 +13809,7 @@
           12,
           17,
           18,
-          22
+          25
         ],
         "blues": [
           4,

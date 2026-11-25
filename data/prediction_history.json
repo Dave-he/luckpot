@@ -4,7 +4,7 @@
     "name": "双色球",
     "target_issue": "26136",
     "based_on_issue": "26135",
-    "predict_time": "2026-11-24 23:51:50",
+    "predict_time": "2026-11-25 07:44:12",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -3402,7 +3402,7 @@
     "name": "七星彩",
     "target_issue": "26136",
     "based_on_issue": "26135",
-    "predict_time": "2026-11-24 23:51:53",
+    "predict_time": "2026-11-25 07:44:15",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -4710,7 +4710,7 @@
     "name": "七乐彩",
     "target_issue": "26136",
     "based_on_issue": "26135",
-    "predict_time": "2026-11-24 23:51:52",
+    "predict_time": "2026-11-25 07:44:14",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -8275,7 +8275,7 @@
     "name": "排列5",
     "target_issue": "26315",
     "based_on_issue": "26314",
-    "predict_time": "2026-11-24 23:51:53",
+    "predict_time": "2026-11-25 07:44:15",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -8331,7 +8331,7 @@
           0,
           2,
           4,
-          4,
+          9,
           9
         ],
         "blues": []
@@ -10563,7 +10563,7 @@
     "name": "排列3",
     "target_issue": "26315",
     "based_on_issue": "26314",
-    "predict_time": "2026-11-24 23:51:53",
+    "predict_time": "2026-11-25 07:44:15",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -10610,7 +10610,7 @@
         "reds": [
           2,
           5,
-          5
+          9
         ],
         "blues": []
       }
@@ -12601,7 +12601,7 @@
     "name": "福彩3D",
     "target_issue": "2026315",
     "based_on_issue": "2026314",
-    "predict_time": "2026-11-24 23:51:52",
+    "predict_time": "2026-11-25 07:44:14",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],
@@ -12648,7 +12648,7 @@
         "reds": [
           1,
           1,
-          4
+          5
         ],
         "blues": []
       }
@@ -14639,7 +14639,7 @@
     "name": "大乐透",
     "target_issue": "26135",
     "based_on_issue": "26134",
-    "predict_time": "2026-11-24 23:51:51",
+    "predict_time": "2026-11-25 07:44:13",
     "status": "pending",
     "actual_reds": [],
     "actual_blues": [],

@@ -18,7 +18,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 36.55,
+        "elapsed": 37.34,
         "metrics": {
           "red_acc_mean": 0.117,
           "red_acc_per_pos": [
@@ -35,7 +35,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 1.86,
+        "elapsed": 1.87,
         "metrics": {
           "red_acc_mean": 0.5111,
           "blue_acc_mean": 0.8458
@@ -125,7 +125,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.73,
+        "elapsed": 0.74,
         "metrics": {
           "expert_weights": {
             "hot": 0.0001,
@@ -142,7 +142,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 5.39,
+        "elapsed": 5.46,
         "metrics": {
           "final_loss": 5.9278
         },
@@ -169,7 +169,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 17.41,
+        "elapsed": 18.15,
         "metrics": {
           "red_acc_mean": 0.1062,
           "red_acc_per_pos": [
@@ -185,7 +185,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 1.39,
+        "elapsed": 1.41,
         "metrics": {
           "red_acc_mean": 0.5418,
           "blue_acc_mean": 0.8618
@@ -271,7 +271,7 @@
       },
       "moe": {
         "success": true,
-        "elapsed": 0.35,
+        "elapsed": 0.36,
         "metrics": {
           "expert_weights": {
             "hot": 0.0889,
@@ -288,7 +288,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 5.41,
+        "elapsed": 5.44,
         "metrics": {
           "final_loss": 4.1468
         },
@@ -332,7 +332,7 @@
       },
       "mlp": {
         "success": true,
-        "elapsed": 21.59,
+        "elapsed": 22.39,
         "metrics": {
           "red_acc_mean": 0.1556,
           "red_acc_per_pos": [
@@ -350,7 +350,7 @@
       },
       "random_forest": {
         "success": true,
-        "elapsed": 1.43,
+        "elapsed": 1.47,
         "metrics": {
           "red_acc_mean": 0.6535,
           "blue_acc_mean": 0.84
@@ -455,7 +455,7 @@
       },
       "lstm": {
         "success": true,
-        "elapsed": 5.57,
+        "elapsed": 5.7,
         "metrics": {
           "final_loss": 4.3064
         },
@@ -488,7 +488,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 0.4,
+        "elapsed": 0.42,
         "metrics": {
           "red_mse": 6.3465,
           "red_mae": 2.1696
@@ -505,7 +505,7 @@
     "models": {
       "xgboost": {
         "success": true,
-        "elapsed": 0.87,
+        "elapsed": 0.85,
         "metrics": {
           "red_mse": 6.1256,
           "red_mae": 2.1307
